@@ -1,32 +1,9 @@
+// scriptInicioSesion.js
 document.addEventListener('DOMContentLoaded', function () {
-    // === ELEMENTOS DEL DOM ===
-    const html = document.documentElement;
-    const modoOscuroBtn = document.getElementById('modo-oscuro');
-    const modoOscuroLateralBtn = document.getElementById('modo-oscuro-lateral');
-    const menuToggle = document.querySelector('.menu-toggle');
-    const menuLateral = document.getElementById('menu-lateral');
-    const botonNotificacion = document.getElementById('modo-notificacion');
-    const menuNotificaciones = document.getElementById('menu-notificaciones');
-    const botonesAceptar = document.querySelectorAll('.btn-aceptar-publicacion');
-    const contadorNotificaciones = document.querySelector('.contador-notificaciones');
-    const contadorMenu = document.querySelector('.contador-menu');
-    const botonUsuario = document.getElementById('boton-usuario');
-    const menuUsuario = document.getElementById('menu-usuario');
-    const botonAccesibilidad = document.getElementById('boton-accesibilidad');
-    const menuAccesibilidad = document.getElementById('menu-accesibilidad');
-    const botonesTamano = document.querySelectorAll('.btn-tamano');
-    const botonesDaltonismo = document.querySelectorAll('.btn-daltonismo');
-    const botonesIdioma = document.querySelectorAll('.btn-idioma');
-    const altoContrasteToggle = document.getElementById('alto-contraste');
-    const reducirAnimacionesToggle = document.getElementById('reducir-animaciones');
-    const narradorToggle = document.getElementById('narrador');
-    const resetAccesibilidad = document.getElementById('reset-accesibilidad');
+    const loginForm = document.getElementById('login-form');
     const togglePassword = document.querySelector('.toggle-password');
     const passwordInput = document.getElementById('password');
-    const loginForm = document.getElementById('login-form');
 
-
-    
     // === TOGGLE CONTRASEÑA CON EMOJIS REALES ===
     togglePassword.addEventListener('click', () => {
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -34,43 +11,60 @@ document.addEventListener('DOMContentLoaded', function () {
         togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
     });
 
-    // === FORMULARIO DE INICIO DE SESIÓN (CORREGIDO) ===
-    if (loginForm && passwordInput) {
-        // Crear error dinámico
-        const passwordError = document.createElement('p');
-        passwordError.className = 'error';
-        passwordError.style.color = 'red';
-        passwordError.style.display = 'none';
-        passwordError.style.marginTop = '5px';
-        passwordError.style.fontSize = '0.9em';
-        passwordInput.parentElement.appendChild(passwordError);
-
+    // === INICIO DE SESIÓN ===
+    if (loginForm) {
         loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            const password = passwordInput.value.trim();
 
-            // Validar longitud
-            if (password.length !== 9) {
-                passwordError.textContent = translations[html.lang]['error-longitud'];
-                passwordError.style.display = 'block';
+            const username = loginForm.querySelector('input[type="text"]').value.trim();
+            const email = loginForm.querySelector('input[type="email"]').value.trim();
+            const password = passwordInput.value;
+
+            if (!username || !email || !password) {
+                alert('Por favor, completa todos los campos.');
                 return;
-            } else {
-                passwordError.style.display = 'none';
             }
 
-            // Redirección
-            if (password === '123456789') {
-                alert(translations[html.lang]['admin-welcome']);
-                window.location.href = 'inicio.html'; // Admin
-            } else {
-                const username = this.querySelector('input[type="text"]')?.value.trim() || 'Usuario';
-                const msg = translations[html.lang]['user-welcome'].replace('{username}', username);
-                alert(msg);
-                window.location.href = 'inicio-usuario.html'; // Usuario
+            const usuarios = JSON.parse(localStorage.getItem('usuariosRegistrados') || '[]');
+            const usuario = usuarios.find(u =>
+                u.username === username &&
+                u.email === email &&
+                u.password === password
+            );
+
+            if (!usuario) {
+                alert('Credenciales incorrectas. Verifica tus datos o regístrate primero.');
+                return;
             }
+
+            // LOGIN EXITOSO
+            localStorage.setItem('currentUser', JSON.stringify(usuario));
+            localStorage.setItem('userRole', usuario.role);
+
+            window.location.href = 'inicio.html';
         });
     }
 
-    
-});
+    // === MOSTRAR BOTONES ADMIN 
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const isAdmin = currentUser && currentUser.role === 'administrator';
+    document.querySelectorAll('.admin-boton').forEach(btn => {
+        btn.style.display = isAdmin ? 'block' : 'none';
+    });
 
+    // === MOSTRAR USUARIO LOGUEADO EN MENÚ ===
+    const listaUsuarios = document.getElementById('lista-usuarios');
+    if (listaUsuarios && currentUser) {
+        const existing = listaUsuarios.querySelector('.usuario-logueado');
+        if (existing) existing.remove();
+
+        const a = document.createElement('a');
+        a.href = 'perfil.html';
+        a.className = 'opcion-menu usuario-logueado';
+        a.innerHTML = `
+            <img src="${currentUser.avatar || 'user.png'}" class="icono-opcion" alt="Avatar">
+            <span>${currentUser.username}</span>
+        `;
+        listaUsuarios.insertBefore(a, listaUsuarios.firstChild);
+    }
+});
