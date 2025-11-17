@@ -42,6 +42,8 @@
     }
 }
         </style>
+        <script  defer src="sedes.js"></script>
+        <script  defer src="sedes2.js"></script>
     </head> 
     <body>
        
@@ -232,15 +234,15 @@
             <!-- Carrusel de años de mundiales -->
 
             <div class="controles-mundiales">
-                <button class="btn-agregar-sede" id="btn-agregar-sede">
-                    <img src="mas.png" alt="Agregar sede" class="icono-control">
+                <button class="admin-boton" class="btn-agregar-sede" id="btn-agregar-sede" data-i18n="agregar-sede">
+                    <img src="mas.png" alt="Agregar sede" class="icono-control" >
                     Agregar Sede
                 </button>
-                <button class="btn-editar-sede" id="btn-editar-sede">
-                    <img src="editar.png" alt="Editar sede" class="icono-control">
+                <button class="admin-boton" class="btn-editar-sede" id="btn-editar-sede" data-i18n="editar-sede">
+                    <img src="editar.png" alt="Editar sede" class="icono-control" >
                     Editar Sede
                 </button>
-                <button class="btn-eliminar-sede" id="btn-eliminar-sede">
+                <button class="admin-boton" class="btn-eliminar-sede" id="btn-eliminar-sede" data-i18n="eliminar-sede">
                     <img src="delete.png" alt="Eliminar sede" class="icono-control">
                     Eliminar sede
                 </button>
@@ -407,29 +409,29 @@
 
              <!-- NUEVO: Información adicional de la sede -->
     <div id="info-adicional-sedes" class="info-adicional-sedes" style="display: none;">
-        <h3 class="titulo-info-adicional-sedes">Información Detallada de la Sede</h3>
+        <h3 class="titulo-info-adicional-sedes" data-i18n="info-adicional-titulo">Información Detallada de la Sede</h3>
         <div class="info-grid-sedes">
             <div class="info-item-sedes">
-                <span class="etiqueta-info-sedes">País:</span>
+                <span class="etiqueta-info-sedes" data-i18n="pais">País:</span>
                 <span id="pais-sede" class="valor-info-sedes">No disponible</span>
             </div>
             <div class="info-item-sedes">
-                <span class="etiqueta-info-sedes">Ciudad Principal:</span>
+                <span class="etiqueta-info-sedes" data-i18n="ciudad">Ciudad Principal:</span>
                 <span id="ciudad-sede" class="valor-info-sedes">No disponible</span>
             </div>
             <div class="info-item-sedes">
-                <span class="etiqueta-info-sedes">Estadio Principal:</span>
+                <span class="etiqueta-info-sedes" data-i18n="estadio">Estadio Principal:</span>
                 <span id="estadio-sede" class="valor-info-sedes">No disponible</span>
             </div>
             <div class="info-item-sedes">
-                <span class="etiqueta-info-sedes">Capacidad:</span>
+                <span class="etiqueta-info-sedes" data-i18n="capacidad">Capacidad:</span>
                 <span id="capacidad-sede" class="valor-info-sedes">No disponible</span>
             </div>
         </div>
         
         <!-- Datos curiosos -->
         <div id="datos-curiosos-container" class="datos-curiosos-sedes" style="display: none;">
-            <h4 class="titulo-datos-curiosos-sedes">Datos Curiosos</h4>
+            <h4 class="titulo-datos-curiosos-sedes" data-i18n="datos-curiosos-titulo">Datos Curiosos</h4>
             <p id="datos-curiosos-texto" class="texto-datos-curiosos-sedes"></p>
         </div>
     </div>
@@ -545,11 +547,18 @@
                 </div>
             </div>
         </div>
-
+        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        const isAdmin = currentUser && currentUser.role === 'administrator';
+        document.querySelectorAll('.admin-boton').forEach(btn => {
+            btn.style.display = isAdmin ? 'block' : 'none';
+        });
+    });
+</script>
 </body>
 </html>
 
-<script src="sedes.js"></script>
-<script src="scriptChuy.js"></script>
+
 </body>
 </html>

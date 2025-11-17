@@ -1,4 +1,3 @@
-// Traducciones para los textos de la interfaz
 
 document.addEventListener('DOMContentLoaded', () => {
     // === ANIMACIÓN DE ENTRADA ===

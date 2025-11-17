@@ -540,8 +540,8 @@
     <div class="foro-container">
         <!-- Header sticky del foro -->
         <div class="sticky-header">
-            <button class="btn-publicar" id="btnAbrirPublicar" data-i18n="crear-publicacion">PUBLICAR</button>
-            <button class="btn-administrar-publicaciones-foro" id="btnAbrirPanelAdminForo" data-i18n="administrar-pendientes">ADMINISTRAR</button>
+            <button class="admin-boton" class="btn-publicar" id="btnAbrirPublicar"  data-i18n="crear-publicacion">PUBLICAR</button>
+            <button class="admin-boton" class="btn-administrar-publicaciones-foro"  id="btnAbrirPanelAdminForo" data-i18n="administrar-pendientes">ADMINISTRAR</button>
             <div class="header-right">
                 <div class="search-bar">
                     <img src="lupa.png" alt="Buscar" class="icono-buscar">
@@ -726,7 +726,7 @@
 
                 <!-- Dropdown de categorías -->
                 <div class="dropdown">
-                    <button class="icon-btn" id="btnAgregarCategoria">
+                    <button   class="admin-boton" class="icon-btn"id="btnAgregarCategoria">
                         <img src="mas.png" alt="Más opciones" class="icono-mas">
                     </button>
                     <div class="dropdown-content" id="dropdownCategorias">
@@ -992,8 +992,16 @@
             </div>
         </div>
     </div>
-
-    <script src="foro.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        const isAdmin = currentUser && currentUser.role === 'administrator';
+        document.querySelectorAll('.admin-boton').forEach(btn => {
+            btn.style.display = isAdmin ? 'block' : 'none';
+        });
+    });
+</script>
+    <script defer src="foro.js"></script>
     <script defer src="foro2.js"></script>
 </body>
 </html>

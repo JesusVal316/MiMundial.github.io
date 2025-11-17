@@ -1,32 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     // === ELEMENTOS DEL DOM ===
     const html = document.documentElement;
-    const modoOscuroBtn = document.getElementById('modo-oscuro');
-    const modoOscuroLateralBtn = document.getElementById('modo-oscuro-lateral');
-    const modoOscuroIcon = document.querySelector('#modo-oscuro img');
-    const modoOscuroLateralIcon = document.querySelector('#modo-oscuro-lateral img');
-    const menuToggle = document.querySelector('.menu-toggle');
-    const menuLateral = document.getElementById('menu-lateral');
-    const botonNotificacion = document.getElementById('modo-notificacion');
-    const botonNotificacionLateral = document.getElementById('modo-notificacion-lateral');
-    const menuNotificaciones = document.getElementById('menu-notificaciones');
-    const botonesAceptar = document.querySelectorAll('.btn-aceptar-publicacion');
-    const contadorNotificaciones = document.querySelectorAll('.contador-notificaciones');
-    const contadorMenu = document.querySelector('.contador-menu');
-    const botonUsuario = document.getElementById('boton-usuario');
-    const menuUsuario = document.getElementById('menu-usuario');
-    const botonAccesibilidad = document.getElementById('boton-accesibilidad');
-    const botonAccesibilidadLateral = document.getElementById('boton-accesibilidad-lateral');
-    const menuAccesibilidad = document.getElementById('menu-accesibilidad');
-    const botonesTamano = document.querySelectorAll('.btn-tamano');
-    const botonesDaltonismo = document.querySelectorAll('.btn-daltonismo');
-    const botonesIdioma = document.querySelectorAll('.btn-idioma');
-    const altoContrasteToggle = document.getElementById('alto-contraste');
-    const reducirAnimacionesToggle = document.getElementById('reducir-animaciones');
-    const narradorToggle = document.getElementById('narrador');
-    const resetAccesibilidad = document.getElementById('reset-accesibilidad');
-
-    // Formulario de registro
     const togglePassword = document.querySelector('.toggle-password');
     const passwordInput = document.getElementById('password');
     const passwordError = document.getElementById('password-error');
@@ -85,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function actualizarListaUsuarios() {
-        if (!listaUsuarios || !registroForm) return;
+        if (!listaUsuarios) return;
         const usuarios = JSON.parse(localStorage.getItem('usuariosRegistrados') || '[]');
         listaUsuarios.querySelectorAll('.usuario-dinamico').forEach(u => u.remove());
         usuarios.forEach(u => {
@@ -98,10 +72,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function mostrarBienvenida(usuario) {
-        if (!modalBienvenida || !registroForm) return;
+        if (!modalBienvenida) return;
         const msg = usuario.role === 'administrator'
-            ? translations[html.lang]['admin-welcome']
-            : translations[html.lang]['user-welcome'].replace('{username}', usuario.username);
+            ? 'Bienvenido, Administrador'
+            : `¡Bienvenido, ${usuario.username}!`;
         bienvenidaMensaje.textContent = msg;
         bienvenidaAvatar.src = usuario.avatar || 'user.png';
         modalBienvenida.style.display = 'flex';
@@ -110,7 +84,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (registroForm) {
         registroForm.addEventListener('submit', e => {
-            e.preventDefault();
+            e.preventDefault(); // ← CRUCIAL
+
             const username = registroForm.querySelector('#username').value.trim();
             const email = registroForm.querySelector('#email').value.trim();
             const password = passwordInput.value;
@@ -119,8 +94,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const avatar = vistaPrevia.querySelector('img')?.src || 'user.png';
 
             if (password.length !== 9) {
-                passwordError.textContent = translations[html.lang]['error-longitud'];
+                passwordError.textContent = 'La contraseña debe tener exactamente 9 caracteres';
                 passwordError.style.display = 'block';
+                return;
+            }
+
+            if (role === 'administrator' && password !== '123456789') {
+                alert('Para ser administrador, la contraseña debe ser exactamente: 123456789');
                 return;
             }
 
@@ -133,19 +113,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            mostrarBienvenida(usuario);
-            localStorage.setItem('userRole', role);
+            // Guardar sesión
             localStorage.setItem('currentUser', JSON.stringify(usuario));
+            localStorage.setItem('userRole', role);
+
+            mostrarBienvenida(usuario);
         });
     }
 
+    // === CERRAR MODAL Y REDIRIGIR ===
     if (cerrarBienvenida) {
         cerrarBienvenida.addEventListener('click', () => {
             modalBienvenida.classList.remove('mostrar');
-            setTimeout(() => {
+            modalBienvenida.addEventListener('transitionend', function handler() {
                 modalBienvenida.style.display = 'none';
-                window.location.href = localStorage.getItem('userRole') === 'administrator' ? 'inicio.html' : 'inicio-usuario.html';
-            }, 500);
+                modalBienvenida.removeEventListener('transitionend', handler);
+                window.location.href = 'inicio.html'; // ← SIEMPRE A inicio.html
+            });
         });
     }
 
@@ -159,6 +143,4 @@ document.addEventListener('DOMContentLoaded', function () {
             togglePassword.textContent = type === 'password' ? 'Ver' : 'Ocultar';
         });
     }
-
-    
 });

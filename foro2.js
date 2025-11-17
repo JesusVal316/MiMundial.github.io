@@ -852,6 +852,7 @@ document.addEventListener("DOMContentLoaded", function() {
     modoOscuroLateralBtn.addEventListener("click", toggleDarkMode);
 });
 
+
 window.addEventListener('resize', ajustarCarrusel);
 ajustarCarrusel();
 

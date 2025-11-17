@@ -1,797 +1,451 @@
-let anioSeleccionadoParaEliminar = null;
-let anioSeleccionadoParaEditarSede = null;
 
-// Inicializar eventos cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
-    inicializarEventosEliminarSede();
-    inicializarEventosEditarSede();
-    inicializarControlesSedes(); 
-});
-
-// Carrusel
-const cards = document.querySelector(".cards");
-let offset = 0;
-document.querySelector(".next").addEventListener("click", () => {
-    if (offset > -(cards.scrollWidth - cards.parentElement.offsetWidth)) {
-        offset -= 300;
-        cards.style.transform = `translateX(${offset}px)`;
-    }
-});
-document.querySelector(".prev").addEventListener("click", () => {
-    if (offset < 0) {
-        offset += 300;
-        cards.style.transform = `translateX(${offset}px)`;
-    }
-});
-
-// MODAL PARA AGREGAR MUNDIAL
-document.addEventListener('DOMContentLoaded', function() {
-    const btnAgregarMundial = document.getElementById('btn-agregar-sede');
-    const modalMundial = document.getElementById('modal-mundial');
-    const cerrarModal = document.querySelector('.cerrar-modal');
-    const btnCancelar = document.querySelector('.btn-cancelar-sedes');
-    const formMundial = document.getElementById('form-mundial');
-
-    // Abrir modal
-    if (btnAgregarMundial && modalMundial) {
-        btnAgregarMundial.addEventListener('click', function() {
-            modalMundial.style.display = 'block';
-            document.getElementById('titulo-modal').textContent = 'Agregar Nuevo Mundial';
-            formMundial.reset();
-        });
-    }
-
-    // Cerrar modal
-    function cerrarModalFunc() {
-        if (modalMundial) {
-            modalMundial.style.display = 'none';
-        }
-    }
-    if (cerrarModal) {
-        cerrarModal.addEventListener('click', cerrarModalFunc);
-    }
-
-    if (btnCancelar) {
-        btnCancelar.addEventListener('click', cerrarModalFunc);
-    }
-
-    // Cerrar modal al hacer clic fuera
-    if (modalMundial) {
-        modalMundial.addEventListener('click', function(e) {
-            if (e.target === modalMundial) {
-                cerrarModalFunc();
-            }
-        });
-    }
-
-    // Enviar formulario
-    if (formMundial) {
-        formMundial.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const anio = document.getElementById('anio-mundial').value;
-            const titulo = document.getElementById('titulo-mundial').value;
-            const imagen = document.getElementById('imagen-mundial').value;
-            const descripcion = document.getElementById('descripcion-mundial').value;
-
-            // Agregar a sedesMundiales
-            sedesMundiales[anio] = {
-                img: imagen,
-                titulo: titulo,
-                texto: descripcion,
-                // Estos campos se pueden llenar después mediante edición
-                pais: '',
-                ciudad: '',
-                estadio: '',
-                capacidad: '',
-                datosCuriosos: ''
-            };
-
-            // Aquí puedes agregar la nueva card al carrusel si lo deseas
-            agregarCardAlCarrusel(anio);
-            cerrarModalFunc();
-            alert('Mundial agregado correctamente!');
-        });
-    }
-    
-
-    // Función para agregar nueva card al carrusel
-    function agregarCardAlCarrusel(anio) {
-    const cardsContainer = document.querySelector('.cards');
-    const nuevaCard = document.createElement('div');
-    nuevaCard.className = 'card';
-    nuevaCard.innerHTML = `
-        <div class="fecha">
-            <span>${anio}</span>
-        </div>
-    `;
-
-    nuevaCard.addEventListener('click', function() {
-        cardsList.forEach(c => c.classList.remove("active"));
-        nuevaCard.classList.add("active");
-        mostrarSedes(anio);
-    });
-
-    cardsContainer.appendChild(nuevaCard);
-    cardsList = document.querySelectorAll(".card");
-}
-
-});
-
-// Información de sedes por año
-// Información de sedes por año
+// ===== DATOS MULTILINGÜES DE MUNDIALES =====
 const sedesMundiales = {
-    1930: { 
-        img: "images/uruguay1930.jpeg",
-        titulo: "Uruguay 1930",
-        texto: "El primer Mundial de la historia se celebró en Uruguay. La final se disputó en el Estadio Centenario de Montevideo, donde Uruguay venció a Argentina 4-2 para convertirse en el primer campeón mundial.",
-        pais: "Uruguay",
-        ciudad: "Montevideo",
-        estadio: "Estadio Centenario",
-        capacidad: "90,000 espectadores",
-        datosCuriosos: "Fue el único Mundial sin fase de clasificación. Los equipos fueron invitados a participar."
+    1930: {
+        es: { titulo: "Uruguay 1930", texto: "El primer Mundial de la historia se celebró en Uruguay. La final se disputó en el Estadio Centenario de Montevideo, donde Uruguay venció a Argentina 4-2.", pais: "Uruguay", ciudad: "Montevideo", estadio: "Estadio Centenario", capacidad: "90,000 espectadores", datosCuriosos: "Fue el único Mundial sin fase de clasificación. Los equipos fueron invitados." },
+        en: { titulo: "Uruguay 1930", texto: "The first World Cup in history was held in Uruguay. The final was played at the Estadio Centenario in Montevideo, where Uruguay defeated Argentina 4-2.", pais: "Uruguay", ciudad: "Montevideo", estadio: "Estadio Centenario", capacidad: "90,000 spectators", datosCuriosos: "It was the only World Cup without a qualifying round. Teams were invited." },
+        fr: { titulo: "Uruguay 1930", texto: "La première Coupe du Monde de l'histoire s'est déroulée en Uruguay. La finale a eu lieu au stade Centenario à Montevideo, où l'Uruguay a battu l'Argentine 4-2.", pais: "Uruguay", ciudad: "Montevideo", estadio: "Stade Centenario", capacidad: "90 000 spectateurs", datosCuriosos: "C'était la seule Coupe du Monde sans phase de qualification. Les équipes étaient invitées." },
+        ar: { titulo: "أوروغواي 1930", texto: "أقيمت أول كأس عالم في التاريخ في أوروغواي. لُعبت المباراة النهائية في ملعب سنتيناريو في مونتيفيديو، حيث فازت أوروغواي على الأرجنتين 4-2.", pais: "أوروغواي", ciudad: "مونتيفيديو", estadio: "ملعب سنتيناريو", capacidad: "90,000 متفرج", datosCuriosos: "كانت الوحيدة بدون تصفيات. تمت دعوة الفرق." }
     },
-    1934: { 
-        img: "images/italia1934.jpg", 
-        titulo: "Italia 1934",
-        texto: "Italia organizó y ganó este Mundial. La final se jugó en el Estadio Nacional del Partido Nacional Fascista en Roma, donde Italia derrotó a Checoslovaquia 2-1.",
-        pais: "Italia",
-        ciudad: "Roma",
-        estadio: "Estadio Nacional del PNF",
-        capacidad: "47,000 espectadores",
-        datosCuriosos: "Primer Mundial con fase de clasificación. 32 equipos participaron en las eliminatorias."
+    1934: {
+        es: { titulo: "Italia 1934", texto: "Italia organizó y ganó este Mundial. La final se jugó en el Estadio Nacional del PNF en Roma.", pais: "Italia", ciudad: "Roma", estadio: "Estadio Nacional del PNF", capacidad: "47,000 espectadores", datosCuriosos: "Primer Mundial con fase de clasificación." },
+        en: { titulo: "Italy 1934", texto: "Italy hosted and won this World Cup. The final was played at the Stadio del PNF in Rome.", pais: "Italy", ciudad: "Rome", estadio: "Stadio del PNF", capacidad: "47,000 spectators", datosCuriosos: "First World Cup with a qualifying round." },
+        fr: { titulo: "Italie 1934", texto: "L'Italie a organisé et remporté cette Coupe du Monde. La finale s'est jouée au Stadio del PNF à Rome.", pais: "Italie", ciudad: "Rome", estadio: "Stadio del PNF", capacidad: "47 000 spectateurs", datosCuriosos: "Première Coupe du Monde avec phase de qualification." },
+        ar: { titulo: "إيطاليا 1934", texto: "استضافت إيطاليا وفازت بهذه الكأس. لُعبت النهائية في ملعب الحزب الوطني الفاشي في روما.", pais: "إيطاليا", ciudad: "روما", estadio: "ملعب الحزب الوطني", capacidad: "47,000 متفرج", datosCuriosos: "أول كأس عالم بتصفيات." }
     },
-    1938: { 
-        img: "images/francia1938.jpg", 
-        titulo: "Francia 1938",
-        texto: "Francia fue la sede de este Mundial. La final se celebró en el Estadio Olímpico Yves-du-Manoir en Colombes, donde Italia retuvo su título al vencer a Hungría 4-2.",
-        pais: "Francia",
-        ciudad: "Colombes",
-        estadio: "Estadio Olímpico Yves-du-Manoir",
-        capacidad: "60,000 espectadores",
-        datosCuriosos: "Austria se clasificó pero no participó debido al Anschluss con Alemania."
+    1938: {
+        es: { titulo: "Francia 1938", texto: "Francia fue la sede. La final se celebró en Colombes, donde Italia retuvo su título.", pais: "Francia", ciudad: "Colombes", estadio: "Estadio Olímpico Yves-du-Manoir", capacidad: "60,000 espectadores", datosCuriosos: "Austria no participó por el Anschluss." },
+        en: { titulo: "France 1938", texto: "France hosted. The final was in Colombes, where Italy retained the title.", pais: "France", ciudad: "Colombes", estadio: "Stade Olympique Yves-du-Manoir", capacidad: "60,000 spectators", datosCuriosos: "Austria did not participate due to the Anschluss." },
+        fr: { titulo: "France 1938", texto: "La France a accueilli. La finale s'est déroulée à Colombes, où l'Italie a conservé son titre.", pais: "France", ciudad: "Colombes", estadio: "Stade Olympique Yves-du-Manoir", capacidad: "60 000 spectateurs", datosCuriosos: "L'Autriche n'a pas participé à cause de l'Anschluss." },
+        ar: { titulo: "فرنسا 1938", texto: "استضافت فرنسا. لُعبت النهائية في كولومب، حيث احتفظت إيطاليا باللقب.", pais: "فرنسا", ciudad: "كولومب", estadio: "ملعب أولمبيك إيف دو مانوار", capacidad: "60,000 متفرج", datosCuriosos: "النمسا لم تشارك بسبب الضم." }
     },
-    1950: { 
-        img: "images/brasil1950.jpg", 
-        titulo: "Brasil 1950",
-        texto: "Brasil organizó su primer Mundial. El famoso 'Maracanazo' ocurrió en el Estadio Maracaná de Río de Janeiro, donde Uruguay venció a Brasil 2-1 en la final.",
-        pais: "Brasil",
-        ciudad: "Río de Janeiro",
-        estadio: "Estadio Maracaná",
-        capacidad: "200,000 espectadores",
-        datosCuriosos: "Último Mundial con formato de ronda final en lugar de una final única."
+    1950: {
+        es: { titulo: "Brasil 1950", texto: "Brasil organizó su primer Mundial. El 'Maracanazo' ocurrió en Río.", pais: "Brasil", ciudad: "Río de Janeiro", estadio: "Estadio Maracaná", capacidad: "200,000 espectadores", datosCuriosos: "Último Mundial con ronda final, no final única." },
+        en: { titulo: "Brazil 1950", texto: "Brazil hosted its first World Cup. The 'Maracanazo' happened in Rio.", pais: "Brazil", ciudad: "Rio de Janeiro", estadio: "Maracanã Stadium", capacidad: "200,000 spectators", datosCuriosos: "Last World Cup with a final round, not a single final." },
+        fr: { titulo: "Brésil 1950", texto: "Le Brésil a organisé sa première Coupe. Le 'Maracanazo' a eu lieu à Rio.", pais: "Brésil", ciudad: "Rio de Janeiro", estadio: "Stade Maracanã", capacidad: "200 000 spectateurs", datosCuriosos: "Dernière Coupe avec ronde finale, pas de finale unique." },
+        ar: { titulo: "البرازيل 1950", texto: "استضافت البرازيل أول كأس. حدث 'ماراكانازو' في ريو.", pais: "البرازيل", ciudad: "ريو دي جانيرو", estadio: "ملعب ماراكانا", capacidad: "200,000 متفرج", datosCuriosos: "آخر كأس بدور نهائي، ليس نهائي واحد." }
     },
-    1954: { 
-        img: "images/suiza1954.jpg", 
-        titulo: "Suiza 1954",
-        texto: "Suiza fue la sede de este Mundial. La final se disputó en el Estadio Wankdorf de Berna, donde Alemania Occidental venció a Hungría 3-2 en un emocionante partido.",
-        pais: "Suiza",
-        ciudad: "Berna",
-        estadio: "Estadio Wankdorf",
-        capacidad: "64,000 espectadores",
-        datosCuriosos: "Primer Mundial transmitido por televisión internacionalmente."
+    1954: {
+        es: { titulo: "Suiza 1954", texto: "Suiza fue la sede. Alemania venció a Hungría en la final.", pais: "Suiza", ciudad: "Berna", estadio: "Estadio Wankdorf", capacidad: "64,000 espectadores", datosCuriosos: "Primer Mundial transmitido por TV internacional." },
+        en: { titulo: "Switzerland 1954", texto: "Switzerland hosted. West Germany beat Hungary in the final.", pais: "Switzerland", ciudad: "Bern", estadio: "Wankdorf Stadium", capacidad: "64,000 spectators", datosCuriosos: "First World Cup broadcast internationally on TV." },
+        fr: { titulo: "Suisse 1954", texto: "La Suisse a accueilli. L'Allemagne de l'Ouest a battu la Hongrie en finale.", pais: "Suisse", ciudad: "Berne", estadio: "Stade Wankdorf", capacidad: "64 000 spectateurs", datosCuriosos: "Première Coupe diffusée à la TV internationale." },
+        ar: { titulo: "سويسرا 1954", texto: "استضافت سويسرا. فازت ألمانيا الغربية على المجر في النهائي.", pais: "سويسرا", ciudad: "برن", estadio: "ملعب فانكدورف", capacidad: "64,000 متفرج", datosCuriosos: "أول بث تلفزيوني دولي." }
     },
-    1958: { 
-        img: "images/suecia1958.jpg", 
-        titulo: "Suecia 1958",
-        texto: "Suecia organizó este Mundial. La final se jugó en el Estadio Råsunda de Solna, donde Brasil ganó su primer título mundial al vencer a Suecia 5-2.",
-        pais: "Suecia",
-        ciudad: "Solna",
-        estadio: "Estadio Råsunda",
-        capacidad: "52,000 espectadores",
-        datosCuriosos: "Debut de Pelé en un Mundial con solo 17 años."
+    1958: {
+        es: { titulo: "Suecia 1958", texto: "Suecia organizó. Brasil ganó su primer título con Pelé de 17 años.", pais: "Suecia", ciudad: "Solna", estadio: "Estadio Råsunda", capacidad: "52,000 espectadores", datosCuriosos: "Debut de Pelé a los 17 años." },
+        en: { titulo: "Sweden 1958", texto: "Sweden hosted. Brazil won its first title with 17-year-old Pelé.", pais: "Sweden", ciudad: "Solna", estadio: "Råsunda Stadium", capacidad: "52,000 spectators", datosCuriosos: "Pelé's debut at age 17." },
+        fr: { titulo: "Suède 1958", texto: "La Suède a organisé. Le Brésil a remporté son premier titre avec Pelé à 17 ans.", pais: "Suède", ciudad: "Solna", estadio: "Stade Råsunda", capacidad: "52 000 spectateurs", datosCuriosos: "Début de Pelé à 17 ans." },
+        ar: { titulo: "السويد 1958", texto: "استضافت السويد. فازت البرازيل بأول لقب مع بيليه 17 عامًا.", pais: "السويد", ciudad: "سولنا", estadio: "ملعب روسوندا", capacidad: "52,000 متفرج", datosCuriosos: "ظهور بيليه أول مرة." }
     },
-    1962: { 
-        img: "images/chile1962.jpg", 
-        titulo: "Chile 1962",
-        texto: "Chile fue la sede de este Mundial. La final se celebró en el Estadio Nacional de Santiago, donde Brasil retuvo su título al vencer a Checoslovaquia 3-1.",
-        pais: "Chile",
-        ciudad: "Santiago",
-        estadio: "Estadio Nacional",
-        capacidad: "76,000 espectadores",
-        datosCuriosos: "Mundial marcado por el juego físico y numerosas faltas."
+    1962: {
+        es: { titulo: "Chile 1962", texto: "Chile fue la sede. Brasil retuvo el título.", pais: "Chile", ciudad: "Santiago", estadio: "Estadio Nacional", capacidad: "76,000 espectadores", datosCuriosos: "Mundial del juego físico." },
+        en: { titulo: "Chile 1962", texto: "Chile hosted. Brazil retained the title.", pais: "Chile", ciudad: "Santiago", estadio: "Estadio Nacional", capacidad: "76,000 spectators", datosCuriosos: "World Cup of physical play." },
+        fr: { titulo: "Chili 1962", texto: "Le Chili a accueilli. Le Brésil a conservé le titre.", pais: "Chili", ciudad: "Santiago", estadio: "Stade National", capacidad: "76 000 spectateurs", datosCuriosos: "Coupe du jeu physique." },
+        ar: { titulo: "تشيلي 1962", texto: "استضافت تشيلي. احتفظت البرازيل باللقب.", pais: "تشيلي", ciudad: "سانتياغو", estadio: "الملعب الوطني", capacidad: "76,000 متفرج", datosCuriosos: "كأس اللعب البدني." }
     },
-    1966: { 
-        img: "images/inglaterra1966.jpg", 
-        titulo: "Inglaterra 1966",
-        texto: "Inglaterra organizó y ganó este Mundial. La final se disputó en el Estadio de Wembley en Londres, donde Inglaterra venció a Alemania Occidental 4-2 en la prórroga.",
-        pais: "Inglaterra",
-        ciudad: "Londres",
-        estadio: "Estadio de Wembley",
-        capacidad: "98,000 espectadores",
-        datosCuriosos: "Famoso gol fantasma de Inglaterra en la final que aún genera controversia."
+    1966: {
+        es: { titulo: "Inglaterra 1966", texto: "Inglaterra organizó y ganó. Gol fantasma en la final.", pais: "Inglaterra", ciudad: "Londres", estadio: "Estadio de Wembley", capacidad: "98,000 espectadores", datosCuriosos: "Famoso gol fantasma." },
+        en: { titulo: "England 1966", texto: "England hosted and won. Ghost goal in the final.", pais: "England", ciudad: "London", estadio: "Wembley Stadium", capacidad: "98,000 spectators", datosCuriosos: "Famous ghost goal." },
+        fr: { titulo: "Angleterre 1966", texto: "L'Angleterre a organisé et gagné. But fantôme en finale.", pais: "Angleterre", ciudad: "Londres", estadio: "Stade de Wembley", capacidad: "98 000 spectateurs", datosCuriosos: "But fantôme célèbre." },
+        ar: { titulo: "إنجلترا 1966", texto: "استضافت وفازت إنجلترا. هدف شبح في النهائي.", pais: "إنجلترا", ciudad: "لندن", estadio: "ملعب ويمبلي", capacidad: "98,000 متفرج", datosCuriosos: "هدف الشبح الشهير." }
     },
-    1970: { 
-        img: "estadio-azteca.jpg", 
-        titulo: "México 1970",
-        texto: "México fue la primera sede de un Mundial en Norteamérica. La final se jugó en el Estadio Azteca de Ciudad de México, donde Brasil venció a Italia 4-1 para ganar su tercer título.",
-        pais: "México",
-        ciudad: "Ciudad de México",
-        estadio: "Estadio Azteca",
-        capacidad: "107,000 espectadores",
-        datosCuriosos: "Primer Mundial transmitido en color por televisión. Se introdujeron las tarjetas amarilla y roja."
+    1970: {
+        es: { titulo: "México 1970", texto: "Primer Mundial en Norteamérica. Brasil ganó su tercer título.", pais: "México", ciudad: "Ciudad de México", estadio: "Estadio Azteca", capacidad: "107,000 espectadores", datosCuriosos: "Primer Mundial en color y con tarjetas." },
+        en: { titulo: "Mexico 1970", texto: "First World Cup in North America. Brazil won its third title.", pais: "Mexico", ciudad: "Mexico City", estadio: "Azteca Stadium", capacidad: "107,000 spectators", datosCuriosos: "First in color and with cards." },
+        fr: { titulo: "Mexique 1970", texto: "Première Coupe en Amérique du Nord. Le Brésil a remporté son 3e titre.", pais: "Mexique", ciudad: "Mexico", estadio: "Stade Azteca", capacidad: "107 000 spectateurs", datosCuriosos: "Première en couleur et avec cartons." },
+        ar: { titulo: "المكسيك 1970", texto: "أول كأس في أمريكا الشمالية. فازت البرازيل بالثالث.", pais: "المكسيك", ciudad: "مدينة مكسيكو", estadio: "ملعب أزتيكا", capacidad: "107,000 متفرج", datosCuriosos: "أول بث ملون وبطاقات." }
     },
-    1974: { 
-        img: "images/alemania1974.jpg", 
-        titulo: "Alemania 1974",
-        texto: "Alemania Occidental organizó este Mundial. La final se celebró en el Estadio Olímpico de Múnich, donde Alemania Occidental venció a los Países Bajos 2-1.",
-        pais: "Alemania Occidental",
-        ciudad: "Múnich",
-        estadio: "Estadio Olímpico",
-        capacidad: "80,000 espectadores",
-        datosCuriosos: "Se introdujo el actual trofeo de la Copa Mundial."
+    1974: {
+        es: { titulo: "Alemania 1974", texto: "Alemania Occidental organizó. Se introdujo el trofeo actual.", pais: "Alemania Occidental", ciudad: "Múnich", estadio: "Estadio Olímpico", capacidad: "80,000 espectadores", datosCuriosos: "Se introdujo el trofeo actual." },
+        en: { titulo: "West Germany 1974", texto: "West Germany hosted. The current trophy was introduced.", pais: "West Germany", ciudad: "Munich", estadio: "Olympic Stadium", capacidad: "80,000 spectators", datosCuriosos: "Current trophy introduced." },
+        fr: { titulo: "Allemagne de l'Ouest 1974", texto: "L'Allemagne de l'Ouest a organisé. Le trophée actuel a été introduit.", pais: "Allemagne de l'Ouest", ciudad: "Munich", estadio: "Stade Olympique", capacidad: "80 000 spectateurs", datosCuriosos: "Trophée actuel introduit." },
+        ar: { titulo: "ألمانيا الغربية 1974", texto: "استضافت ألمانيا الغربية. تم تقديم الكأس الحالية.", pais: "ألمانيا الغربية", ciudad: "ميونيخ", estadio: "الملعب الأولمبي", capacidad: "80,000 متفرج", datosCuriosos: "تم تقديم الكأس الحالية." }
     },
-    1978: { 
-        img: "images/argentina1978.jpg", 
-        titulo: "Argentina 1978",
-        texto: "Argentina organizó y ganó este Mundial. La final se disputó en el Estadio Monumental de Buenos Aires, donde Argentina venció a los Países Bajos 3-1 en la prórroga.",
-        pais: "Argentina",
-        ciudad: "Buenos Aires",
-        estadio: "Estadio Monumental",
-        capacidad: "76,000 espectadores",
-        datosCuriosos: "Celebrado durante la última dictadura militar argentina."
+    1978: {
+        es: { titulo: "Argentina 1978", texto: "Argentina organizó y ganó durante la dictadura.", pais: "Argentina", ciudad: "Buenos Aires", estadio: "Estadio Monumental", capacidad: "76,000 espectadores", datosCuriosos: "Celebrado durante la dictadura militar." },
+        en: { titulo: "Argentina 1978", texto: "Argentina hosted and won during the dictatorship.", pais: "Argentina", ciudad: "Buenos Aires", estadio: "Monumental Stadium", capacidad: "76,000 spectators", datosCuriosos: "Held during the military dictatorship." },
+        fr: { titulo: "Argentine 1978", texto: "L'Argentine a organisé et gagné pendant la dictature.", pais: "Argentine", ciudad: "Buenos Aires", estadio: "Stade Monumental", capacidad: "76 000 spectateurs", datosCuriosos: "Tenue pendant la dictature militaire." },
+        ar: { titulo: "الأرجنتين 1978", texto: "استضافت وفازت الأرجنتين أثناء الديكتاتورية.", pais: "الأرجنتين", ciudad: "بوينس آيرس", estadio: "ملعب مونومنتال", capacidad: "76,000 متفرج", datosCuriosos: "أقيمت أثناء الديكتاتورية." }
     },
-    1982: { 
-        img: "images/españa1982.jpg", 
-        titulo: "España 1982",
-        texto: "España fue la sede de este Mundial. La final se jugó en el Estadio Santiago Bernabéu de Madrid, donde Italia venció a Alemania Occidental 3-1 para ganar su tercer título.",
-        pais: "España",
-        ciudad: "Madrid",
-        estadio: "Estadio Santiago Bernabéu",
-        capacidad: "90,000 espectadores",
-        datosCuriosos: "Primer Mundial con 24 equipos participantes."
+    1982: {
+        es: { titulo: "España 1982", texto: "España fue la sede. Italia ganó su tercer título.", pais: "España", ciudad: "Madrid", estadio: "Estadio Santiago Bernabéu", capacidad: "90,000 espectadores", datosCuriosos: "Primer Mundial con 24 equipos." },
+        en: { titulo: "Spain 1982", texto: "Spain hosted. Italy won its third title.", pais: "Spain", ciudad: "Madrid", estadio: "Santiago Bernabéu", capacidad: "90,000 spectators", datosCuriosos: "First World Cup with 24 teams." },
+        fr: { titulo: "Espagne 1982", texto: "L'Espagne a accueilli. L'Italie a remporté son 3e titre.", pais: "Espagne", ciudad: "Madrid", estadio: "Stade Santiago Bernabéu", capacidad: "90 000 spectateurs", datosCuriosos: "Première Coupe avec 24 équipes." },
+        ar: { titulo: "إسبانيا 1982", texto: "استضافت إسبانيا. فازت إيطاليا بالثالث.", pais: "إسبانيا", ciudad: "مدريد", estadio: "ملعب سانتياغو برنابيو", capacidad: "90,000 متفرج", datosCuriosos: "أول 24 فريقًا." }
     },
-    1986: { 
-        img: "estadio-azteca.jpg", 
-        titulo: "México 1986",
-        texto: "México organizó su segundo Mundial. La final se celebró en el Estadio Azteca de Ciudad de México, donde Argentina venció a Alemania Occidental 3-2.",
-        pais: "México",
-        ciudad: "Ciudad de México",
-        estadio: "Estadio Azteca",
-        capacidad: "114,000 espectadores",
-        datosCuriosos: "Recordado por los goles de Diego Maradona, especialmente 'La Mano de Dios'."
+    1986: {
+        es: { titulo: "México 1986", texto: "México organizó su segundo Mundial. Argentina ganó con Maradona.", pais: "México", ciudad: "Ciudad de México", estadio: "Estadio Azteca", capacidad: "114,000 espectadores", datosCuriosos: "Mano de Dios y Gol del Siglo." },
+        en: { titulo: "Mexico 1986", texto: "Mexico hosted its second World Cup. Argentina won with Maradona.", pais: "Mexico", ciudad: "Mexico City", estadio: "Azteca Stadium", capacidad: "114,000 spectators", datosCuriosos: "Hand of God and Goal of the Century." },
+        fr: { titulo: "Mexique 1986", texto: "Le Mexique a organisé sa 2e Coupe. L'Argentine a gagné avec Maradona.", pais: "Mexique", ciudad: "Mexico", estadio: "Stade Azteca", capacidad: "114 000 spectateurs", datosCuriosos: "Main de Dieu et But du Siècle." },
+        ar: { titulo: "المكسيك 1986", texto: "استضافت المكسيك الثانية. فازت الأرجنتين مع مارادونا.", pais: "المكسيك", ciudad: "مدينة مكسيكو", estadio: "ملعب أزتيكا", capacidad: "114,000 متفرج", datosCuriosos: "يد الله وهدف القرن." }
     },
-    1990: { 
-        img: "images/italia1990.jpg", 
-        titulo: "Italia 1990",
-        texto: "Italia organizó su segundo Mundial. La final se disputó en el Estadio Olímpico de Roma, donde Alemania Occidental venció a Argentina 1-0.",
-        pais: "Italia",
-        ciudad: "Roma",
-        estadio: "Estadio Olímpico",
-        capacidad: "80,000 espectadores",
-        datosCuriosos: "Mundial con el promedio de goles más bajo de la historia (2.21 por partido)."
+    1990: {
+        es: { titulo: "Italia 1990", texto: "Italia organizó su segundo Mundial. Promedio de goles más bajo.", pais: "Italia", ciudad: "Roma", estadio: "Estadio Olímpico", capacidad: "80,000 espectadores", datosCuriosos: "Menos goles en la historia (2.21 por partido)." },
+        en: { titulo: "Italy 1990", texto: "Italy hosted its second World Cup. Lowest goal average.", pais: "Italy", ciudad: "Rome", estadio: "Olympic Stadium", capacidad: "80,000 spectators", datosCuriosos: "Lowest goal average in history (2.21 per match)." },
+        fr: { titulo: "Italie 1990", texto: "L'Italie a organisé sa 2e Coupe. Moyenne de buts la plus basse.", pais: "Italie", ciudad: "Rome", estadio: "Stade Olympique", capacidad: "80 000 spectateurs", datosCuriosos: "Moyenne de buts la plus basse (2.21 par match)." },
+        ar: { titulo: "إيطاليا 1990", texto: "استضافت إيطاليا الثانية. أقل أهداف (2.21 لكل مباراة).", pais: "إيطاليا", ciudad: "روما", estadio: "الملعب الأولمبي", capacidad: "80,000 متفرج", datosCuriosos: "أقل معدل أهداف." }
     },
-    1994: { 
-        img: "images/usa1994.jpeg", 
-        titulo: "Estados Unidos 1994",
-        texto: "Estados Unidos fue la sede de este Mundial. La final se jugó en el Rose Bowl de Pasadena, California, donde Brasil venció a Italia en la tanda de penaltis después de un empate 0-0.",
-        pais: "Estados Unidos",
-        ciudad: "Pasadena, California",
-        estadio: "Rose Bowl",
-        capacidad: "94,000 espectadores",
-        datosCuriosos: "Mayor asistencia total en la historia de los Mundiales con 3.6 millones de espectadores."
+    1994: {
+        es: { titulo: "Estados Unidos 1994", texto: "EE.UU. fue la sede. Mayor asistencia total.", pais: "Estados Unidos", ciudad: "Pasadena", estadio: "Rose Bowl", capacidad: "94,000 espectadores", datosCuriosos: "3.6 millones de espectadores." },
+        en: { titulo: "USA 1994", texto: "USA hosted. Highest total attendance.", pais: "United States", ciudad: "Pasadena", estadio: "Rose Bowl", capacidad: "94,000 spectators", datosCuriosos: "3.6 million total spectators." },
+        fr: { titulo: "États-Unis 1994", texto: "Les États-Unis ont accueilli. Plus grande affluence totale.", pais: "États-Unis", ciudad: "Pasadena", estadio: "Rose Bowl", capacidad: "94 000 spectateurs", datosCuriosos: "3.6 millions de spectateurs." },
+        ar: { titulo: "الولايات المتحدة 1994", texto: "استضافت أمريكا. أكبر حضور (3.6 مليون).", pais: "الولايات المتحدة", ciudad: "باسادينا", estadio: "روز بول", capacidad: "94,000 متفرج", datosCuriosos: "3.6 مليون متفرج." }
     },
-    1998: { 
-        img: "images/francia1998.jpg", 
-        titulo: "Francia 1998",
-        texto: "Francia organizó y ganó este Mundial. La final se celebró en el Stade de France de Saint-Denis, donde Francia venció a Brasil 3-0.",
-        pais: "Francia",
-        ciudad: "Saint-Denis",
-        estadio: "Stade de France",
-        capacidad: "80,000 espectadores",
-        datosCuriosos: "Primer Mundial con 32 equipos participantes."
+    1998: {
+        es: { titulo: "Francia 1998", texto: "Francia organizó y ganó. Primer Mundial con 32 equipos.", pais: "Francia", ciudad: "Saint-Denis", estadio: "Stade de France", capacidad: "80,000 espectadores", datosCuriosos: "Primer Mundial con 32 equipos." },
+        en: { titulo: "France 1998", texto: "France hosted and won. First World Cup with 32 teams.", pais: "France", ciudad: "Saint-Denis", estadio: "Stade de France", capacidad: "80,000 spectators", datosCuriosos: "First with 32 teams." },
+        fr: { titulo: "France 1998", texto: "La France a organisé et gagné. Première Coupe avec 32 équipes.", pais: "France", ciudad: "Saint-Denis", estadio: "Stade de France", capacidad: "80 000 spectateurs", datosCuriosos: "Première avec 32 équipes." },
+        ar: { titulo: "فرنسا 1998", texto: "استضافت وفازت فرنسا. أول 32 فريقًا.", pais: "فرنسا", ciudad: "سان دوني", estadio: "ستاد دو فرانس", capacidad: "80,000 متفرج", datosCuriosos: "أول كأس بـ32 فريقًا." }
     },
-    2002: { 
-        img: "images/coreajapon2002.jpg", 
-        titulo: "Corea/Japón 2002",
-        texto: "Primer Mundial coorganizado por dos países: Corea del Sur y Japón. La final se disputó en el Estadio Internacional de Yokohama, Japón, donde Brasil venció a Alemania 2-0.",
-        pais: "Corea del Sur / Japón",
-        ciudad: "Yokohama",
-        estadio: "Estadio Internacional",
-        capacidad: "72,000 espectadores",
-        datosCuriosos: "Primer y único Mundial organizado por dos países. Corea del Sur llegó a semifinales."
+    2002: {
+        es: { titulo: "Corea/Japón 2002", texto: "Primer Mundial coorganizado. Corea del Sur llegó a semifinales.", pais: "Corea del Sur / Japón", ciudad: "Yokohama", estadio: "Estadio Internacional", capacidad: "72,000 espectadores", datosCuriosos: "Primer y único coorganizado." },
+        en: { titulo: "South Korea/Japan 2002", texto: "First co-hosted World Cup. South Korea reached semifinals.", pais: "South Korea / Japan", ciudad: "Yokohama", estadio: "International Stadium", capacidad: "72,000 spectators", datosCuriosos: "First and only co-hosted." },
+        fr: { titulo: "Corée du Sud/Japon 2002", texto: "Première Coupe co-organisée. La Corée du Sud en demi-finale.", pais: "Corée du Sud / Japon", ciudad: "Yokohama", estadio: "Stade International", capacidad: "72 000 spectateurs", datosCuriosos: "Première et unique co-organisée." },
+        ar: { titulo: "كوريا الجنوبية/اليابان 2002", texto: "أول كأس مشتركة. وصلت كوريا لنصف النهائي.", pais: "كوريا الجنوبية / اليابان", ciudad: "يوكوهاما", estadio: "الملعب الدولي", capacidad: "72,000 متفرج", datosCuriosos: "أول ووحيد مشترك." }
     },
-    2006: { 
-        img: "images/alemania2006.jpg", 
-        titulo: "Alemania 2006",
-        texto: "Alemania organizó este Mundial. La final se jugó en el Estadio Olímpico de Berlín, donde Italia venció a Francia en la tanda de penaltis después de un empate 1-1.",
-        pais: "Alemania",
-        ciudad: "Berlín",
-        estadio: "Estadio Olímpico",
-        capacidad: "74,000 espectadores",
-        datosCuriosos: "Famoso por el cabezazo de Zidane a Materazzi en la final."
+    2006: {
+        es: { titulo: "Alemania 2006", texto: "Alemania organizó. Cabezazo de Zidane en la final.", pais: "Alemania", ciudad: "Berlín", estadio: "Estadio Olímpico", capacidad: "74,000 espectadores", datosCuriosos: "Cabezazo de Zidane a Materazzi." },
+        en: { titulo: "Germany 2006", texto: "Germany hosted. Zidane's headbutt in the final.", pais: "Germany", ciudad: "Berlin", estadio: "Olympic Stadium", capacidad: "74,000 spectators", datosCuriosos: "Zidane headbutted Materazzi." },
+        fr: { titulo: "Allemagne 2006", texto: "L'Allemagne a organisé. Coup de tête de Zidane en finale.", pais: "Allemagne", ciudad: "Berlin", estadio: "Stade Olympique", capacidad: "74 000 spectateurs", datosCuriosos: "Coup de tête de Zidane." },
+        ar: { titulo: "ألمانيا 2006", texto: "استضافت ألمانيا. رأسية زيدان في النهائي.", pais: "ألمانيا", ciudad: "برلين", estadio: "الملعب الأولمبي", capacidad: "74,000 متفرج", datosCuriosos: "رأسية زيدان لماتيرازي." }
     },
-    2010: { 
-        img: "images/sudafrica2010.jpg", 
-        titulo: "Sudáfrica 2010",
-        texto: "Primer Mundial celebrado en África. La final se celebró en el Soccer City de Johannesburgo, donde España venció a los Países Bajos 1-0 en la prórroga.",
-        pais: "Sudáfrica",
-        ciudad: "Johannesburgo",
-        estadio: "Soccer City",
-        capacidad: "94,700 espectadores",
-        datosCuriosos: "Primer Mundial africano. España ganó su primer título mundial."
+    2010: {
+        es: { titulo: "Sudáfrica 2010", texto: "Primer Mundial en África. España ganó su primero.", pais: "Sudáfrica", ciudad: "Johannesburgo", estadio: "Soccer City", capacidad: "94,700 espectadores", datosCuriosos: "Primer Mundial africano." },
+        en: { titulo: "South Africa 2010", texto: "First World Cup in Africa. Spain won its first.", pais: "South Africa", ciudad: "Johannesburg", estadio: "Soccer City", capacidad: "94,700 spectators", datosCuriosos: "First African World Cup." },
+        fr: { titulo: "Afrique du Sud 2010", texto: "Première Coupe en Afrique. L'Espagne a gagné sa première.", pais: "Afrique du Sud", ciudad: "Johannesburg", estadio: "Soccer City", capacidad: "94 700 spectateurs", datosCuriosos: "Première Coupe africaine." },
+        ar: { titulo: "جنوب أفريقيا 2010", texto: "أول كأس في أفريقيا. فازت إسبانيا بأول لقب.", pais: "جنوب أفريقيا", ciudad: "جوهانسبرغ", estadio: "سوكر سيتي", capacidad: "94,700 متفرج", datosCuriosos: "أول كأس أفريقية." }
     },
-    2014: { 
-        img: "images/brasil2014.jpeg", 
-        titulo: "Brasil 2014",
-        texto: "Brasil organizó su segundo Mundial. La final se disputó en el Estadio Maracaná de Río de Janeiro, donde Alemania venció a Argentina 1-0 en la prórroga.",
-        pais: "Brasil",
-        ciudad: "Río de Janeiro",
-        estadio: "Estadio Maracaná",
-        capacidad: "78,838 espectadores",
-        datosCuriosos: "Alemania venció 7-1 a Brasil en semifinales, la mayor goleada en una semifinal mundialista."
+    2014: {
+        es: { titulo: "Brasil 2014", texto: "Brasil organizó su segundo. Alemania ganó 7-1 a Brasil.", pais: "Brasil", ciudad: "Río de Janeiro", estadio: "Estadio Maracaná", capacidad: "78,838 espectadores", datosCuriosos: "7-1 en semifinales." },
+        en: { titulo: "Brazil 2014", texto: "Brazil hosted its second. Germany won 7-1 vs Brazil.", pais: "Brazil", ciudad: "Rio de Janeiro", estadio: "Maracanã", capacidad: "78,838 spectators", datosCuriosos: "7-1 in semifinals." },
+        fr: { titulo: "Brésil 2014", texto: "Le Brésil a organisé sa 2e. L'Allemagne a gagné 7-1 contre le Brésil.", pais: "Brésil", ciudad: "Rio de Janeiro", estadio: "Maracanã", capacidad: "78 838 spectateurs", datosCuriosos: "7-1 en demi-finale." },
+        ar: { titulo: "البرازيل 2014", texto: "استضافت البرازيل الثانية. فازت ألمانيا 7-1 على البرازيل.", pais: "البرازيل", ciudad: "ريو", estadio: "ماراكانا", capacidad: "78,838 متفرج", datosCuriosos: "7-1 في نصف النهائي." }
     },
-    2018: { 
-        img: "images/rusia2018.jpg", 
-        titulo: "Rusia 2018",
-        texto: "Primer Mundial celebrado en Europa del Este. La final se jugó en el Estadio Luzhnikí de Moscú, donde Francia venció a Croacia 4-2.",
-        pais: "Rusia",
-        ciudad: "Moscú",
-        estadio: "Estadio Luzhnikí",
-        capacidad: "81,000 espectadores",
-        datosCuriosos: "Primer uso del VAR (Árbitro Asistente de Video) en un Mundial."
+    2018: {
+        es: { titulo: "Rusia 2018", texto: "Primer Mundial en Europa del Este. Primer uso del VAR.", pais: "Rusia", ciudad: "Moscú", estadio: "Estadio Luzhnikí", capacidad: "81,000 espectadores", datosCuriosos: "Primer uso del VAR." },
+        en: { titulo: "Russia 2018", texto: "First World Cup in Eastern Europe. First use of VAR.", pais: "Russia", ciudad: "Moscow", estadio: "Luzhniki Stadium", capacidad: "81,000 spectators", datosCuriosos: "First use of VAR." },
+        fr: { titulo: "Russie 2018", texto: "Premièreoupe en Europe de l'Est. Premier usage du VAR.", pais: "Russie", ciudad: "موسكو", estadio: "Stade Loujniki", capacidad: "81 000 spectateurs", datosCuriosos: "Premier usage du VAR." },
+        ar: { titulo: "روسيا 2018", texto: "أول كأس في شرق أوروبا. أول استخدام لـ VAR.", pais: "روسيا", ciudad: "موسكو", estadio: "ملعب لوجنيكي", capacidad: "81,000 متفرج", datosCuriosos: "أول استخدام لـ VAR." }
     },
-    2022: { 
-        img: "images/qatar2022.jpg", 
-        titulo: "Qatar 2022",
-        texto: "Primer Mundial celebrado en Oriente Medio. La final se celebró en el Estadio Lusail, donde Argentina venció a Francia en la tanda de penaltis después de un empate 3-3.",
-        pais: "Qatar",
-        ciudad: "Lusail",
-        estadio: "Estadio Lusail",
-        capacidad: "88,966 espectadores",
-        datosCuriosos: "Primer Mundial celebrado en noviembre-diciembre para evitar el calor extremo del verano qatarí."
+    2022: {
+        es: { titulo: "Qatar 2022", texto: "Primer Mundial en Oriente Medio. En noviembre-diciembre.", pais: "Qatar", ciudad: "Lusail", estadio: "Estadio Lusail", capacidad: "88,966 espectadores", datosCuriosos: "Celebrado en invierno por el calor." },
+        en: { titulo: "Qatar 2022", texto: "First World Cup in the Middle East. Held in Nov-Dec.", pais: "Qatar", ciudad: "Lusail", estadio: "Lusail Stadium", capacidad: "88,966 spectators", datosCuriosos: "Held in winter due to heat." },
+        fr: { titulo: "Qatar 2022", texto: "Première Coupe au Moyen-Orient. En novembre-décembre.", pais: "Qatar", ciudad: "Lusail", estadio: "Stade Lusail", capacidad: "88 966 spectateurs", datosCuriosos: "Tenue en hiver à cause de la chaleur." },
+        ar: { titulo: "قطر 2022", texto: "أول كأس في الشرق الأوسط. في نوفمبر-ديسمبر.", pais: "قطر", ciudad: "لوسيل", estadio: "ملعب لوسيل", capacidad: "88,966 متفرج", datosCuriosos: "أقيمت في الشتاء بسبب الحر." }
     },
-    2026: { 
-        img: "estadio-azteca.jpg", 
-        titulo: "México/EE.UU/Canadá 2026",
-        texto: "Primer Mundial organizado por tres países: México, Estados Unidos y Canadá. Será el primer Mundial con 48 equipos participantes.",
-        pais: "México / Estados Unidos / Canadá",
-        ciudad: "Múltiples sedes",
-        estadio: "Estadio Azteca (final)",
-        capacidad: "87,000 espectadores (Azteca)",
-        datosCuriosos: "Primer Mundial con 48 equipos. México será el primer país en organizar tres Mundiales."
+    2026: {
+        es: { titulo: "México/EE.UU/Canadá 2026", texto: "Primer Mundial con 48 equipos. Tres países.", pais: "México / EE.UU. / Canadá", ciudad: "Múltiples", estadio: "Estadio Azteca (final)", capacidad: "87,000 (Azteca)", datosCuriosos: "México organiza por tercera vez." },
+        en: { titulo: "Mexico/USA/Canada 2026", texto: "First World Cup with 48 teams. Three countries.", pais: "Mexico / USA / Canada", ciudad: "Multiple", estadio: "Azteca Stadium (final)", capacidad: "87,000 (Azteca)", datosCuriosos: "Mexico hosts for the third time." },
+        fr: { titulo: "Mexique/É.-U./Canada 2026", texto: "Première Coupe avec 48 équipes. Trois pays.", pais: "Mexique / É.-U. / Canada", ciudad: "Multiples", estadio: "Stade Azteca (finale)", capacidad: "87 000 (Azteca)", datosCuriosos: "Le Mexique accueille pour la 3e fois." },
+        ar: { titulo: "المكسيك/أمريكا/كندا 2026", texto: "أول كأس بـ48 فريقًا. ثلاث دول.", pais: "المكسيك / أمريكا / كندا", ciudad: "متعددة", estadio: "ملعب أزتيكا (النهائي)", capacidad: "87,000 (أزتيكا)", datosCuriosos: "المكسيك تستضيف للمرة الثالثة." }
     }
 };
 
-let cardsList = document.querySelectorAll(".card");
-const imgSedes = document.getElementById("imagen-sedes");
-const tituloSedes = document.getElementById("titulo-sedes");
-const textoSedes = document.getElementById("texto-sedes");
+// ===== TRADUCCIONES DE UI =====
+const traduccionesUI = {
+    es: {
+        'agregar-sede': 'Agregar Sede',
+        'editar-sede': 'Editar Sede',
+        'eliminar-sede': 'Eliminar sede',
+        'anio-mundial': 'Año del Mundial:',
+        'titulo-mundial': 'Título:',
+        'imagen-mundial': 'URL de la imagen:',
+        'descripcion-mundial': 'Descripción:',
+        'guardar': 'Guardar',
+        'cancelar': 'Cancelar',
+        'editar-titulo': 'Editar Sede',
+        'confirmar-eliminar': '¿Estás seguro de eliminar "{titulo}"?',
+        'sede-eliminada': 'Sede eliminada correctamente.',
+        'sede-agregada': 'Mundial agregado correctamente!',
+        'sede-editada': 'Sede actualizada correctamente!',
+        'no-sedes': 'No hay sedes disponibles.',
+        'selecciona-anio': '-- Selecciona un año --'
+    },
+    en: {
+        'agregar-sede': 'Add Venue',
+        'editar-sede': 'Edit Venue',
+        'eliminar-sede': 'Delete Venue',
+        'anio-mundial': 'World Cup Year:',
+        'titulo-mundial': 'Title:',
+        'imagen-mundial': 'Image URL:',
+        'descripcion-mundial': 'Description:',
+        'guardar': 'Save',
+        'cancelar': 'Cancel',
+        'editar-titulo': 'Edit Venue',
+        'confirmar-eliminar': 'Are you sure you want to delete "{titulo}"?',
+        'sede-eliminada': 'Venue deleted successfully.',
+        'sede-agregada': 'World Cup added successfully!',
+        'sede-editada': 'Venue updated successfully!',
+        'no-sedes': 'No venues available.',
+        'selecciona-anio': '-- Select a year --'
+    },
+    fr: {
+        'agregar-sede': 'Ajouter un site',
+        'editar-sede': 'Modifier le site',
+        'eliminar-sede': 'Supprimer le site',
+        'anio-mundial': 'Année de la Coupe du Monde:',
+        'titulo-mundial': 'Titre:',
+        'imagen-mundial': 'URL de l\'image:',
+        'descripcion-mundial': 'Description:',
+        'guardar': 'Sauvegarder',
+        'cancelar': 'Annuler',
+        'editar-titulo': 'Modifier le site',
+        'confirmar-eliminar': 'Êtes-vous sûr de vouloir supprimer "{titulo}" ?',
+        'sede-eliminada': 'Site supprimé avec succès.',
+        'sede-agregada': 'Coupe du Monde ajoutée avec succès !',
+        'sede-editada': 'Site mis à jour avec succès !',
+        'no-sedes': 'Aucun site disponible.',
+        'selecciona-anio': '-- Sélectionnez une année --'
+    },
+    ar: {
+        'agregar-sede': 'إضافة موقع',
+        'editar-sede': 'تعديل الموقع',
+        'eliminar-sede': 'حذف الموقع',
+        'anio-mundial': 'سنة كأس العالم:',
+        'titulo-mundial': 'العنوان:',
+        'imagen-mundial': 'رابط الصورة:',
+        'descripcion-mundial': 'الوصف:',
+        'guardar': 'حفظ',
+        'cancelar': 'إلغاء',
+        'editar-titulo': 'تعديل الموقع',
+        'confirmar-eliminar': 'هل أنت متأكد من حذف "{titulo}"؟',
+        'sede-eliminada': 'تم حذف الموقع بنجاح.',
+        'sede-agregada': 'تمت إضافة كأس العالم بنجاح!',
+        'sede-editada': 'تم تحديث الموقع بنجاح!',
+        'no-sedes': 'لا توجد مواقع متاحة.',
+        'selecciona-anio': '-- اختر سنة --'
+    }
+};
 
-// Mostrar 1930 por defecto
+let modoEdicion = false;
+let añoEditando = null;
+
+// ===== OBTENER IDIOMA =====
+function getLang() {
+    return document.documentElement.lang || 'es';
+}
+
+// ===== MOSTRAR INFO DE SEDE =====
 function mostrarSedes(year) {
-    if (sedesMundiales[year]) {
-        const sede = sedesMundiales[year];
-        
-        // Elementos básicos (ya existentes)
-        imgSedes.src = sede.img;
-        tituloSedes.textContent = sede.titulo;
-        textoSedes.textContent = sede.texto;
-        
-        // NUEVO: Información adicional
-        const infoAdicional = document.getElementById('info-adicional-sedes');
-        const paisElement = document.getElementById('pais-sede');
-        const ciudadElement = document.getElementById('ciudad-sede');
-        const estadioElement = document.getElementById('estadio-sede');
-        const capacidadElement = document.getElementById('capacidad-sede');
-        const datosCuriososContainer = document.getElementById('datos-curiosos-container');
-        const datosCuriososTexto = document.getElementById('datos-curiosos-texto');
-        
-        // Mostrar información adicional si existe
-        if (sede.pais || sede.ciudad || sede.estadio || sede.capacidad) {
-            paisElement.textContent = sede.pais || 'No disponible';
-            ciudadElement.textContent = sede.ciudad || 'No disponible';
-            estadioElement.textContent = sede.estadio || 'No disponible';
-            capacidadElement.textContent = sede.capacidad || 'No disponible';
-            infoAdicional.style.display = 'block';
-        } else {
-            infoAdicional.style.display = 'none';
-        }
-        
-        // Mostrar datos curiosos si existen
-        if (sede.datosCuriosos) {
-            datosCuriososTexto.textContent = sede.datosCuriosos;
-            datosCuriososContainer.style.display = 'block';
-        } else {
-            datosCuriososContainer.style.display = 'none';
-        }
+    const lang = getLang();
+    const sede = sedesMundiales[year]?.[lang] || sedesMundiales[year]?.es;
+    if (!sede) return;
+
+    const img = document.getElementById("imagen-sedes");
+    img.src = `images/${year}.jpeg`;
+    img.onerror = () => img.src = `images/${year}.jpg`;
+
+    document.getElementById("titulo-sedes").textContent = sede.titulo;
+    document.getElementById("texto-sedes").textContent = sede.texto;
+
+    const info = document.getElementById('info-adicional-sedes');
+    const dc = document.getElementById('datos-curiosos-container');
+
+    if (sede.pais) {
+        document.getElementById('pais-sede').textContent = sede.pais;
+        document.getElementById('ciudad-sede').textContent = sede.ciudad;
+        document.getElementById('estadio-sede').textContent = sede.estadio;
+        document.getElementById('capacidad-sede').textContent = sede.capacidad;
+        info.style.display = 'block';
+    } else {
+        info.style.display = 'none';
     }
-}
 
-function inicializarControlesSedes() {
-    // Los botones ya están en tu HTML, solo asegurar que tengan los eventos correctos
-    console.log('Controles de sedes inicializados');
-}
+    if (sede.datosCuriosos) {
+        document.getElementById('datos-curiosos-texto').textContent = sede.datosCuriosos;
+        dc.style.display = 'block';
+    } else {
+        dc.style.display = 'none';
+    }
 
-function activarCard(card) {
-    cardsList.forEach(c => c.classList.remove("active"));
-    card.classList.add("active");
-}
-
-cardsList.forEach(card => {
-    card.addEventListener("click", () => {
-        cardsList.forEach(c => c.classList.remove("active"));
-        card.classList.add("active");
-
-        const year = card.querySelector(".fecha span").textContent;
-        mostrarSedes(year); 
+    // Activar card correspondiente
+    document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('active');
+        if (card.querySelector('.fecha span').textContent === year) {
+            card.classList.add('active');
+        }
     });
-});
+}
 
-function inicializarEventosEditarSede() {
-    const btnEditarSede = document.getElementById('btn-editar-sede');
-    const modalEditarSede = document.getElementById('modal-editar-sede');
-    const cerrarModalEditarSede = document.querySelector('.cerrar-modal-editar-sede');
-    const cerrarModal = document.querySelector('.cerrar-modal');
-    const btnCancelarEditarSede = document.querySelector('#modal-editar-sede .btn-cancelar-sedes');
-    const formEditarSede = document.getElementById('form-editar-sede');
-
-    // Asegurarnos de que el modal esté oculto al cargar la página
-    if (modalEditarSede) {
-        modalEditarSede.style.display = 'none';
-    }
-
-    if (btnEditarSede && modalEditarSede) {
-        btnEditarSede.addEventListener('click', function() {
-            const añosDisponibles = obtenerAñosDisponiblesSedes();
-            
-            if (añosDisponibles.length > 0) {
-                // Mostrar selector de años para editar
-                const añoSeleccionado = prompt('Ingresa el año de la sede que quieres editar:\n' + añosDisponibles.join(', '));
-                
-                if (añoSeleccionado && sedesMundiales[añoSeleccionado]) {
-                    anioSeleccionadoParaEditarSede = añoSeleccionado;
-                    cargarDatosSedeEnFormularioEditar(añoSeleccionado);
-                    modalEditarSede.style.display = 'block'; // Solo se muestra aquí
-                } else if (añoSeleccionado) {
-                    alert('El año ingresado no existe en la base de datos.');
-                }
-            } else {
-                alert('No hay sedes disponibles para editar.');
-            }
+// ===== ACTIVAR CARD AL HACER CLIC =====
+function activarCardAlClick() {
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            const year = card.querySelector('.fecha span').textContent;
+            mostrarSedes(year);
         });
-    }
+    });
+}
 
-    function cerrarModalEditarSedeFunc() {
-        if (modalEditarSede) {
-            modalEditarSede.style.display = 'none';
-            anioSeleccionadoParaEditarSede = null;
+// ===== NAVEGACIÓN CON FLECHAS =====
+function navegarCarrusel(dir) {
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const activo = cards.findIndex(c => c.classList.contains('active'));
+    const total = cards.length;
+    const nuevo = (activo + dir + total) % total;
+    cards.forEach(c => c.classList.remove('active'));
+    cards[nuevo].classList.add('active');
+    mostrarSedes(cards[nuevo].querySelector('.fecha span').textContent);
+}
+
+// ===== ABRIR MODAL (AGREGAR / EDITAR) =====
+function abrirModal(edicion = false, año = null) {
+    modoEdicion = edicion;
+    añoEditando = año;
+    const lang = getLang();
+    const ui = traduccionesUI[lang];
+
+    document.getElementById('titulo-modal').textContent = edicion ? ui['editar-sede'] : ui['agregar-sede'];
+    document.getElementById('modal-mundial').style.display = 'flex'; // ID correcto
+
+    // Limpiar formulario
+    const form = document.getElementById('form-mundial');
+    form.reset();
+    document.getElementById('anio-mundial').value = '';
+
+    if (edicion && año) {
+        const sede = sedesMundiales[año]?.[lang] || sedesMundiales[año]?.es;
+        if (sede) {
+            document.getElementById('anio-mundial').value = año;
+            document.getElementById('titulo-mundial').value = sede.titulo;
+            document.getElementById('imagen-mundial').value = `images/${año}.jpg`;
+            document.getElementById('descripcion-mundial').value = sede.texto;
         }
     }
+}
 
-    if (cerrarModalEditarSede) {
-        cerrarModalEditarSede.addEventListener('click', cerrarModalEditarSedeFunc);
+// ===== GUARDAR SEDE =====
+function guardarSede() {
+    const lang = getLang();
+    const ui = traduccionesUI[lang];
+    const año = document.getElementById('anio-mundial').value.trim();
+    const titulo = document.getElementById('titulo-mundial').value.trim();
+    const imagen = document.getElementById('imagen-mundial').value.trim() || `images/${año}.jpg`;
+    const descripcion = document.getElementById('descripcion-mundial').value.trim();
+
+    if (!año || !titulo || !descripcion) {
+        alert('Completa todos los campos');
+        return;
     }
 
-    if (btnCancelarEditarSede) {
-        btnCancelarEditarSede.addEventListener('click', cerrarModalEditarSedeFunc);
+    if (!sedesMundiales[año]) {
+        sedesMundiales[año] = {};
     }
 
-    if (modalEditarSede) {
-        modalEditarSede.addEventListener('click', function(e) {
-            if (e.target === modalEditarSede) {
-                cerrarModalEditarSedeFunc();
-            }
-        });
-    }
-
-    if (formEditarSede) {
-        formEditarSede.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (!anioSeleccionadoParaEditarSede) return;
-            
-            const titulo = document.getElementById('titulo-sede-editar').value;
-            const imagen = document.getElementById('imagen-sede-editar').value;
-            const descripcion = document.getElementById('descripcion-sede-editar').value;
-            const pais = document.getElementById('pais-sede-editar').value;
-            const ciudad = document.getElementById('ciudad-sede-editar').value;
-            const estadio = document.getElementById('estadio-sede-editar').value;
-            const capacidad = document.getElementById('capacidad-sede-editar').value;
-            const datosCuriosos = document.getElementById('datos-curiosos-sede').value;
-
-            // Actualizar la sede
-            sedesMundiales[anioSeleccionadoParaEditarSede] = {
-                ...sedesMundiales[anioSeleccionadoParaEditarSede],
-                img: imagen,
-                titulo: titulo,
-                texto: descripcion,
-                pais: pais,
-                ciudad: ciudad,
-                estadio: estadio,
-                capacidad: capacidad,
-                datosCuriosos: datosCuriosos
+    // Guardar en todos los idiomas
+    ['es', 'en', 'fr', 'ar'].forEach(idioma => {
+        if (!sedesMundiales[año][idioma]) {
+            sedesMundiales[año][idioma] = {
+                titulo: '', texto: '', pais: '', ciudad: '', estadio: '', capacidad: '', datosCuriosos: ''
             };
+        }
+        sedesMundiales[año][idioma].titulo = titulo;
+        sedesMundiales[año][idioma].texto = descripcion;
+    });
 
-            // Actualizar la vista actual si es necesario
-            const cardActiva = document.querySelector('.card.active');
-            if (cardActiva) {
-                const añoActivo = cardActiva.querySelector('.fecha span').textContent;
-                if (añoActivo === anioSeleccionadoParaEditarSede) {
-                    mostrarSedes(anioSeleccionadoParaEditarSede);
-                }
-            }
+    localStorage.setItem('sedesPersonalizadas', JSON.stringify(sedesMundiales));
+    alert(modoEdicion ? ui['sede-editada'] : ui['sede-agregada']);
+    cerrarModal();
+    location.reload(); // Recarga para reflejar cambios
+}
 
-            cerrarModalEditarSedeFunc();
-            alert('Sede actualizada correctamente!');
-        });
+// ===== ELIMINAR SEDE =====
+function eliminarSede() {
+    const activeCard = document.querySelector('.card.active');
+    if (!activeCard) return;
+
+    const year = activeCard.querySelector('.fecha span').textContent;
+    const lang = getLang();
+    const titulo = sedesMundiales[year]?.[lang]?.titulo || year;
+
+    if (confirm(traduccionesUI[lang]['confirmar-eliminar'].replace('{titulo}', titulo))) {
+        delete sedesMundiales[year];
+        localStorage.setItem('sedesPersonalizadas', JSON.stringify(sedesMundiales));
+        alert(traduccionesUI[lang]['sede-eliminada']);
+        location.reload();
     }
 }
 
-function cargarDatosSedeEnFormularioEditar(año) {
-    const sede = sedesMundiales[año];
-    if (!sede) return;
-
-    document.getElementById('anio-sede-editar').value = año;
-    document.getElementById('titulo-sede-editar').value = sede.titulo || '';
-    document.getElementById('imagen-sede-editar').value = sede.img || '';
-    document.getElementById('descripcion-sede-editar').value = sede.texto || '';
-    document.getElementById('pais-sede-editar').value = sede.pais || '';
-    document.getElementById('ciudad-sede-editar').value = sede.ciudad || '';
-    document.getElementById('estadio-sede-editar').value = sede.estadio || '';
-    document.getElementById('capacidad-sede-editar').value = sede.capacidad || '';
-    document.getElementById('datos-curiosos-sede').value = sede.datosCuriosos || '';
+// ===== CERRAR MODAL =====
+function cerrarModal() {
+    document.getElementById('modal-mundial').style.display = 'none';
 }
 
-function obtenerAñosDisponiblesSedes() {
-    if (typeof sedesMundiales !== 'undefined' && sedesMundiales !== null) {
-        const años = Object.keys(sedesMundiales).map(año => parseInt(año));
-        return años.sort((a, b) => b - a);
+// ===== CAMBIAR IDIOMA =====
+function cambiarIdioma(idioma) {
+    document.documentElement.lang = idioma;
+    document.documentElement.dir = idioma === 'ar' ? 'rtl' : 'ltr';
+    localStorage.setItem('idioma', idioma);
+
+    // Actualizar botones
+    const ui = traduccionesUI[idioma];
+    document.getElementById('btn-agregar-sede').title = ui['agregar-sede'];
+    document.getElementById('btn-editar-sede').title = ui['editar-sede'];
+    document.getElementById('btn-eliminar-sede').title = ui['eliminar-sede'];
+
+    // Re-mostrar sede activa
+    const active = document.querySelector('.card.active');
+    if (active) {
+        const year = active.querySelector('.fecha span').textContent;
+        mostrarSedes(year);
     }
-    console.warn('No se encontró el objeto sedesMundiales');
-    return [];
 }
 
-function mostrarInformacionCompletaSede(año) {
-    const sede = sedesMundiales[año];
-    if (!sede) return;
+// ===== INICIALIZACIÓN =====
+document.addEventListener('DOMContentLoaded', () => {
+    // Cargar idioma guardado
+    const savedLang = localStorage.getItem('idioma') || 'es';
+    cambiarIdioma(savedLang);
 
-    // Ejemplo de cómo mostrar información más completa
-    return `
-        <div class="info-sede-completa">
-            <div class="info-grid-sede">
-                <div class="info-columna-sede">
-                    <h4>🏟️ Información de la Sede</h4>
-                    <p><strong>País:</strong> ${sede.pais || 'No disponible'}</p>
-                    <p><strong>Ciudad Principal:</strong> ${sede.ciudad || 'No disponible'}</p>
-                    <p><strong>Estadio Principal:</strong> ${sede.estadio || 'No disponible'}</p>
-                    <p><strong>Capacidad:</strong> ${sede.capacidad || 'No disponible'} espectadores</p>
-                </div>
-                
-                <div class="info-columna-sede">
-                    <h4>📈 Datos del Evento</h4>
-                    <p><strong>Ciudades Sede:</strong> ${sede.ciudadesSede ? sede.ciudadesSede.join(', ') : 'No disponible'}</p>
-                    <p><strong>Estadios Utilizados:</strong> ${sede.estadiosUtilizados ? sede.estadiosUtilizados.join(', ') : 'No disponible'}</p>
-                    <p><strong>Inversión:</strong> ${sede.inversion || 'No disponible'}</p>
-                </div>
-            </div>
-            
-            ${sede.datosCuriosos ? `
-            <div class="datos-curiosos-sede">
-                <h4>💡 Datos Curiosos</h4>
-                <p>${sede.datosCuriosos}</p>
-            </div>
-            ` : ''}
-            
-            ${sede.legado ? `
-            <div class="legado-sede">
-                <h4>🏛️ Legado</h4>
-                <p>${sede.legado}</p>
-            </div>
-            ` : ''}
-        </div>
-    `;
-}
+    // Cargar sedes personalizadas
+    const guardadas = localStorage.getItem('sedesPersonalizadas');
+    if (guardadas) {
+        Object.assign(sedesMundiales, JSON.parse(guardadas));
+    }
 
-function inicializarEventosEliminarSede() {
-    const btnEliminarSede = document.getElementById('btn-eliminar-sede');
-    const modalEliminarSede = document.getElementById('modal-confirmacion-eliminar-sede');
-    const btnCancelarEliminar = document.querySelector('.btn-cancelar-eliminar-sede');
-    const btnConfirmarEliminar = document.querySelector('.btn-confirmar-eliminar-sede');
-    const cerrarModalEliminar = document.querySelector('.cerrar-modal-eliminar-sede');
-    const cerrarModal = document.querySelector('.cerrar-modal');
-    const selectAnio = document.getElementById('select-anio-mundial');
+    // Mostrar primera sede
+    const primeraCard = document.querySelector('.card');
+    if (primeraCard) {
+        primeraCard.classList.add('active');
+        const year = primeraCard.querySelector('.fecha span').textContent;
+        mostrarSedes(year);
+    }
 
-    // Abrir modal de confirmación al hacer clic en "Eliminar sede"
-    btnEliminarSede.addEventListener('click', function() {
-        const añosDisponibles = obtenerAñosDisponibles();
-        
-        if (añosDisponibles.length > 0) {
-            cargarAñosEnSelect(añosDisponibles);
-            abrirModalEliminarSede();
-        } else {
-            alert('No hay sedes de mundial disponibles para eliminar.');
+    // Activar clics en cards
+    activarCardAlClick();
+
+    // Botones flotantes
+    document.getElementById('btn-agregar-sede')?.addEventListener('click', () => abrirModal(false));
+    document.getElementById('btn-editar-sede')?.addEventListener('click', () => {
+        const active = document.querySelector('.card.active');
+        if (active) {
+            const year = active.querySelector('.fecha span').textContent;
+            abrirModal(true, year);
         }
     });
+    document.getElementById('btn-eliminar-sede')?.addEventListener('click', eliminarSede);
 
-    // Evento para el selector de año
-    selectAnio.addEventListener('change', function() {
-        anioSeleccionadoParaEliminar = this.value;
-        const btnConfirmar = document.querySelector('.btn-confirmar-eliminar-sede');
-        btnConfirmar.disabled = !anioSeleccionadoParaEliminar;
-        
-        // Mostrar información de la sede seleccionada
-        if (anioSeleccionadoParaEliminar) {
-            mostrarInformacionSede(anioSeleccionadoParaEliminar);
-        }
+    // Flechas
+    document.querySelector('.prev')?.addEventListener('click', () => navegarCarrusel(-1));
+    document.querySelector('.next')?.addEventListener('click', () => navegarCarrusel(1));
+
+    // Modal
+    document.querySelector('.btn-guardar-sedes')?.addEventListener('click', guardarSede);
+    document.querySelector('.btn-cancelar-sedes')?.addEventListener('click', cerrarModal);
+    document.querySelector('.cerrar-modal')?.addEventListener('click', cerrarModal);
+
+    // Cerrar al hacer clic fuera
+    window.addEventListener('click', (e) => {
+        const modal = document.getElementById('modal-mundial');
+        if (e.target === modal) cerrarModal();
     });
 
-    // Cerrar modal al hacer clic en la X
-    cerrarModalEliminar.addEventListener('click', cerrarModalEliminarSede);
-
-    // Cerrar modal al hacer clic en Cancelar
-    btnCancelarEliminar.addEventListener('click', cerrarModalEliminarSede);
-
-    // Confirmar eliminación
-    btnConfirmarEliminar.addEventListener('click', confirmarEliminacionSede);
-
-    // Cerrar modal al hacer clic fuera del contenido
-    window.addEventListener('click', function(event) {
-        if (event.target === modalEliminarSede) {
-            cerrarModalEliminarSede();
-        }
-    });
-}
-
-function obtenerAñosDisponibles() {
-    // Obtener los años desde el objeto sedesMundiales
-    if (typeof sedesMundiales !== 'undefined' && sedesMundiales !== null) {
-        const años = Object.keys(sedesMundiales).map(año => parseInt(año));
-        
-        // Ordenar de mayor a menor (más reciente primero)
-        return años.sort((a, b) => b - a);
-    }
-    
-    // Si no existe el objeto, retornar array vacío
-    console.warn('No se encontró el objeto sedesMundiales');
-    return [];
-}
-
-// Función para mostrar información de la sede seleccionada (opcional)
-function mostrarInformacionSede(año) {
-    const sede = sedesMundiales[año];
-    if (sede) {
-        console.log(`Sede seleccionada: ${sede.titulo}`);
-        // Puedes mostrar esta información en el modal si quieres
-    }
-}
-
-// Función para cargar los años en el select
-function cargarAñosEnSelect(años) {
-    const select = document.getElementById('select-anio-mundial');
-    
-    // Limpiar opciones existentes (excepto la primera)
-    while (select.options.length > 1) {
-        select.remove(1);
-    }
-    
-    // Agregar opciones (ya vienen ordenadas de la función obtenerAñosDisponibles)
-    años.forEach(año => {
-        const option = document.createElement('option');
-        option.value = año;
-        option.textContent = año;
-        select.appendChild(option);
-    });
-    
-    // Resetear selección
-    select.value = "";
-    anioSeleccionadoParaEliminar = null;
-    
-    // Deshabilitar botón de confirmar
-    const btnConfirmar = document.querySelector('.btn-confirmar-eliminar-sede');
-    btnConfirmar.disabled = true;
-}
-
-function abrirModalEliminarSede() {
-    const modal = document.getElementById('modal-confirmacion-eliminar-sede');
-    modal.style.display = 'block';
-}
-
-function cerrarModalEliminarSede() {
-    const modal = document.getElementById('modal-confirmacion-eliminar-sede');
-    modal.style.display = 'none';
-    anioSeleccionadoParaEliminar = null;
-}
-
-function confirmarEliminacionSede() {
-    if (anioSeleccionadoParaEliminar) {
-        // Obtener información de la sede antes de eliminar para el mensaje
-        const sede = sedesMundiales[anioSeleccionadoParaEliminar];
-        const nombreSede = sede ? sede.titulo : `Mundial ${anioSeleccionadoParaEliminar}`;
-        
-        // Confirmación final
-        if (confirm(`¿Estás completamente seguro de que deseas eliminar "${nombreSede}"? Esta acción es irreversible.`)) {
-            // Eliminar la sede
-            eliminarSedePorAño(anioSeleccionadoParaEliminar);
-            
-            // Cerrar el modal después de eliminar
-            cerrarModalEliminarSede();
-            
-            // Mostrar mensaje de éxito
-            alert(`"${nombreSede}" ha sido eliminado correctamente.`);
-            
-            // Actualizar la interfaz
-            actualizarListaSedes();
-        }
-    }
-}
-
-// Función para eliminar la sede por año
-function eliminarSedePorAño(año) {
-    console.log(`Eliminando sede del año: ${año}`);
-    
-    // Eliminar del objeto sedesMundiales
-    if (sedesMundiales[año]) {
-        delete sedesMundiales[año];
-        console.log(`Sede ${año} eliminada del objeto sedesMundiales`);
-    }
-    
-    // Aquí puedes agregar llamadas a APIs o actualizaciones adicionales si es necesario
-    /*
-    fetch(`/api/sedes/${año}`, {
-        method: 'DELETE'
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Sede eliminada del servidor:', data);
-    })
-    .catch(error => {
-        console.error('Error al eliminar del servidor:', error);
-    });
-    */
-}
-
-// Función para actualizar la lista de sedes después de eliminar
-function actualizarListaSedes() {
-    console.log('Actualizando lista de sedes...');
-    
-    // Aquí debes llamar a la función que actualiza tu interfaz principal
-    // Por ejemplo, si tienes una función que renderiza las sedes:
-    
-    // Si usas una función como mostrarSedes() o renderizarSedes():
-    if (typeof mostrarSedes === 'function') {
-        mostrarSedes();
-    }
-    
-    // O si actualizas una tabla:
-    if (typeof actualizarTablaSedes === 'function') {
-        actualizarTablaSedes();
-    }
-    
-    // O si simplemente recargas la página (menos elegante pero funciona):
-    // location.reload();
-    
-    console.log('Objeto sedesMundiales actualizado:', sedesMundiales);
-}
-
-// Inicializar con 1930
-mostrarSedes("1930");
-activarCard(cardsList[0]);
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Aplicar animación simple a elementos principales
-    const elements = document.querySelectorAll('header, .texto-menu, .controles-mundiales, .cuadro-blanco-sede, .cuadro-blanco-historia');
-    
-    elements.forEach((el, index) => {
-        el.style.animation = `caidaRecta 0.4s ease-out ${index * 0.1}s both`;
-    });
-    
-    // Transición rápida
-    document.querySelectorAll('a[href*=".html"]').forEach(link => {
-        link.addEventListener('click', function(e) {
-            if (this.getAttribute('href').startsWith('#')) return;
-            
-            e.preventDefault();
-            const href = this.getAttribute('href');
-            
-            // Salida simple
-            elements.forEach(el => {
-                el.style.animation = 'salidaRecta 0.15s ease-in both';
-            });
-            
-            setTimeout(() => {
-                window.location.href = href;
-            }, 100);
-        });
+    // Botones de idioma
+    document.querySelectorAll('[data-idioma]').forEach(btn => {
+        btn.addEventListener('click', () => cambiarIdioma(btn.dataset.idioma));
     });
 });
+
+
