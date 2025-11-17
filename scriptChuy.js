@@ -647,43 +647,7 @@ resetAccesibilidad.addEventListener('click', () => {
     cambiarIdioma('es');
 });
 
-// Carrusel de noticias
-let currentIndex = 0;
-const totalItems = document.querySelectorAll('.noticia-card').length;
 
-function actualizarCarrusel() {
-    const isRtl = document.documentElement.getAttribute('dir') === 'rtl';
-    const offset = isRtl ? currentIndex * (window.innerWidth > 800 ? 100 / 3 : 100) : -currentIndex * (window.innerWidth > 800 ? 100 / 3 : 100);
-    carruselItems.style.transform = `translateX(${offset}%)`;
-}
-
-carruselBtnNext.addEventListener('click', () => {
-    if (window.innerWidth > 800) {
-        currentIndex = (currentIndex + 1) % totalItems;
-    } else {
-        currentIndex = (currentIndex + 1) % totalItems;
-    }
-    actualizarCarrusel();
-});
-
-carruselBtnPrev.addEventListener('click', () => {
-    if (window.innerWidth > 800) {
-        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-    } else {
-        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-    }
-    actualizarCarrusel();
-});
-
-// Ajustar carrusel en pantallas grandes
-function ajustarCarrusel() {
-    if (window.innerWidth > 800) {
-        carruselItems.style.transform = 'translateX(0)';
-        currentIndex = 0;
-    } else {
-        actualizarCarrusel();
-    }
-}
 document.addEventListener("DOMContentLoaded", function() {
     // Menú hamburguesa
     const menuToggle = document.querySelector(".menu-toggle");
@@ -724,7 +688,6 @@ document.addEventListener("DOMContentLoaded", function() {
     modoOscuroLateralBtn.addEventListener("click", toggleDarkMode);
 });
 
-window.addEventListener('resize', ajustarCarrusel);
-ajustarCarrusel();
+
 
 
