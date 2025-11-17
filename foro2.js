@@ -19,7 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
+const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        const isAdmin = currentUser && currentUser.role === 'administrator';
+        document.querySelectorAll('.admin-boton').forEach(btn => {
+            btn.style.display = isAdmin ? 'block' : 'none';
+        });
 
 function posicionarMenu(menu, boton) {
     if (window.innerWidth <= 800) return;
