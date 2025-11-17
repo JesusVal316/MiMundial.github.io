@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Animación Nube</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: rgb(46, 172, 221);
+    }
+    #nube {
+      width: 400px;
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div id="vientos"></div>
+
+  <script>
+    lottie.loadAnimation({
+      container: document.getElementById('vientos'), // el div donde irá
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'viento.json' // tu archivo exportado
+    });
+  </script>
+</body>
+</html>

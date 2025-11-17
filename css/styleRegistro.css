@@ -1,0 +1,1348 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    margin:0;
+    padding: 0;
+}
+.opcion-inicio {
+    text-decoration: none;
+    color: inherit;
+
+}
+html {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #222;
+    transition: background 0.3s, color 0.3s;
+    font-size: 0.95rem;
+    overflow-x: hidden;
+}
+
+html[dir="rtl"] {
+    direction: rtl;
+    font-family: "Segoe UI", Arial, Tahoma, sans-serif;
+}
+
+html.dark {
+    background: #181818;
+    color: #f5f5f5;
+}
+
+html.alto-contraste {
+    background: #000 !important;
+    color: #fff !important;
+}
+
+html.tamano-pequeno {
+    font-size: 0.85rem;
+}
+
+html.tamano-grande {
+    font-size: 1.15rem;
+}
+
+html.reducir-animaciones * {
+    transition: none !important;
+}
+
+/* Modos de daltonismo */
+html.protanopia img,
+html.deuteranopia img,
+html.tritanopia img {
+    filter: grayscale(50%) contrast(1.2);
+}
+
+html.protanopia .noticia-contenido h3,
+html.protanopia .noticia-contenido p {
+    color: #0066cc;
+}
+
+html.deuteranopia .noticia-contenido h3,
+html.deuteranopia .noticia-contenido p {
+    color: #006666;
+}
+
+html.tritanopia .noticia-contenido h3,
+html.tritanopia .noticia-contenido p {
+    color: #cc6600;
+}
+
+/* Header */
+header {
+    background-color: #222;
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1000;
+    border-bottom: 2px solid #3a3a3a;
+    isolation: isolate;
+}
+
+html[dir="rtl"] header {
+    flex-direction: row-reverse;
+}
+
+html.dark header {
+    background: #000;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    letter-spacing: 0;
+}
+
+header h1 span {
+    color: #ccc;
+}
+
+/* Contenedor de botones */
+.contenedor-botones {
+    display: flex;
+    gap: 10px;
+    margin-right: 4%;
+}
+
+html[dir="rtl"] .contenedor-botones {
+    margin-right: 0;
+    margin-left: 4%;
+}
+
+/* Botones de header */
+#modo-oscuro,
+#modo-notificacion,
+#boton-usuario,
+#boton-accesibilidad {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    display: none;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+#modo-oscuro:hover,
+#modo-notificacion:hover,
+#boton-usuario:hover,
+#boton-accesibilidad:hover,
+.menu-toggle:hover {
+    transform: scale(1.15);
+}
+
+.boton-icono-perfil,
+.boton-notificacion,
+.modo-oscuro-desktop button {
+    padding: 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.boton-icono-perfil:hover,
+.boton-notificacion:hover,
+.modo-oscuro-desktop button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.icono-perfil-btn,
+.icono-lateral,
+.icono-opcion,
+.icono-dato,
+.icono-usuario {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+html.dark .icono-perfil-btn,
+html.dark .icono-lateral,
+html.dark .icono-opcion,
+html.dark .icono-dato,
+html.dark .icono-usuario {
+    filter: invert(100%) brightness(2);
+}
+
+/* Asegurar que el ícono del modo oscuro sea consistente */
+.modo-oscuro-desktop img,
+#modo-oscuro-lateral img {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+}
+
+html.dark .modo-oscuro-desktop img,
+html.dark #modo-oscuro-lateral img {
+    filter: invert(100%) brightness(2);
+}
+
+/* Menú de navegación */
+.texto-menu {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    background-color: rgba(30, 30, 30, 0.9);
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    z-index: 900;
+    color: white;
+    isolation: isolate;
+}
+
+html[dir="rtl"] .texto-menu {
+    text-align: center;
+}
+
+.texto-menu a {
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 0 1vw;
+}
+
+html[dir="rtl"] .texto-menu a {
+    padding: 0 1vw;
+}
+
+.texto-menu a:hover {
+    color: #00b7ff;
+    text-decoration: underline;
+}
+
+/* Menú lateral para móviles */
+.menu-lateral {
+    display: none;
+    position: fixed;
+    top: 60px;
+    right: 12px;
+    width: 50%;
+    max-width: 200px;
+    background: #333;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    flex-direction: column;
+    gap: 8px;
+    z-index: 2000;
+}
+
+html.dark .menu-lateral {
+    background: #1a1a1a;
+}
+
+html[dir="rtl"] .menu-lateral {
+    right: auto;
+    left: 12px;
+}
+
+.menu-lateral a,
+.menu-lateral .boton-lateral {
+    background: #555;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background 0.2s;
+}
+
+html.dark .menu-lateral a,
+html.dark .menu-lateral .boton-lateral {
+    background: #444;
+    color: #f5f5f5;
+}
+
+html[dir="rtl"] .menu-lateral a,
+html[dir="rtl"] .menu-lateral .boton-lateral {
+    flex-direction: row-reverse;
+}
+
+.menu-lateral a:hover,
+.menu-lateral .boton-lateral:hover {
+    background: #777;
+}
+
+html.dark .menu-lateral a:hover,
+html.dark .menu-lateral .boton-lateral:hover {
+    background: #555;
+}
+
+.menu-lateral.activo {
+    display: flex;
+}
+
+.acciones-lateral {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Barra inferior para móviles */
+.barra-inferior {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #222;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    z-index: 150;
+}
+
+html.dark .barra-inferior {
+    background: #000;
+}
+
+html[dir="rtl"] .barra-inferior {
+    flex-direction: row-reverse;
+}
+
+.barra-inferior a {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.6rem;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.barra-inferior a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+/* Menús desplegables */
+.menu-usuario,
+.menu-notificaciones,
+.menu-accesibilidad,
+.modo-oscuro-desktop {
+    position: relative;
+}
+
+.menu-desplegable,
+.menu-notificaciones-desplegable,
+.menu-accesibilidad-desplegable {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    min-width: 220px;
+    z-index: 2100;
+    display: none;
+    margin-top: 5px;
+    border: 1px solid #e0e0e0;
+}
+
+html.dark .menu-desplegable {
+    background: #2a2a2a;
+    border-color: #444;
+    color: #f5f5f5;
+}
+
+html.dark .menu-notificaciones-desplegable,
+html.dark .menu-accesibilidad-desplegable {
+    background: #2a2a2a;
+    border-color: #444;
+    color: #ffffff; /* White text for menus in dark mode */
+}
+
+html[dir="rtl"] .menu-desplegable,
+html[dir="rtl"] .menu-notificaciones-desplegable,
+html[dir="rtl"] .menu-accesibilidad-desplegable {
+    right: auto;
+    left: 0;
+}
+
+.menu-desplegable.activo,
+.menu-notificaciones-desplegable.activo,
+.menu-accesibilidad-desplegable.activo {
+    display: block;
+    animation: aparecerMenu 0.2s ease;
+}
+
+@keyframes aparecerMenu {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.usuarios-registrados h4,
+.cabecera-notificaciones h4,
+.cabecera-accesibilidad h4 {
+    padding: 8px;
+    margin: 0;
+    font-size: 0.9rem;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+html.dark .usuarios-registrados h4,
+html.dark .cabecera-notificaciones h4,
+html.dark .cabecera-accesibilidad h4 {
+    border-bottom: 1px solid #444;
+}
+
+html.dark .menu-notificaciones-desplegable .cabecera-notificaciones h4,
+html.dark .menu-accesibilidad-desplegable .cabecera-accesibilidad h4 {
+    color: #ffffff; /* White text for headers in dark mode */
+}
+
+.usuario-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+    gap: 8px;
+}
+
+html.dark .menu-notificaciones-desplegable .usuario-item,
+html.dark .menu-accesibilidad-desplegable .usuario-item {
+    color: #ffffff; /* White text for user items in dark mode */
+}
+
+html[dir="rtl"] .usuario-item {
+    flex-direction: row-reverse;
+}
+
+.usuario-item:hover {
+    background: #f0f0f0;
+}
+
+html.dark .usuario-item:hover {
+    background: #333;
+}
+
+html.dark .menu-notificaciones-desplegable .usuario-item:hover,
+html.dark .menu-accesibilidad-desplegable .usuario-item:hover {
+    background: #444; /* Slightly lighter for hover in dark mode */
+}
+
+.usuario-item span {
+    font-size: 0.9rem;
+    color: #333;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+html.dark .usuario-item span {
+    color: #f5f5f5;
+}
+
+html.dark .menu-notificaciones-desplegable .usuario-item span,
+html.dark .menu-accesibilidad-desplegable .usuario-item span {
+    color: #ffffff; /* White text for user item spans in dark mode */
+}
+
+.opcion-menu {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    text-decoration: none;
+    color: #333;
+    gap: 8px;
+}
+
+.opcion-menu.añadir-cuenta span {
+    color: #333;
+}
+
+html.dark .opcion-menu {
+    color: #f5f5f5;
+}
+
+html.dark .opcion-menu.añadir-cuenta span {
+    color: #f5f5f5;
+}
+
+html.dark .menu-accesibilidad-desplegable .opcion-menu,
+html.dark .menu-notificaciones-desplegable .opcion-menu {
+    color: #ffffff; /* White text for menu options in dark mode */
+}
+
+html.dark .menu-accesibilidad-desplegable .opcion-menu.añadir-cuenta span,
+html.dark .menu-notificaciones-desplegable .opcion-menu.añadir-cuenta span {
+    color: #ffffff; /* White text for añadir-cuenta spans in dark mode */
+}
+
+html[dir="rtl"] .opcion-menu {
+    flex-direction: row-reverse;
+}
+
+.opcion-menu:hover {
+    background: #f0f0f0;
+}
+
+html.dark .opcion-menu:hover {
+    background: #333;
+}
+
+html.dark .menu-accesibilidad-desplegable .opcion-menu:hover,
+html.dark .menu-notificaciones-desplegable .opcion-menu:hover {
+    background: #444; /* Slightly lighter for hover in dark mode */
+}
+
+.contador-notificaciones {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #e0e0e0;
+    color: #333;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+html.dark .contador-notificaciones {
+    background: #444;
+    color: #ffffff; /* White text for notification counter in dark mode */
+}
+
+html[dir="rtl"] .contador-notificaciones {
+    right: auto;
+    left: 0;
+}
+
+.notificacion-item {
+    display: flex;
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+    gap: 8px;
+}
+
+html.dark .notificacion-item {
+    border-bottom: 1px solid #444;
+}
+
+html[dir="rtl"] .notificacion-item {
+    flex-direction: row-reverse;
+}
+
+.contenido-notificacion {
+    flex: 1;
+    text-align: left;
+}
+
+html[dir="rtl"] .contenido-notificacion {
+    text-align: right;
+}
+
+.texto-notificacion {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #333;
+}
+
+html.dark .texto-notificacion {
+    color: #f5f5f5;
+}
+
+html.dark .menu-notificaciones-desplegable .texto-notificacion {
+    color: #ffffff; /* White text for notification text in dark mode */
+}
+
+.tiempo-notificacion {
+    display: block;
+    font-size: 0.7rem;
+    color: #666;
+}
+
+html.dark .tiempo-notificacion {
+    color: #f5f5f5;
+}
+
+html.dark .menu-notificaciones-desplegable .tiempo-notificacion {
+    color: #ffffff; /* White text for notification time in dark mode */
+}
+
+.btn-aceptar-publicacion {
+    background: #00b7ff;
+    color: white;
+    border: none;
+    padding: 5px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 0.8rem;
+}
+
+.btn-aceptar-publicacion.aceptado {
+    background: #666;
+}
+
+.ver-todas {
+    display: block;
+    text-align: center;
+    padding: 8px;
+    color: #00b7ff;
+    text-decoration: none;
+    font-size: 0.8rem;
+}
+
+html.dark .menu-notificaciones-desplegable .ver-todas {
+    color: #ffffff; /* White text for "ver todas" in dark mode */
+}
+
+.ver-todas:hover {
+    background: #f0f0f0;
+}
+
+html.dark .ver-todas:hover {
+    background: #333;
+}
+
+html.dark .menu-notificaciones-desplegable .ver-todas:hover {
+    background: #444; /* Slightly lighter for hover in dark mode */
+}
+
+/* Accesibilidad */
+.opciones-accesibilidad {
+    padding: 8px;
+}
+
+.opcion-grupo {
+    margin-bottom: 10px;
+}
+
+.opcion-label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #000;
+}
+
+html.dark .opcion-label {
+    color: #fff;
+}
+
+html.dark .menu-accesibilidad-desplegable .opcion-label {
+    color: #ffffff; /* White text for option labels in dark mode */
+}
+
+html.alto-contraste .opcion-label {
+    color: #fff;
+}
+
+.controles-tamano,
+.controles-daltonismo,
+.controles-idioma {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+html[dir="rtl"] .controles-tamano,
+html[dir="rtl"] .controles-daltonismo,
+html[dir="rtl"] .controles-idioma {
+    flex-direction: row-reverse;
+}
+
+.btn-tamano,
+.btn-daltonismo,
+.btn-idioma {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 5px 8px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
+
+html.dark .btn-tamano,
+html.dark .btn-daltonismo,
+html.dark .btn-idioma {
+    background: #333;
+    border-color: #555;
+    color: #f5f5f5;
+}
+
+html.dark .menu-accesibilidad-desplegable .btn-tamano,
+html.dark .menu-accesibilidad-desplegable .btn-daltonismo,
+html.dark .menu-accesibilidad-desplegable .btn-idioma {
+    background: #333;
+    border-color: #555;
+    color: #ffffff; /* White text for accessibility buttons in dark mode */
+}
+
+.btn-tamano:hover,
+.btn-daltonismo:hover,
+.btn-idioma:hover {
+    background: #e0e0e0;
+}
+
+html.dark .btn-tamano:hover,
+html.dark .btn-daltonismo:hover,
+html.dark .btn-idioma:hover {
+    background: #444;
+}
+
+html.dark .menu-accesibilidad-desplegable .btn-tamano:hover,
+html.dark .menu-accesibilidad-desplegable .btn-daltonismo:hover,
+html.dark .menu-accesibilidad-desplegable .btn-idioma:hover {
+    background: #444; /* Slightly lighter for hover in dark mode */
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 18px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ccc;
+    transition: 0.4s;
+    border-radius: 18px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+html[dir="rtl"] .slider:before {
+    left: auto;
+    right: 2px;
+}
+
+input:checked + .slider {
+    background: #00b7ff;
+}
+
+
+
+
+input:checked + .slider:before {
+    transform: translateX(18px);
+}
+
+html[dir="rtl"] input:checked + .slider:before {
+    transform: translateX(-18px);
+}
+
+.btn-reset-todo {
+    background: #00b7ff;
+    color: white;
+    border: none;
+    padding: 6px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.btn-reset-todo:hover {
+    background: #0097d8;
+}
+
+/* Sección de inicio de sesión */
+.iniciar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 120px);
+    padding: 20px;
+    margin-top: 100px;
+}
+
+.form-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+html.dark .form-container {
+    background: #202020;
+    color: #f5f5f5;
+}
+
+.texto-info h2 {
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form label {
+    text-align: left;
+    font-weight: bold;
+}
+
+html[dir="rtl"] form label {
+    text-align: right;
+}
+
+form input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+html.dark form input {
+    background: #333;
+    border-color: #555;
+    color: #f5f5f5;
+}
+
+.password-container {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+html[dir="rtl"] .toggle-password {
+    right: auto;
+    left: 10px;
+}
+
+.btn-confirmar {
+    background: #00b7ff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-confirmar:hover {
+    background: #0097d8;
+}
+
+.btn-registrar {
+    display: inline-block;
+    margin: 10px 0;
+    color: #00b7ff;
+    text-decoration: none;
+}
+
+.btn-registrar:hover {
+    text-decoration: underline;
+}
+
+.terminos {
+    color: #00b7ff;
+    cursor: pointer;
+}
+
+.terminos:hover {
+    text-decoration: underline;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2200;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+}
+
+html.dark .modal-content {
+    background: #2a2a2a;
+    color: #f5f5f5;
+}
+
+.cerrar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+html[dir="rtl"] .cerrar {
+    right: auto;
+    left: 15px;
+}
+
+/* Hero section */
+.hero-section {
+    position: relative;
+    height: 70vh;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* Noticias */
+.noticias {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.titulo-noticias {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+html.dark .titulo-noticias {
+    color: #ffffff;
+}
+
+.carrusel-noticias {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.carrusel-contenedor {
+    overflow: hidden;
+    width: 100%;
+}
+
+.carrusel-items {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+html[dir="rtl"] .carrusel-items {
+    flex-direction: row-reverse;
+}
+
+.noticia-card {
+    flex: 0 0 100%;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 10px;
+}
+
+html.dark .noticia-card {
+    background: #2a2a2a;
+}
+input:focus {
+  outline: none;
+  border: 3px solid #00b7ff;
+}
+html.dark input:focus {
+  border: 3px solid #0097d8;
+}
+
+@media (min-width: 801px) {
+    .noticia-card {
+        flex: 0 0 calc(33.333% - 20px);
+        margin: 0 10px;
+    }
+}
+
+.noticia-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.noticia-contenido {
+    padding: 20px;
+    text-align: left;
+}
+
+html[dir="rtl"] .noticia-contenido {
+    text-align: right;
+}
+
+.noticia-contenido h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+html.dark .noticia-contenido h3 {
+    color: #fff;
+}
+
+.noticia-contenido p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+html.dark .noticia-contenido p {
+    color: #ccc;
+}
+
+.noticia-link {
+    display: inline-block;
+    color: #00b7ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.noticia-link:hover {
+    text-decoration: underline;
+}
+
+.carrusel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    border-radius: 50%;
+}
+
+.carrusel-btn-prev {
+    left: 10px;
+}
+
+html[dir="rtl"] .carrusel-btn-prev {
+    left: auto;
+    right: 10px;
+}
+
+.carrusel-btn-next {
+    right: 10px;
+}
+
+html[dir="rtl"] .carrusel-btn-next {
+    right: auto;
+    left: 10px;
+}
+
+.carrusel-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+/* Mundiales */
+.mundiales {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.titulo-mundiales {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+html.dark .titulo-mundiales {
+    color: #ffffff;
+}
+
+.grid-mundiales {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+html[dir="rtl"] .grid-mundiales {
+    flex-direction: row-reverse;
+}
+
+.card-mundial {
+    flex: 0 0 calc(33.333% - 30px);
+    max-width: calc(33.333% - 30px);
+    min-width: 280px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+html.dark .card-mundial {
+    background: #2a2a2a;
+}
+
+.card-mundial img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-mundial p {
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    background-color: #f8f9fa;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+html.dark .card-mundial p {
+    color: #f5f5f5;
+    background-color: #333;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #222;
+    color: white;
+    position: relative;
+    margin-top: 40px;
+}
+
+html.dark footer {
+    background: #000;
+}
+
+html.dark body {
+    background-color: #121212;
+}
+
+/* Responsive: Ajustes para pantallas <= 800px */
+@media (max-width: 800px) {
+    .iniciar {
+        margin-top: 60px;
+    }
+    .menu-toggle {
+        display: flex;
+    }
+    .modo-oscuro-desktop {
+        display: none;
+    }
+    .contenedor-botones {
+        display: flex;
+        gap: 10px;
+    }
+    .menu-usuario {
+        display: none;
+    }
+    .texto-menu {
+        display: none;
+    }
+    .menu-lateral {
+        display: none;
+    }
+    .menu-lateral.activo {
+        display: flex;
+    }
+    .barra-inferior {
+        display: flex;
+    }
+    .contenido-principal {
+        margin-top: 60px;
+    }
+
+    /* MÓVIL: Menús fijos debajo del header */
+    .menu-desplegable,
+    .menu-notificaciones-desplegable,
+    .menu-accesibilidad-desplegable {
+        position: fixed !important;
+        top: 70px !important;
+        left: 10px !important;
+        right: 10px !important;
+        width: auto !important;
+        max-width: calc(100vw - 20px);
+        min-width: auto !important;
+        transform: none !important;
+        margin-top: 0 !important;
+        border-radius: 18px;
+        padding: 1.2rem;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+        z-index: 999999;
+        max-height: calc(100vh - 90px);
+        overflow-y: auto;
+        display: none;
+    }
+
+    .menu-desplegable.activo,
+    .menu-notificaciones-desplegable.activo,
+    .menu-accesibilidad-desplegable.activo {
+        display: block;
+    }
+
+    .opciones-accesibilidad {
+        padding: 3px;
+    }
+    .opcion-grupo {
+        margin-bottom: 5px;
+    }
+    .opcion-label {
+        font-size: 0.6rem;
+    }
+    .btn-tamano,
+    .btn-daltonismo,
+    .btn-idioma {
+        font-size: 0.6rem;
+        padding: 3px 5px;
+    }
+    .switch {
+        width: 28px;
+        height: 14px;
+    }
+    .slider:before {
+        height: 10px;
+        width: 10px;
+    }
+    input:checked + .slider:before {
+        transform: translateX(14px);
+    }
+    html[dir="rtl"] input:checked + .slider:before {
+        transform: translateX(-14px);
+    }
+    .btn-reset-todo {
+        font-size: 0.6rem;
+        padding: 3px;
+    }
+}
+
+/* Responsive para pantallas menores a 576px */
+@media (max-width: 576px) {
+    .grid-mundiales {
+        gap: 15px;
+    }
+    .card-mundial {
+        flex: 0 0 calc(50% - 15px);
+        max-width: calc(50% - 15px);
+    }
+    .card-mundial img {
+        height: 150px;
+    }
+    .card-mundial p {
+        font-size: 1rem;
+    }
+    .noticia-card {
+        flex: 0 0 100%;
+    }
+}
+
+/* Responsive para pantallas menores a 360px */
+@media (max-width: 360px) {
+    .grid-mundiales {
+        grid-template-columns: 1fr;
+    }
+    .card-mundial {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+
+/* ===================== ANIMACIÓN DE ENTRADA: fadeInScale ===================== */
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOutScale {
+    to { opacity: 0; transform: scale(0.95); }
+}
+
+header, .texto-menu, .controles-mundiales, .cuadro-blanco-sede, .cuadro-blanco-historia {
+    opacity: 0;
+    animation: fadeInScale 0.5s ease-out both;
+}
+
+header { animation-delay: 0.5s; }
+.texto-menu { animation-delay: 0.5s; }
+.controles-mundiales { animation-delay: 0.5s; }
+.cuadro-blanco-sede { animation-delay: 0.5s; }
+.cuadro-blanco-historia { animation-delay: 0.5s; }

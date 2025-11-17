@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta author="Jesús Francisco Valdés Lara y Kenya Lulu Hernandez Huerta">
+    <meta name="description" content="Página web sobre los mundiales de fútbol">
+    <meta name="keywords" content="mundial, fútbol, copa, mundial de fútbol, mundial 2026, méxico, estados unidos, canadá">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Spanish">
+    <!--<meta http-equiv="Refresh" content="10">
+    <meta http-equiv='Window-target' content='_blank' />-->
+    <meta name="copyright" content="Jesús Francisco Valdés Lara y Kenya Lulu Hernandez Huerta">
+    <meta name="title" content="Mi Mundial">
+    <meta name='rating' content='General' />
+     <meta name='revisit-after' content='1 days' />
+     
+    <title data-i18n="header-title">Mi Mundial</title>
+    <link rel="stylesheet" href="css/style3prueba.css">
+    
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <a href="inicio.html" class="opcion-inicio">
+            <h1 data-i18n="header-title">Mi Mundial </h1>
+        </a>
+        
+        <div class="contenedor-botones">
+            <!-- Botón hamburguesa -->
+            <button class="menu-toggle" title="Menú">☰</button>
+            <!-- Menú de usuario -->
+            <div class="menu-usuario">
+                <button class="boton-icono-perfil" id="boton-usuario" title="Menú de usuario">
+                    <img src="user.png" alt="Perfil" class="icono-perfil-btn">
+                </button>
+                <div class="menu-desplegable" id="menu-usuario">
+                    <div class="usuarios-registrados">
+                        <h4 data-i18n="cuentas-activas">Cuentas activas</h4>
+                        <a href="perfil.html" class="opcion-menu añadir-cuenta">
+                        <img src="user.png" alt="Añadir" class="icono-opcion">
+                        <span >SimonSnow</span>
+                    </a>
+                    </div>
+                    <a href="Inicio-Sesion.html" class="opcion-menu añadir-cuenta">
+                        <img src="añadir_usuario.png" alt="Añadir" class="icono-opcion">
+                        <span data-i18n="anadir-cuenta">Añadir cuenta</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Menú de notificaciones -->
+            <div class="menu-notificaciones">
+                <button class="boton-notificacion" id="modo-notificacion" title="Notificaciones">
+                    <img src="bell.png" alt="Ver notificaciones" class="icono-perfil-btn">
+                    <span class="contador-notificaciones">3</span>
+                </button>
+                <div class="menu-notificaciones-desplegable" id="menu-notificaciones">
+                    <div class="cabecera-notificaciones">
+                        <h4 data-i18n="notificaciones-title">Notificaciones</h4>
+                        <span class="contador-menu" data-i18n="notificaciones-nuevas">3 nuevas</span>
+                    </div>
+                    <div class="lista-notificaciones">
+                        <div class="notificacion-item">
+                            <div class="icono-notificacion">
+                                <img src="user.png" alt="Usuario" class="icono-dato">
+                            </div>
+                            <div class="contenido-notificacion">
+                                <p class="texto-notificacion"><strong>usuario23</strong> <span data-i18n="notificacion-aceptada">aceptó tu publicación</span></p>
+                                <span class="tiempo-notificacion" data-i18n="hace-2-horas">Hace 2 horas</span>
+                            </div>
+                        </div>
+                        <div class="notificacion-item">
+                            <div class="icono-notificacion">
+                                <img src="comentarios.png" alt="Comentario" class="icono-dato">
+                            </div>
+                            <div class="contenido-notificacion">
+                                <p class="texto-notificacion"><strong>usuario70</strong> <span data-i18n="notificacion-comentada">comentó tu publicación</span></p>
+                                <span class="tiempo-notificacion" data-i18n="hace-1-hora">Hace 1 hora</span>
+                            </div>
+                        </div>
+                        <div class="notificacion-item notificacion-con-boton">
+                            <div class="icono-notificacion">
+                                <img src="user.png" alt="Solicitud" class="icono-dato">
+                            </div>
+                            <div class="contenido-notificacion">
+                                <p class="texto-notificacion"><strong>usuario67</strong> <span data-i18n="notificacion-solicitud">ha solicitado publicar algo</span></p>
+                                <span class="tiempo-notificacion" data-i18n="hace-30-minutos">Hace 30 minutos</span>
+                                <button class="btn-aceptar-publicacion" data-notificacion="1" data-i18n="aceptar-publicacion">Aceptar publicación</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pie-notificaciones">
+                        <a href="#" class="ver-todas" data-i18n="ver-todas">Ver todas las notificaciones</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Modo oscuro -->
+            <div class="modo-oscuro-desktop">
+                <button class="boton-icono-perfil" id="modo-oscuro" title="Activar/desactivar modo oscuro">
+                    <img src="modo claro.png" alt="Modo oscuro" class="icono-perfil-btn">
+                </button>
+            </div>
+            <!-- Menú de accesibilidad -->
+            <div class="menu-accesibilidad">
+                <button class="boton-icono-perfil" id="boton-accesibilidad" title="Opciones de accesibilidad">
+                    <img src="ajustes.png" alt="Ajustes" class="icono-perfil-btn">
+                </button>
+                <div class="menu-accesibilidad-desplegable" id="menu-accesibilidad">
+                    <div class="cabecera-accesibilidad">
+                        <h4 data-i18n="accesibilidad-title">Opciones de Accesibilidad</h4>
+                    </div>
+                    <div class="opciones-accesibilidad">
+                        <div class="opcion-grupo">
+                            <label class="opcion-label" data-i18n="tamano-texto">Ajustar Tamaño de Texto</label>
+                            <div class="controles-tamano">
+                                <button class="btn-tamano" data-accion="disminuir-texto" title="Reducir tamaño de texto">A-</button>
+                                <button class="btn-tamano" data-accion="reset-texto" title="Tamaño de texto normal">A</button>
+                                <button class="btn-tamano" data-accion="aumentar-texto" title="Aumentar tamaño de texto">A+</button>
+                            </div>
+                        </div>
+                        <div class="opcion-grupo">
+                            <label class="opcion-label" data-i18n="daltonismo">Modos para Daltonismo</label>
+                            <div class="controles-daltonismo">
+                                <button class="btn-daltonismo" data-tipo="protanopia" title="Protanopía (dificultad con rojos)" data-i18n="protanopia">🔴 Protanopía</button>
+                                <button class="btn-daltonismo" data-tipo="deuteranopia" title="Deuteranopía (dificultad con verdes)" data-i18n="deuteranopia">🟢 Deuteranopía</button>
+                                <button class="btn-daltonismo" data-tipo="tritanopia" title="Tritanopía (dificultad con azules)" data-i18n="tritanopia">🔵 Tritanopía</button>
+                                <button class="btn-daltonismo" data-tipo="reset" title="Restablecer colores normales" data-i18n="normal">⬜ Normal</button>
+                            </div>
+                        </div>
+                        <div class="opcion-grupo">
+                            <label class="opcion-label" data-i18n="idioma">Cambiar Idioma</label>
+                            <div class="controles-idioma">
+                                <button class="btn-idioma" data-idioma="es" title="Cambiar a Español" data-i18n="es">Español</button>
+                                <button class="btn-idioma" data-idioma="en" title="Cambiar a Inglés" data-i18n="en">Inglés</button>
+                                <button class="btn-idioma" data-idioma="fr" title="Cambiar a Francés" data-i18n="fr">Francés</button>
+                                
+                            </div>
+                        </div>
+                        <div class="opcion-grupo">
+                            <label class="opcion-label" data-i18n="narrador">Activar Narrador</label>
+                            <label class="switch">
+                                <input type="checkbox" id="narrador">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="opcion-grupo">
+                            <label class="opcion-label" data-i18n="alto-contraste">Activar Alto Contraste</label>
+                            <label class="switch">
+                                <input type="checkbox" id="alto-contraste">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="opcion-grupo">
+                            <label class="opcion-label" data-i18n="reducir-animaciones">Reducir Animaciones</label>
+                            <label class="switch">
+                                <input type="checkbox" id="reducir-animaciones">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="pie-accesibilidad">
+                        <button class="btn-reset-todo" id="reset-accesibilidad" data-i18n="reset-accesibilidad">Restablecer Configuraciones</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menú lateral para móviles -->
+    <div class="menu-lateral">
+        <a href="Inicio-Sesion.html" data-i18n="nav-inicio-sesion">Inicio Sesión</a>
+        <a href="registro.html" data-i18n="nav-registrarse">Registrarse</a>
+        <a href="historia.html" data-i18n="nav-historia">Historia</a>
+        <a href="sedes.html" data-i18n="nav-sedes">Sedes</a>
+        <a href="foro.html" data-i18n="nav-foro">Foro</a>
+        <a href="Partidos.html" data-i18n="nav-partidos">Ver partidos</a>
+        <a href="perfil.html" data-i18n="nav-perfil">Perfil</a>
+        <div class="acciones-lateral">
+            <button class="boton-lateral" id="modo-oscuro-lateral" title="Activar/desactivar modo oscuro">
+                <img src="modo claro.png" alt="Modo oscuro" class="icono-lateral">
+                <span data-i18n="modo-oscuro">Modo Oscuro</span>
+            </button>
+            <button class="boton-lateral" id="modo-notificacion-lateral" title="Ver notificaciones">
+                <img src="bell.png" alt="Notificaciones" class="icono-lateral">
+                <span data-i18n="notificaciones">Notificaciones</span>
+                <span class="contador-notificaciones">3</span>
+            </button>
+            <button class="boton-lateral" id="boton-accesibilidad-lateral" title="Opciones de accesibilidad">
+                <img src="ajustes.png" alt="Accesibilidad" class="icono-lateral">
+                <span data-i18n="accesibilidad">Accesibilidad</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Menú de navegación fijo -->
+    <nav class="texto-menu">
+        <a href="Inicio-Sesion.html" data-i18n="nav-inicio-sesion">Inicio Sesión</a>
+        <a href="registro.html" data-i18n="nav-registrarse">Registrarse</a>
+        <a href="historia.html" data-i18n="nav-historia">Historia</a>
+        <a href="sedes.html" data-i18n="nav-sedes">Sedes</a>
+        <a href="foro.html" data-i18n="nav-foro">Foro</a>
+        <a href="Partidos.html" data-i18n="nav-partidos">Ver partidos</a>
+        
+    </nav>
+
+
+    <main class="contenido-principal">
+        <!-- Sección de video -->
+        <section class="hero-section">
+            <video class="hero-video" src="0815.mp4" loop autoplay muted></video>
+            
+        </section>
+
+        <!-- Sección de noticias -->
+        <section class="noticias">
+            <h2 class="titulo-noticias" data-i18n="noticias-title">Últimas Noticias</h2>
+            <div class="carrusel-noticias">
+                <button class="carrusel-btn carrusel-btn-prev" title="Anterior">◄</button>
+                <div class="carrusel-contenedor">
+                    <div class="carrusel-items">
+                        <article class="noticia-card">
+                            <img src="cr7.jpg" alt="Noticia 1" loading="lazy">
+                            <div class="noticia-contenido">
+                                <h3 data-i18n="noticia1-title">Preparativos para el Mundial 2026 en marcha</h3>
+                                <p data-i18n="noticia1-desc">Las sedes en México, EE.UU. y Canadá están listas para recibir a millones de aficionados.</p>
+                                <a href="foro.html" class="noticia-link" data-i18n="noticia-link">Leer más</a>
+                            </div>
+                        </article>
+                        <article class="noticia-card">
+                            <img src="Estadio_Akron.jpg" alt="Noticia 2" loading="lazy">
+                            <div class="noticia-contenido">
+                                <h3 data-i18n="noticia2-title">Selecciones clasificadas: ¿Quiénes estarán?</h3>
+                                <p data-i18n="noticia2-desc">Las eliminatorias avanzan y ya conocemos a varios equipos que competirán en 2026.</p>
+                                <a href="foro.html" class="noticia-link" data-i18n="noticia-link">Leer más</a>
+                            </div>
+                        </article>
+                        <article class="noticia-card">
+                            <img src="estadio-azteca.jpg" alt="Noticia 3" loading="lazy">
+                            <div class="noticia-contenido">
+                                <h3 data-i18n="noticia3-title">Estadios emblemáticos para el Mundial</h3>
+                                <p data-i18n="noticia3-desc">El Estadio Azteca hará historia albergando su tercer Mundial.</p>
+                                <a href="foro.html" class="noticia-link" data-i18n="noticia-link">Leer más</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <button class="carrusel-btn carrusel-btn-next" title="Siguiente">►</button>
+            </div>
+        </section>
+
+        <!-- Sección de mundiales -->
+        <section class="mundiales">
+    <h2 class="titulo-mundiales" data-i18n="mundiales-title">Mundiales</h2>
+    <div class="grid-mundiales">
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="2026.jpeg" alt="Mundial 2026" loading="lazy">
+                <p data-i18n="mundial-2026">Mundial 2026</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="2022.jpeg" alt="Mundial 2022" loading="lazy">
+                <p data-i18n="mundial-2022">Mundial 2022</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="2018.jpg" alt="Mundial 2018" loading="lazy">
+                <p data-i18n="mundial-2018">Mundial 2018</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="2014.jpeg" alt="Mundial 2014" loading="lazy">
+                <p data-i18n="mundial-2014">Mundial 2014</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="2010.jpg" alt="Mundial 2010" loading="lazy">
+                <p data-i18n="mundial-2010">Mundial 2010</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="2006.jpg" alt="Mundial 2006" loading="lazy">
+                <p data-i18n="mundial-2006">Mundial 2006</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="2002.jpg" alt="Mundial 2002" loading="lazy">
+                <p data-i18n="mundial-2002">Mundial 2002</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1998.jpg" alt="Mundial 1998" loading="lazy">
+                <p data-i18n="mundial-1998">Mundial 1998</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1994.jpg" alt="Mundial 1994" loading="lazy">
+                <p data-i18n="mundial-1994">Mundial 1994</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1990.jpg" alt="Mundial 1990" loading="lazy">
+                <p data-i18n="mundial-1990">Mundial 1990</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1986.jpg" alt="Mundial 1986" loading="lazy">
+                <p data-i18n="mundial-1986">Mundial 1986</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1982.jpg" alt="Mundial 1982" loading="lazy">
+                <p data-i18n="mundial-1982">Mundial 1982</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1978.jpg" alt="Mundial 1978" loading="lazy">
+                <p data-i18n="mundial-1978">Mundial 1978</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1974.jpg" alt="Mundial 1974" loading="lazy">
+                <p data-i18n="mundial-1974">Mundial 1974</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1970.jpg" alt="Mundial 1970" loading="lazy">
+                <p data-i18n="mundial-1970">Mundial 1970</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1966.jpg" alt="Mundial 1966" loading="lazy">
+                <p data-i18n="mundial-1966">Mundial 1966</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1962.jpg" alt="Mundial 1962" loading="lazy">
+                <p data-i18n="mundial-1962">Mundial 1962</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1958.jpg" alt="Mundial 1958" loading="lazy">
+                <p data-i18n="mundial-1958">Mundial 1958</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1954.jpg" alt="Mundial 1954" loading="lazy">
+                <p data-i18n="mundial-1954">Mundial 1954</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1950.jpg" alt="Mundial 1950" loading="lazy">
+                <p data-i18n="mundial-1950">Mundial 1950</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1938.jpg" alt="Mundial 1938" loading="lazy">
+                <p data-i18n="mundial-1938">Mundial 1938</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1934.jpg" alt="Mundial 1934" loading="lazy">
+                <p data-i18n="mundial-1934">Mundial 1934</p>
+            </article>
+        </a>
+
+        <a href="historia.html" class="card-mundial-link">
+            <article class="card-mundial">
+                <img src="1930.jpg" alt="Mundial 1930" loading="lazy">
+                <p data-i18n="mundial-1930">Mundial 1930</p>
+            </article>
+        </a>
+
+    </div>
+</section>
+    </main>
+
+    
+
+    <footer>
+        <h4 data-i18n="footer">© 2025 Mi Mundial. Todos los derechos reservados.</h4>
+    </footer>
+
+    <script src="scriptChuy.js"></script>
+</body>
+</html>

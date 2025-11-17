@@ -1,0 +1,1604 @@
+<!DOCTYPE html> 
+<html lang="es"> 
+    <head> 
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Mi Mundial</title> 
+        <link rel="stylesheet" href="style.css"> 
+        <style>
+            /* Default light mode styles */
+
+            .next {
+    margin-top: 6%;
+    margin-right: 0%; /* Lowers the "next" button by 5 pixels */
+}
+.prev {
+    margin-top: 0%;
+    margin-left: 0%; /* Lowers the "previous" button by 5 pixels */
+}
+@media (max-width: 1200px) {
+    .next {
+        margin-top: 8%;
+        margin-right: 5%;
+    }
+    .prev {
+        margin-top: 0%;
+        margin-left: 5%;
+    }
+}
+@media (max-width: 800px) {
+    .next {
+        margin-top: 12%;
+        margin-right: 6%;
+    }
+    .prev {
+        margin-top: 0%;
+        margin-left: 6%;
+    }
+}
+@media (max-width: 600px) {
+    .next {
+        margin-top: 16%;
+        margin-right: 8%;
+    }
+    .prev {
+        margin-top: 0%;
+        margin-left: 8%;
+    }
+}
+.cuadro-blanco-historia {
+    background: rgba(255, 255, 255, 0.3);
+    color: black;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 1200px;
+    width: 100%;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+}
+
+.fecha-mundial {
+    width: 100%;
+    text-align: center;
+}
+
+.carrusel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.cards-container {
+    overflow: hidden;
+    width: 80%;
+}
+
+.cards {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+
+.card.active {
+    background: #007bff;
+    color: white;
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+
+
+
+
+.info-mundial {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+#imagen-mundial {
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.info-text {
+    flex: 1;
+}
+
+#titulo-mundial {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#texto-mundial {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+#jugadores-info {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+#jugadores-info p {
+    margin: 5px 0;
+}
+
+#jugadores-info strong {
+    color: #007bff;
+}
+
+/* Dark mode styles */
+.dark {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+
+/* Modal styles */
+.modal-mundial {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.modal-contenido {
+    background: #ffffff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+}
+
+
+
+.cerrar-modal {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.campo-formulario {
+    margin-bottom: 15px;
+}
+
+.campo-formulario label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.campo-formulario input,
+.campo-formulario textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.dark .campo-formulario input,
+.dark .campo-formulario textarea {
+    background: #444;
+    border: 1px solid #666;
+    color: #ffffff;
+}
+
+
+
+
+        </style>
+    </head> 
+    <body>
+       <header>
+           <a href="inicio.html" class="opcion-inicio">
+            <h1 data-i18n="header-title">Mi Mundial <span>2026</span></h1>
+        </a>
+        
+        <div class="contenedor-botones">
+            <!-- Botón hamburguesa -->
+            <button class="menu-toggle" title="Menú">☰</button>
+            <!-- Menú de usuario -->
+            <div class="menu-usuario">
+                <button class="boton-icono-perfil" id="boton-usuario" title="Menú de usuario">
+                    <img src="user.png" alt="Perfil" class="icono-perfil-btn">
+                </button>
+                <div class="menu-desplegable" id="menu-usuario">
+                    <div class="usuarios-registrados">
+                        <h4 data-i18n="cuentas-activas">Cuentas activas</h4>
+                        <a href="perfil.html" class="opcion-menu añadir-cuenta">
+                            <img src="user.png" alt="Añadir" class="icono-opcion">
+                            <span>SimonSnow</span>
+                        </a>
+                        <a href="perfil.html" class="opcion-menu añadir-cuenta">
+                            <img src="user.png" alt="Añadir" class="icono-opcion">
+                            <span>Jesus</span>
+                        </a>
+                    </div>
+                    <a href="Inicio-Sesion.html" class="opcion-menu añadir-cuenta">
+                        <img src="añadir_usuario.png" alt="Añadir" class="icono-opcion">
+                        <span data-i18n="anadir-cuenta">Añadir cuenta</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Menú de notificaciones -->
+            <div class="menu-notificaciones">
+                <button class="boton-notificacion" id="modo-notificacion" title="Notificaciones">
+                    <img src="bell.png" alt="Ver notificaciones" class="icono-perfil-btn">
+                    <span class="contador-notificaciones">3</span>
+                </button>
+                <div class="menu-notificaciones-desplegable" id="menu-notificaciones">
+                    <div class="cabecera-notificaciones">
+                        <h4 data-i18n="notificaciones-title">Notificaciones</h4>
+                        <span class="contador-menu" data-i18n="notificaciones-nuevas">3 nuevas</span>
+                    </div>
+                    <div class="lista-notificaciones">
+                        <div class="notificacion-item">
+                            <div class="icono-notificacion">
+                                <img src="user.png" alt="Usuario" class="icono-dato">
+                            </div>
+                            <div class="contenido-notificacion">
+                                <p class="texto-notificacion"><strong>usuario23</strong> <span data-i18n="notificacion-aceptada">aceptó tu publicación</span></p>
+                                <span class="tiempo-notificacion" data-i18n="hace-2-horas">Hace 2 horas</span>
+                            </div>
+                        </div>
+                        <div class="notificacion-item">
+                            <div class="icono-notificacion">
+                                <img src="comentarios.png" alt="Comentario" class="icono-dato">
+                            </div>
+                            <div class="contenido-notificacion">
+                                <p class="texto-notificacion"><strong>usuario70</strong> <span data-i18n="notificacion-comentada">comentó tu publicación</span></p>
+                                <span class="tiempo-notificacion" data-i18n="hace-1-hora">Hace 1 hora</span>
+                            </div>
+                        </div>
+                        <div class="notificacion-item notificacion-con-boton">
+                            <div class="icono-notificacion">
+                                <img src="user.png" alt="Solicitud" class="icono-dato">
+                            </div>
+                            <div class="contenido-notificacion">
+                                <p class="texto-notificacion"><strong>usuario67</strong> <span data-i18n="notificacion-solicitud">ha solicitado publicar algo</span></p>
+                                <span class="tiempo-notificacion" data-i18n="hace-30-minutos">Hace 30 minutos</span>
+                                <button class="btn-aceptar-publicacion" data-notificacion="1" data-i18n="aceptar-publicacion">Aceptar publicación</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pie-notificaciones">
+                        <a href="#" class="ver-todas" data-i18n="ver-todas">Ver todas las notificaciones</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Modo oscuro -->
+            <div class="modo-oscuro-desktop">
+                <button class="boton-icono-perfil" id="modo-oscuro" title="Activar/desactivar modo oscuro">
+                    <img src="modo claro.png" alt="Modo oscuro" class="icono-perfil-btn">
+                </button>
+            </div>
+            <!-- Menú de accesibilidad -->
+            <div class="menu-accesibilidad">
+                <button class="boton-icono-perfil" id="boton-accesibilidad" title="Opciones de accesibilidad">
+                    <img src="ajustes.png" alt="Ajustes" class="icono-perfil-btn">
+                </button>
+                <div class="menu-accesibilidad-desplegable" id="menu-accesibilidad">
+                    <div class="cabecera-accesibilidad">
+                        <h4 data-i18n="accesibilidad-title">Opciones de Accesibilidad</h4>
+                    </div>
+                    <div class="opciones-accesibilidad">
+                        <div class="opcion-grupo">
+                            <label class="opcion-label" data-i18n="tamano-texto">Ajustar Tamaño de Texto</label>
+                            <div class="controles-tamano">
+                                <button class="btn-tamano" data-accion="disminuir-texto" title="Reducir tamaño de texto">A-</button>
+                                <button class="btn-tamano" data-accion="reset-texto" title="Tamaño de texto normal">A</button>
+                                <button class="btn-tamano" data-accion="aumentar-texto" title="Aumentar tamaño de texto">A+</button>
+                            </div>
+                        </div>
+                        <div class="opcion-grupo">
+                            <label class="opcion-label" data-i18n="daltonismo">Modos para Daltonismo</label>
+                            <div class="controles-daltonismo">
+                                <button class="btn-daltonismo" data-tipo="protanopia" title="Protanopía (dificultad con rojos)" data-i18n="protanopia">🔴 Protanopía</button>
+                                <button class="btn-daltonismo" data-tipo="deuteranopia" title="Deuteranopía (dificultad con verdes)" data-i18n="deuteranopia">🟢 Deuteranopía</button>
+                                <button class="btn-daltonismo" data-tipo="tritanopia" title="Tritanopía (dificultad con azules)" data-i18n="tritanopia">🔵 Tritanopía</button>
+                                <button class="btn-daltonismo" data-tipo="reset" title="Restablecer colores normales" data-i18n="normal">⬜ Normal</button>
+                            </div>
+                        </div>
+                        <div class="opcion-grupo">
+                            <label class="opcion-label" data-i18n="idioma">Cambiar Idioma</label>
+                            <div class="controles-idioma">
+                                <button class="btn-idioma" data-idioma="es" title="Cambiar a Español" data-i18n="es">Español</button>
+                                <button class="btn-idioma" data-idioma="en" title="Cambiar a Inglés" data-i18n="en">Inglés</button>
+                                <button class="btn-idioma" data-idioma="fr" title="Cambiar a Francés" data-i18n="fr">Francés</button>
+                            </div>
+                        </div>
+                        <div class="opcion-grupo">
+                            <label class="opcion-label" data-i18n="narrador">Activar Narrador</label>
+                            <label class="switch">
+                                <input type="checkbox" id="narrador">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="opcion-grupo">
+                            <label class="opcion-label" data-i18n="alto-contraste">Activar Alto Contraste</label>
+                            <label class="switch">
+                                <input type="checkbox" id="alto-contraste">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="opcion-grupo">
+                            <label class="opcion-label" data-i18n="reducir-animaciones">Reducir Animaciones</label>
+                            <label class="switch">
+                                <input type="checkbox" id="reducir-animaciones">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="pie-accesibilidad">
+                        <button class="btn-reset-todo" id="reset-accesibilidad" data-i18n="reset-accesibilidad">Restablecer Configuraciones</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menú lateral para móviles -->
+    <div class="menu-lateral">
+        <a href="Inicio-Sesion.html" data-i18n="nav-inicio-sesion">Inicio Sesión</a>
+        <a href="registro.html" data-i18n="nav-registrarse">Registrarse</a>
+        <a href="historia.html" data-i18n="nav-historia">Historia</a>
+        <a href="sedes.html" data-i18n="nav-sedes">Sedes</a>
+        <a href="foro.html" data-i18n="nav-foro">Foro</a>
+        <a href="Partidos.html" data-i18n="nav-partidos">Ver partidos</a>
+        <a href="perfil.html" data-i18n="nav-perfil">Perfil</a>
+        <div class="acciones-lateral">
+            <button class="boton-lateral" id="modo-oscuro-lateral" title="Activar/desactivar modo oscuro">
+                <img src="modo claro.png" alt="Modo oscuro" class="icono-lateral">
+                <span data-i18n="modo-oscuro">Modo Oscuro</span>
+            </button>
+            <button class="boton-lateral" id="modo-notificacion-lateral" title="Ver notificaciones">
+                <img src="bell.png" alt="Notificaciones" class="icono-lateral">
+                <span data-i18n="notificaciones">Notificaciones</span>
+                <span class="contador-notificaciones">3</span>
+            </button>
+            <button class="boton-lateral" id="boton-accesibilidad-lateral" title="Opciones de accesibilidad">
+                <img src="ajustes.png" alt="Accesibilidad" class="icono-lateral">
+                <span data-i18n="accesibilidad">Accesibilidad</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Menú de navegación fijo -->
+    <nav class="texto-menu">
+        <a href="Inicio-Sesion.html" data-i18n="nav-inicio-sesion">Inicio Sesión</a>
+        <a href="registro.html" data-i18n="nav-registrarse">Registrarse</a>
+        <a href="historia.html" data-i18n="nav-historia">Historia</a>
+        <a href="sedes.html" data-i18n="nav-sedes">Sedes</a>
+        <a href="foro.html" data-i18n="nav-foro">Foro</a>
+        <a href="Partidos.html" data-i18n="nav-partidos">Ver partidos</a>
+    </nav>
+
+    <div class="cuadro-blanco-historia">
+        <div class="controles-mundiales">
+            <button class="btn-agregar-mundial" id="btn-agregar-mundial">
+                <img src="mas.png" alt="Agregar mundial" class="icono-control">
+                Agregar Mundial
+            </button>
+            <button class="btn-editar-mundial" id="btn-editar-mundial">
+                <img src="editar.png" alt="Editar mundial" class="icono-control">
+                Editar Mundial
+            </button>
+            <button class="btn-eliminar-mundial" id="btn-eliminar-mundial">
+                    <img src="delete.png" alt="Eliminar mundial" class="icono-control">
+                    Eliminar Mundial
+                </button>
+        </div>
+
+        <!-- Próximos partidos -->
+        <section class="fecha-mundial">
+            <div class="carrusel">
+                <button class="prev">⮜</button>
+                <div class="cards-container">
+                    <div class="cards">
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1930</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1934</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1938</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1950</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1954</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1958</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1962</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1966</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1970</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1974</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1978</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1982</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1986</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1990</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1994</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>1998</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>2002</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>2006</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>2010</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>2014</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>2018</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>2022</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="fecha">
+                                <span>2026</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="next">⮞</button>
+            </div>
+            <!-- Sección independiente abajo -->
+            <div id="info-mundial" class="info-mundial">
+                <div class="info-container">
+                    <img id="imagen-mundial" src="" alt="Imagen del Mundial">
+                    <div class="info-text">
+                        <h2 id="titulo-mundial"></h2>
+                        <p id="texto-mundial"></p>
+                        <div id="jugadores-info"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agrega esto después de la sección de información del mundial -->
+            <div class="estadisticas-generales">
+                <h3>📈 Estadísticas Históricas</h3>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <h4>País con más Copas</h4>
+                        <p>🇧🇷 Brasil - 5 títulos</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Máximo Goleador Histórico</h4>
+                        <p>👑 Miroslav Klose (Alemania) - 16 goles</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Más Finales Disputadas</h4>
+                        <p>🇩🇪 Alemania - 8 finales</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>Partido con más Goles</h4>
+                        <p>⚽ Austria 7-5 Suiza (1954)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODAL PARA AGREGAR/EDITAR MUNDIAL -->
+    <div id="modal-mundial" class="modal-mundial">
+        <div class="modal-contenido">
+            <span class="cerrar-modal">&times;</span>
+            <h3 id="titulo-modal">Agregar Nuevo Mundial</h3>
+            <form id="form-mundial">
+                <div class="campo-formulario">
+                    <label for="anio-mundial">Año del Mundial:</label>
+                    <input type="number" id="anio-mundial" required min="1930" max="2100">
+                </div>
+                <div class="campo-formulario">
+                    <label for="titulo-mundial">Título:</label>
+                    <input type="text" id="titulo-mundial" required>
+                </div>
+                <div class="campo-formulario">
+                    <label for="imagen-mundial">URL de la imagen:</label>
+                    <input type="url" id="imagen-mundial" required>
+                </div>
+                <div class="campo-formulario">
+                    <label for="descripcion-mundial">Descripción:</label>
+                    <textarea id="descripcion-mundial" rows="4" required></textarea>
+                </div>
+                <div class="botones-modal">
+                    <button type="submit" class="btn-guardar-sedes">Guardar</button>
+                    <button type="button" class="btn-cancelar-sedes">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL PARA EDITAR MUNDIAL -->
+        <div id="modal-editar-mundial" class="modal-mundial">
+            <div class="modal-contenido">
+                <span class="cerrar-modal-editar">&times;</span>
+                <h3 id="titulo-modal-editar">Editar Mundial</h3>
+                <form id="form-editar-mundial">
+                    <div class="campo-formulario">
+                        <label for="anio-mundial-editar">Año del Mundial:</label>
+                        <input type="number" id="anio-mundial-editar" required min="1930" max="2100" readonly>
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="titulo-mundial-editar">Título:</label>
+                        <input type="text" id="titulo-mundial-editar" required>
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="imagen-mundial-editar">URL de la imagen:</label>
+                        <input type="url" id="imagen-mundial-editar" required>
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="descripcion-mundial-editar">Descripción:</label>
+                        <textarea id="descripcion-mundial-editar" rows="4" required></textarea>
+                    </div>
+                    <div class="botones-modal">
+                        <button type="submit" class="btn-guardar-sedes">Guardar Cambios</button>
+                        <button type="button" class="btn-cancelar-sedes">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    <!-- Modal de confirmación para eliminar mundial -->
+    <div id="modal-confirmacion-eliminar-mundial" class="modal-eliminar-mundial">
+        <div class="modal-contenido-eliminar-mundial">
+            <div class="modal-header-eliminar-mundial">
+                <h2>Eliminar Mundial</h2>
+                <span class="cerrar-modal-eliminar-mundial">&times;</span>
+            </div>
+            <div class="modal-body-eliminar-mundial">
+                <div class="selector-anio-eliminar">
+                    <label for="select-anio-mundial-eliminar">Selecciona el año del mundial a eliminar:</label>
+                    <select id="select-anio-mundial-eliminar" class="select-anio">
+                        <option value="">-- Selecciona un año --</option>
+                        <!-- Los años se cargarán dinámicamente -->
+                    </select>
+                </div>
+                <div id="info-mundial-seleccionado" class="info-mundial-seleccionado" style="display: none;">
+                    <h4>Información del mundial:</h4>
+                    <p id="mundial-titulo"></p>
+                    <p id="mundial-descripcion"></p>
+                </div>
+                <p class="advertencia-eliminar-mundial">Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="modal-footer-eliminar-mundial">
+                <button class="btn-cancelar-eliminar-mundial">Cancelar</button>
+                <button class="btn-confirmar-eliminar-mundial" disabled>Eliminar</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+    <script src="scriptChuy.js"></script>
+    <script>
+    let anioSeleccionadoParaEliminarMundial = null;
+    let anioSeleccionadoParaEditar = null;
+    let cardsList = document.querySelectorAll(".card");
+    const imgMundial = document.getElementById("imagen-mundial");
+    const textoMundial = document.getElementById("texto-mundial");
+    const tituloMundial = document.getElementById("titulo-mundial");
+    const jugadoresInfo = document.getElementById("jugadores-info");
+
+// OBJETO MUNDIALES COMPLETO CON TODOS LOS CAMPOS
+const mundiales = {
+    1930: { 
+        img: "1930.jpg",
+        texto: "Uruguay 1930: En el año 1930 se disputó el primer Mundial de fútbol de la historia, que tuvo como sede Uruguay, que además sería el primer campeón del mundo de la historia, tras imponerse en la final a Argentina (4-2) en el estadio Centenario de Montevideo.",
+        bestPlayer: { name: 'José Nasazzi', country: 'Uruguay' },
+        topScorer: { name: 'Guillermo Stábile', country: 'Argentina', goals: '8' },
+        bestGK: { name: '', country: '' },
+        campeon: "Uruguay",
+        subcampeon: "Argentina",
+        sede: "Uruguay",
+        equiposParticipantes: 13,
+        partidosJugados: 18,
+        golesTotales: 70,
+        promedioGoles: 3.89,
+        asistenciaTotal: "434,500",
+        estadioFinal: "Estadio Centenario, Montevideo",
+        resultadoFinal: "Uruguay 4-2 Argentina",
+        datoCurioso: "Primer y único mundial sin eliminatorias - los equipos fueron invitados"
+    },
+    1934: { 
+        img: "1934.jpg", 
+        texto: "Italia 1934: Italia, como hiciera cuatro años antes Uruguay, también sería campeón al organizar el Mundial, en este caso el segundo de la historia. La Nazionale venció a Checoslovaquia (2-1) con un gol de Angelo Schiavio en la prórroga.",
+        bestPlayer: { name: 'Giuseppe Meazza', country: 'Italy' },
+        topScorer: { name: 'Oldřich Nejedlý', country: 'Czechoslovakia', goals: '5' },
+        bestGK: { name: '', country: '' },
+        campeon: "Italia",
+        subcampeon: "Checoslovaquia",
+        sede: "Italia",
+        equiposParticipantes: 16,
+        partidosJugados: 17,
+        golesTotales: 70,
+        promedioGoles: 4.12,
+        estadioFinal: "Estadio Nacional del PNF, Roma",
+        resultadoFinal: "Italia 2-1 Checoslovaquia",
+        datoCurioso: "Primer mundial con eliminatorias"
+    },
+    1938: { 
+        img: "1938.jpg", 
+        texto: "Francia 1938: La selección italiana revalidaría el título mundial cuatro años después en Francia, venciendo en la final con autoridad a Hungría (4-2) y convirtiéndose en el primer país en tener dos entorchados mundiales.",
+        bestPlayer: { name: 'Leônidas', country: 'Brazil' },
+        topScorer: { name: 'Leônidas', country: 'Brazil', goals: '7' },
+        bestGK: { name: '', country: '' },
+        campeon: "Italia",
+        subcampeon: "Hungría",
+        sede: "Francia",
+        equiposParticipantes: 15,
+        partidosJugados: 18,
+        golesTotales: 84,
+        promedioGoles: 4.67,
+        estadioFinal: "Estadio Olímpico Yves-du-Manoir, Colombes",
+        resultadoFinal: "Italia 4-2 Hungría",
+        datoCurioso: "Italia se convirtió en el primer bicampeón"
+    },
+    1950: { 
+        img: "1950.jpg", 
+        texto: "Brasil 1950: El Mundial disputado en Brasil, en el año 1950, dejó uno de los recuerdos más memorables de la historia de los Mundiales. Uruguay lograría su segundo galardón al imponerse a la Canarinha (2-1) en la final disputada en el estadio de Maracaná. El llamado 'Maracanazo' todavía sigue siendo recordado por todos los aficionados al fútbol.",
+        bestPlayer: { name: 'Zizinho', country: 'Brazil' },
+        topScorer: { name: 'Ademir', country: 'Brazil', goals: '9' },
+        bestGK: { name: '', country: '' },
+        campeon: "Uruguay",
+        subcampeon: "Brasil",
+        sede: "Brasil",
+        equiposParticipantes: 13,
+        partidosJugados: 22,
+        golesTotales: 88,
+        promedioGoles: 4.00,
+        estadioFinal: "Estadio Maracaná, Río de Janeiro",
+        resultadoFinal: "Uruguay 2-1 Brasil",
+        datoCurioso: "Famoso 'Maracanazo' - Uruguay sorprendió a Brasil en casa"
+    },
+    1954: { 
+        img: "1954.jpg", 
+        texto: "Suiza 1954: Alemania lograría su primer Mundial en el año 1954, una cita disputada en Suiza, y lo hizo imponiéndose a la Hungría de Ferenc Puskas en una gran remontada. Los húngaros empezaron venciendo 0-2 en los primeros diez minutos, pero Alemania logró darle la vuelta al marcador para acabar venciendo 3-2.",
+        bestPlayer: { name: 'Ferenc Puskás', country: 'Hungary' },
+        topScorer: { name: 'Sándor Kocsis', country: 'Hungary', goals: '11' },
+        bestGK: { name: '', country: '' },
+        campeon: "Alemania Occidental",
+        subcampeon: "Hungría",
+        sede: "Suiza",
+        equiposParticipantes: 16,
+        partidosJugados: 26,
+        golesTotales: 140,
+        promedioGoles: 5.38,
+        estadioFinal: "Estadio Wankdorf, Berna",
+        resultadoFinal: "Alemania Occidental 3-2 Hungría",
+        datoCurioso: "El 'Milagro de Berna' - Alemania venció a la poderosa Hungría"
+    },
+    1958: { 
+        img: "1958.jpg", 
+        texto: "Suecia 1958: En el año 1958, en Suecia, llegaría el primer Mundial de Brasil, país con más entorchados en la historia. La Canaricha evitó que Suecia, país anfitrión, lograra proclamarse campeón del mundo, y además lo hizo con un resultado contundente: 5-2.",
+        bestPlayer: { name: 'Didi', country: 'Brazil' },
+        topScorer: { name: 'Just Fontaine', country: 'France', goals: '13' },
+        bestGK: { name: '', country: '' },
+        campeon: "Brasil",
+        subcampeon: "Suecia",
+        sede: "Suecia",
+        equiposParticipantes: 16,
+        partidosJugados: 35,
+        golesTotales: 126,
+        promedioGoles: 3.60,
+        estadioFinal: "Estadio Råsunda, Solna",
+        resultadoFinal: "Brasil 5-2 Suecia",
+        datoCurioso: "Debut de Pelé con 17 años y récord de 13 goles de Just Fontaine"
+    },
+    1962: { 
+        img: "1962.jpg", 
+        texto: "Chile 1962: Cuatro años después, en Chile, Brasil colocaría su segunda estrella de campeón en el escudo tras vencer en la final a Checoslovaquia, que tendría que conformarse con un nuevo subcampeonato, que se suma al que lograron en el año 1934.",
+        bestPlayer: { name: 'Garrincha', country: 'Brazil' },
+        topScorer: { name: 'Garrincha', country: 'Brazil', goals: '4' },
+        bestGK: { name: '', country: '' },
+        campeon: "Brasil",
+        subcampeon: "Checoslovaquia",
+        sede: "Chile",
+        equiposParticipantes: 16,
+        partidosJugados: 32,
+        golesTotales: 89,
+        promedioGoles: 2.78,
+        estadioFinal: "Estadio Nacional, Santiago",
+        resultadoFinal: "Brasil 3-1 Checoslovaquia",
+        datoCurioso: "Brasil se convirtió en el primer bicampeón desde Italia"
+    },
+    1966: { 
+        img: "1966.jpg", 
+        texto: "Inglaterra 1966: Inglaterra se convertiría en otro de los países capaces de convertirse en campeón del mundo jugando en casa. Los Tres Leones vencerían en una trepidante final a Alemania en la prórroga (4-2) en un escenario imponente como lo es Wembley.",
+        bestPlayer: { name: 'Bobby Charlton', country: 'England' },
+        topScorer: { name: 'Eusébio', country: 'Portugal', goals: '9' },
+        bestGK: { name: '', country: '' },
+        campeon: "Inglaterra",
+        subcampeon: "Alemania Occidental",
+        sede: "Inglaterra",
+        equiposParticipantes: 16,
+        partidosJugados: 32,
+        golesTotales: 89,
+        promedioGoles: 2.78,
+        estadioFinal: "Estadio Wembley, Londres",
+        resultadoFinal: "Inglaterra 4-2 Alemania Occidental",
+        datoCurioso: "El famoso 'gol fantasma' en la final"
+    },
+    1970: { 
+        img: "1970.jpg", 
+        texto: "Mexico 1970: En el año 1970, en el Mundial disputado en México, Brasil sería nuevamente la campeona, sumando tres entorchados mundiales en las últimas cuatro citas disputadas. En la final, celebrada en el estadio Azteca, la Canarinha pasó por encima de Italia con un 4-1 sin paliativos. El Brasil del 70' siempre será considerado uno de los mejores equipos de la historia.",
+        bestPlayer: { name: 'Pelé', country: 'Brazil' },
+        topScorer: { name: 'Gerd Müller', country: 'West Germany', goals: '10' },
+        bestGK: { name: '', country: '' },
+        campeon: "Brasil",
+        subcampeon: "Italia",
+        sede: "México",
+        equiposParticipantes: 16,
+        partidosJugados: 32,
+        golesTotales: 95,
+        promedioGoles: 2.97,
+        estadioFinal: "Estadio Azteca, Ciudad de México",
+        resultadoFinal: "Brasil 4-1 Italia",
+        datoCurioso: "Brasil ganó su tercer título y se quedó con la Copa Jules Rimet en propiedad"
+    },
+    1974: { 
+        img: "1974.jpg", 
+        texto: "Alemania 1974: Alemania albergaría el Mundial del año 1974 y vería cómo su selección se convertiría en campeón del mundo por segunda vez en su historia al imponerse a la Holanda de Johan Cruyff por 2-1, en un encuentro disputado en el Olímpico de Múnich.",
+        bestPlayer: { name: 'Johan Cruyff', country: 'Netherlands' },
+        topScorer: { name: 'Grzegorz Lato', country: 'Poland', goals: '7' },
+        bestGK: { name: '', country: '' },
+        campeon: "Alemania Occidental",
+        subcampeon: "Países Bajos",
+        sede: "Alemania Occidental",
+        equiposParticipantes: 16,
+        partidosJugados: 38,
+        golesTotales: 97,
+        promedioGoles: 2.55,
+        estadioFinal: "Estadio Olímpico, Múnich",
+        resultadoFinal: "Alemania Occidental 2-1 Países Bajos",
+        datoCurioso: "Introducción del actual trofeo de la Copa del Mundo"
+    },
+    1978: { 
+        img: "1978.jpg", 
+        texto: "Argentina 1978: Argentina seguiría cuatro años después los pasos de Alemania, primero convirtiéndose en campeona del mundo en su casa, y segundo volviendo a dejar a Holanda con la miel en los labios en la final (3-1). El Monumental se vistió de Albiceleste .",
+        bestPlayer: { name: 'Mario Kempes', country: 'Argentina' },
+        topScorer: { name: 'Mario Kempes', country: 'Argentina', goals: '6' },
+        bestGK: { name: '', country: '' },
+        campeon: "Argentina",
+        subcampeon: "Países Bajos",
+        sede: "Argentina",
+        equiposParticipantes: 16,
+        partidosJugados: 38,
+        golesTotales: 102,
+        promedioGoles: 2.68,
+        estadioFinal: "Estadio Monumental, Buenos Aires",
+        resultadoFinal: "Argentina 3-1 Países Bajos",
+        datoCurioso: "Primer título para Argentina como local"
+    },
+    1982: { 
+        img: "1982.jpg", 
+        texto: "España 1982: España, en el año 1982, vería cómo Italia se proclamaría campeón del mundo por tercera vez en su historia. La Nazionale vencería 3-1 a Alemania en una final que se disputó en Madrid, en el estadio Santiago Bernabéu.",
+        bestPlayer: { name: 'Paolo Rossi', country: 'Italy' },
+        topScorer: { name: 'Paolo Rossi', country: 'Italy', goals: '6' },
+        bestGK: { name: '', country: '' },
+        campeon: "Italia",
+        subcampeon: "Alemania Occidental",
+        sede: "España",
+        equiposParticipantes: 24,
+        partidosJugados: 52,
+        golesTotales: 146,
+        promedioGoles: 2.81,
+        estadioFinal: "Estadio Santiago Bernabéu, Madrid",
+        resultadoFinal: "Italia 3-1 Alemania Occidental",
+        datoCurioso: "Primer mundial con 24 equipos"
+    },
+    1986: { 
+        img: "1986.jpg", 
+        texto: "Mexico 1986: México vivió el fútbol total de Diego Armando Maradona, y obviamente su Argentina, que sería campeona del mundo tras imponerse en una gran final a Alemania (3-2). El '10' no marcó en la final, pero su torneo fue sencillamente sensacional, sobre todo su partido ante Inglaterra, que dejó uno de los mejores goles de la historia.",
+        bestPlayer: { name: 'Diego Maradona', country: 'Argentina' },
+        topScorer: { name: 'Gary Lineker', country: 'England', goals: '6' },
+        bestGK: { name: '', country: '' },
+        campeon: "Argentina",
+        subcampeon: "Alemania Occidental",
+        sede: "México",
+        equiposParticipantes: 24,
+        partidosJugados: 52,
+        golesTotales: 132,
+        promedioGoles: 2.54,
+        estadioFinal: "Estadio Azteca, Ciudad de México",
+        resultadoFinal: "Argentina 3-2 Alemania Occidental",
+        datoCurioso: "El 'Gol del Siglo' de Maradona contra Inglaterra"
+    },
+    1990: { 
+        img: "1990.jpg", 
+        texto: "Italia 1990: Cuatro años después Alemania se tomaría la revancha contra Argentina, reeditando una final que se llevaría la Mannschaft , por la mínima (1-0), para proclamarse campeón del mundo por tercera vez en su historia. El solitario gol de Andreas Brehme sirvió para que, en el Olímpico de Roma, Alemania venciera nuevamente.",
+        bestPlayer: { name: 'Salvatore Schillaci', country: 'Italy' },
+        topScorer: { name: 'Salvatore Schillaci', country: 'Italy', goals: '6' },
+        bestGK: { name: '', country: '' },
+        campeon: "Alemania Occidental",
+        subcampeon: "Argentina",
+        sede: "Italia",
+        equiposParticipantes: 24,
+        partidosJugados: 52,
+        golesTotales: 115,
+        promedioGoles: 2.21,
+        estadioFinal: "Estadio Olímpico, Roma",
+        resultadoFinal: "Alemania Occidental 1-0 Argentina",
+        datoCurioso: "Mundial con menor promedio de goles de la historia"
+    },
+    1994: { 
+        img: "1994.jpg", 
+        texto: "Estados Unidos 1994: Estados Unidos albergó por primera vez una cita mundialista que sirvió para empezar a poner las bases para que el 'soccer' empezara a ser seguido por los yankees . Brasil sería campeona del mundo por cuarta vez en su historia tras vencer a Italia en la tanda de penaltis. Roberto Baggio, con su penalti a las nubes, nos regalaría otra de las imágenes de la historia de los Mundiales.",
+        bestPlayer: { name: 'Romário', country: 'Brazil' },
+        topScorer: { name: 'Oleg Salenko and Hristo Stoichkov', country: 'Russia/Bulgaria', goals: '6' },
+        bestGK: { name: 'Michel Preud\'homme', country: 'Belgium' },
+        campeon: "Brasil",
+        subcampeon: "Italia",
+        sede: "Estados Unidos",
+        equiposParticipantes: 24,
+        partidosJugados: 52,
+        golesTotales: 141,
+        promedioGoles: 2.71,
+        estadioFinal: "Rose Bowl, Pasadena",
+        resultadoFinal: "Brasil 0-0 Italia (3-2 pen.)",
+        datoCurioso: "Primera final decidida por penaltis"
+    },
+    1998: { 
+        img: "1998.jpg", 
+        texto: "Francia 1998: La Francia de Zinedine Zidane se convertiría en campeón del mundo por primera vez en su historia tras bordar el torneo, en el que además actuaban de local al ser sede. In la final, disputada en el Stade de France, Les Bleus arrollaron a Brasil (3-0).",
+        bestPlayer: { name: 'Ronaldo', country: 'Brazil' },
+        topScorer: { name: 'Davor Šuker', country: 'Croatia', goals: '6' },
+        bestGK: { name: 'Fabien Barthez', country: 'France' },
+        campeon: "Francia",
+        subcampeon: "Brasil",
+        sede: "Francia",
+        equiposParticipantes: 32,
+        partidosJugados: 64,
+        golesTotales: 171,
+        promedioGoles: 2.67,
+        estadioFinal: "Stade de France, Saint-Denis",
+        resultadoFinal: "Francia 3-0 Brasil",
+        datoCurioso: "Primer mundial con 32 equipos"
+    },
+    2002: { 
+        img: "2002.jpg", 
+        texto: "Corea del Sur/Japon 2002: El primer Mundial disputado en suelo asiático dejó campeón a Brasil, nuevamente venciendo a Alemania (2-0) el combinado que mas finales ha disputado en la historia de los Mundiales. Ronaldo, que fue triste protagonista en la final de 1998, se desquitaría con un doblete que valdría para que la Canarinha se convirtiera en pentacampeona en el estadio de Yokohama.",
+        bestPlayer: { name: 'Oliver Kahn', country: 'Germany' },
+        topScorer: { name: 'Ronaldo', country: 'Brazil', goals: '8' },
+        bestGK: { name: 'Oliver Kahn', country: 'Germany' },
+        campeon: "Brasil",
+        subcampeon: "Alemania",
+        sede: "Corea del Sur y Japón",
+        equiposParticipantes: 32,
+        partidosJugados: 64,
+        golesTotales: 161,
+        promedioGoles: 2.52,
+        estadioFinal: "Estadio Internacional, Yokohama",
+        resultadoFinal: "Brasil 2-0 Alemania",
+        datoCurioso: "Primer mundial coorganizado por dos países"
+    },
+    2006: { 
+        img: "2006.jpg", 
+        texto: "Alemania 2006: Alemania albergaría cuatro años después un Mundial que quedaría marcado por dos hechos: la victoria de Italia y la retirada internacional de Zinedine Zidane, que sería expulsado en la final tras propinar un cabezazo a Marco Materazzi. La Nazionale sería tetracampeona del mundo tras imponerse a les Bleus en la tanda de penaltis.",
+        bestPlayer: { name: 'Zinedine Zidane', country: 'France' },
+        topScorer: { name: 'Miroslav Klose', country: 'Germany', goals: '5' },
+        bestGK: { name: 'Gianluigi Buffon', country: 'Italy' },
+        campeon: "Italia",
+        subcampeon: "Francia",
+        sede: "Alemania",
+        equiposParticipantes: 32,
+        partidosJugados: 64,
+        golesTotales: 147,
+        promedioGoles: 2.30,
+        estadioFinal: "Estadio Olímpico, Berlín",
+        resultadoFinal: "Italia 1-1 Francia (5-3 pen.)",
+        datoCurioso: "Famoso cabezazo de Zidane a Materazzi en la final"
+    },
+    2010: { 
+        img: "2010.jpg", 
+        texto: "Sudafrica 2010: Sudáfrica viviría el fútbol total de la Selección Española, que se se proclamaría campeona del mundo por primera vez en su historia tras arrasar con su 'tiki-taka'. Con un juego de toque que encandiló al mundo entero, La Roja se impuso en la prórroga de la final, disputada en el Soccer City de Johannesburgo, a Holanda con un gol de Andrés Iniesta que ya es historia del deporte.",
+        bestPlayer: { name: 'Diego Forlán', country: 'Uruguay' },
+        topScorer: { name: 'Thomas Müller', country: 'Germany', goals: '5' },
+        bestGK: { name: 'Iker Casillas', country: 'Spain' },
+        campeon: "España",
+        subcampeon: "Países Bajos",
+        sede: "Sudáfrica",
+        equiposParticipantes: 32,
+        partidosJugados: 64,
+        golesTotales: 145,
+        promedioGoles: 2.27,
+        estadioFinal: "Soccer City, Johannesburgo",
+        resultadoFinal: "España 1-0 Países Bajos",
+        datoCurioso: "Primer mundial en África"
+    },
+    2014: { 
+        img: "2014.jpeg", 
+        texto: "Brasil 2014: Alemania, otra vez Alemania en una final. En esta ocasión para proclamarse campeona del mundo en Maracaná por cuarta vez en su historia al vencer a Argentina, nuevamente, con un gol en la prórroga de Mario Götze. Lionel Messi, en una final discreta, perdería una ocasión de oro para alzar el Mundial.",
+        bestPlayer: { name: 'Lionel Messi', country: 'Argentina' },
+        topScorer: { name: 'James Rodríguez', country: 'Colombia', goals: '6' },
+        bestGK: { name: 'Manuel Neuer', country: 'Germany' },
+        campeon: "Alemania",
+        subcampeon: "Argentina",
+        sede: "Brasil",
+        equiposParticipantes: 32,
+        partidosJugados: 64,
+        golesTotales: 171,
+        promedioGoles: 2.67,
+        estadioFinal: "Estadio Maracaná, Río de Janeiro",
+        resultadoFinal: "Alemania 1-0 Argentina",
+        datoCurioso: "Alemania venció 7-1 a Brasil en semifinales"
+    },
+    2018: { 
+        img: "2018.jpg", 
+        texto: "Rusia 2018: Francia logró su segundo título del mundo al vencer 4-2 en la final a Croacia. El trabajo de los galos se sustentó de punta a punta: desde Hugo Lloris hasta Kilyan Mbappé, pasando por Ngolo Kanté, Paul Pogba o Antoine Griezmann. Veinte años después de ganar y organizar la cita de 1998, Les Bleus volvieron a festejar.",
+        bestPlayer: { name: 'Luka Modrić', country: 'Croatia' },
+        topScorer: { name: 'Harry Kane', country: 'England', goals: '6' },
+        bestGK: { name: 'Thibaut Courtois', country: 'Belgium' },
+        campeon: "Francia",
+        subcampeon: "Croacia",
+        sede: "Rusia",
+        equiposParticipantes: 32,
+        partidosJugados: 64,
+        golesTotales: 169,
+        promedioGoles: 2.64,
+        estadioFinal: "Estadio Luzhnikí, Moscú",
+        resultadoFinal: "Francia 4-2 Croacia",
+        datoCurioso: "Primer mundial en Europa del Este"
+    },
+    2022: { 
+        img: "2022.jpeg", 
+        texto: "Qatar 2022: La Copa Mundial de la FIFA Catar 2022. Fue la vigésima segunda edición de la Copa Mundial de Fútbol masculino organizada por la FIFA. Esta edición del evento se desarrolló del 20 de noviembre al 18 de diciembre en el otoño de Qatar, que consiguió los derechos de organización el 2 de diciembre de 2010.",
+        bestPlayer: { name: 'Lionel Messi', country: 'Argentina' },
+        topScorer: { name: 'Kylian Mbappé', country: 'France', goals: '8' },
+        bestGK: { name: 'Emiliano Martínez', country: 'Argentina' },
+        campeon: "Argentina",
+        subcampeon: "Francia",
+        sede: "Qatar",
+        equiposParticipantes: 32,
+        partidosJugados: 64,
+        golesTotales: 172,
+        promedioGoles: 2.69,
+        estadioFinal: "Estadio Lusail, Lusail",
+        resultadoFinal: "Argentina 3-3 Francia (4-2 pen.)",
+        datoCurioso: "Primer mundial en Oriente Medio y en noviembre-diciembre"
+    },
+    2026: { 
+        img: "2026.jpeg", 
+        texto: "México/EE.UU/Canadá 2026: Por primera vez tres países organizarán una Copa del Mundo y, además, habrá 48 equipos clasificados para disputar el Mundial en el continente americano. Sin duda será un torneo histórico.",
+        bestPlayer: { name: '', country: '' },
+        topScorer: { name: '', country: '', goals: '' },
+        bestGK: { name: '', country: '' },
+        campeon: "Por definir",
+        subcampeon: "Por definir",
+        sede: "México, Estados Unidos y Canadá",
+        equiposParticipantes: 48,
+        partidosJugados: 104,
+        golesTotales: "Por definir",
+        promedioGoles: "Por definir",
+        estadioFinal: "Por definir",
+        resultadoFinal: "Por definir",
+        datoCurioso: "Primer mundial con 48 equipos y tres países organizadores"
+    }
+};
+
+// INICIALIZACIÓN PRINCIPAL
+document.addEventListener('DOMContentLoaded', function() {
+    inicializarEventosEliminarMundial();
+    inicializarEventosAgregarMundial();
+    inicializarEventosEditarMundial();
+    inicializarEfectosHover();
+    inicializarCarrusel();
+    inicializarCardsMundiales();
+    
+    // Mostrar 1930 por defecto
+    mostrarMundial("1930");
+    if (cardsList.length > 0) {
+        activarCard(cardsList[0]);
+    }
+});
+
+// FUNCIONES DE INICIALIZACIÓN
+function inicializarEfectosHover() {
+    const cardsMundiales = document.querySelectorAll('.card');
+    cardsMundiales.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const menuLateralAgenda = document.querySelector('.menu-lateral');
+            if (menuLateralAgenda) menuLateralAgenda.classList.remove('activo');
+        }
+    });
+}
+
+function inicializarEventosAgregarMundial() {
+    const btnAgregarMundial = document.getElementById('btn-agregar-mundial');
+    const modalMundial = document.getElementById('modal-mundial');
+    const cerrarModal = document.querySelector('.cerrar-modal');
+    const btnCancelar = document.querySelector('.btn-cancelar-sedes');
+    const formMundial = document.getElementById('form-mundial');
+
+    if (btnAgregarMundial && modalMundial) {
+        btnAgregarMundial.addEventListener('click', function() {
+            modalMundial.style.display = 'block';
+            document.getElementById('titulo-modal').textContent = 'Agregar Nuevo Mundial';
+            if (formMundial) formMundial.reset();
+        });
+    }
+
+    function cerrarModalFunc() {
+        if (modalMundial) {
+            modalMundial.style.display = 'none';
+        }
+    }
+
+    if (cerrarModal) {
+        cerrarModal.addEventListener('click', cerrarModalFunc);
+    }
+
+    if (btnCancelar) {
+        btnCancelar.addEventListener('click', cerrarModalFunc);
+    }
+
+    if (modalMundial) {
+        modalMundial.addEventListener('click', function(e) {
+            if (e.target === modalMundial) {
+                cerrarModalFunc();
+            }
+        });
+    }
+
+    if (formMundial) {
+        formMundial.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const anio = document.getElementById('anio-mundial').value;
+            const titulo = document.getElementById('titulo-mundial').value;
+            const imagenInput = document.getElementById('imagen-mundial');
+            const descripcion = document.getElementById('descripcion-mundial').value;
+
+            // Subir imagen desde dispositivo
+            const imagenFile = imagenInput.files[0];
+            if (!imagenFile) {
+                alert('Por favor selecciona una imagen');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                mundiales[anio] = {
+                    img: e.target.result, // Guarda la imagen como base64
+                    texto: descripcion,
+                    bestPlayer: { name: '', country: '' },
+                    topScorer: { name: '', country: '', goals: '' },
+                    bestGK: { name: '', country: '' },
+                    campeon: "",
+                    subcampeon: "",
+                    sede: "",
+                    equiposParticipantes: 0,
+                    partidosJugados: 0,
+                    golesTotales: 0,
+                    promedioGoles: 0,
+                    estadioFinal: "",
+                    resultadoFinal: "",
+                    datoCurioso: ""
+                };
+
+                agregarCardAlCarrusel(anio);
+                cerrarModalFunc();
+                alert('Mundial agregado correctamente!');
+            };
+            reader.readAsDataURL(imagenFile);
+        });
+    }
+}
+
+function inicializarEventosEditarMundial() {
+    const btnEditarMundial = document.getElementById('btn-editar-mundial');
+    const modalEditarMundial = document.getElementById('modal-editar-mundial');
+    const cerrarModalEditar = document.querySelector('.cerrar-modal-editar');
+    const btnCancelarEditar = document.querySelector('#modal-editar-mundial .btn-cancelar-sedes');
+    const formEditarMundial = document.getElementById('form-editar-mundial');
+
+    if (btnEditarMundial && modalEditarMundial) {
+        btnEditarMundial.addEventListener('click', function() {
+            const añosDisponibles = obtenerAñosDisponiblesMundiales();
+            
+            if (añosDisponibles.length > 0) {
+                // Mostrar selector de años para editar
+                const añoSeleccionado = prompt('Ingresa el año del mundial que quieres editar:\n' + añosDisponibles.join(', '));
+                
+                if (añoSeleccionado && mundiales[añoSeleccionado]) {
+                    anioSeleccionadoParaEditar = añoSeleccionado;
+                    cargarDatosEnFormularioEditar(añoSeleccionado);
+                    modalEditarMundial.style.display = 'block';
+                } else if (añoSeleccionado) {
+                    alert('El año ingresado no existe en la base de datos.');
+                }
+            } else {
+                alert('No hay mundiales disponibles para editar.');
+            }
+        });
+    }
+
+    function cerrarModalEditarFunc() {
+        if (modalEditarMundial) {
+            modalEditarMundial.style.display = 'none';
+            anioSeleccionadoParaEditar = null;
+        }
+    }
+
+    if (cerrarModalEditar) {
+        cerrarModalEditar.addEventListener('click', cerrarModalEditarFunc);
+    }
+
+    if (btnCancelarEditar) {
+        btnCancelarEditar.addEventListener('click', cerrarModalEditarFunc);
+    }
+
+    if (modalEditarMundial) {
+        modalEditarMundial.addEventListener('click', function(e) {
+            if (e.target === modalEditarMundial) {
+                cerrarModalEditarFunc();
+            }
+        });
+    }
+
+    if (formEditarMundial) {
+        formEditarMundial.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!anioSeleccionadoParaEditar) return;
+            
+            const titulo = document.getElementById('titulo-mundial-editar').value;
+            const imagen = document.getElementById('imagen-mundial-editar').value;
+            const descripcion = document.getElementById('descripcion-mundial-editar').value;
+
+            // Actualizar el mundial
+            mundiales[anioSeleccionadoParaEditar].texto = descripcion;
+            mundiales[anioSeleccionadoParaEditar].img = imagen;
+
+            // Si el usuario cambió campos adicionales, actualízalos también
+            const tituloActual = document.getElementById('titulo-mundial-editar').value;
+            if (tituloActual && tituloActual !== `Mundial ${anioSeleccionadoParaEditar}`) {
+                // Aquí podrías actualizar otros campos si los tienes
+            }
+
+            // Actualizar la vista si el mundial editado es el que se está mostrando
+            const cardActiva = document.querySelector('.card.active');
+            if (cardActiva) {
+                const añoActivo = cardActiva.querySelector('.fecha span').textContent;
+                if (añoActivo === anioSeleccionadoParaEditar) {
+                    mostrarMundial(anioSeleccionadoParaEditar);
+                }
+            }
+
+            cerrarModalEditarFunc();
+            alert('Mundial actualizado correctamente!');
+        });
+    }
+}
+
+function agregarCardAlCarrusel(anio) {
+    const cardsContainer = document.querySelector('.cards');
+    if (!cardsContainer) return;
+    
+    const nuevaCard = document.createElement('div');
+    nuevaCard.className = 'card';
+    nuevaCard.innerHTML = `
+        <div class="fecha">
+            <span>${anio}</span>
+        </div>
+    `;
+
+    nuevaCard.addEventListener('click', function() {
+        cardsList.forEach(c => c.classList.remove("active"));
+        nuevaCard.classList.add("active");
+        const year = anio.toString();
+        mostrarMundial(year);
+    });
+
+    cardsContainer.appendChild(nuevaCard);
+    cardsList = document.querySelectorAll(".card");
+}
+
+function inicializarCarrusel() {
+    const cards = document.querySelector(".cards");
+    if (!cards) return;
+    
+    let offset = 0;
+    const nextBtn = document.querySelector(".next");
+    const prevBtn = document.querySelector(".prev");
+    
+    if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+            if (offset > -(cards.scrollWidth - cards.parentElement.offsetWidth)) {
+                offset -= 300;
+                cards.style.transform = `translateX(${offset}px)`;
+            }
+        });
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener("click", () => {
+            if (offset < 0) {
+                offset += 300;
+                cards.style.transform = `translateX(${offset}px)`;
+            }
+        });
+    }
+}
+
+function inicializarCardsMundiales() {
+    cardsList = document.querySelectorAll(".card");
+    
+    cardsList.forEach(card => {
+        card.addEventListener("click", () => {
+            cardsList.forEach(c => c.classList.remove("active"));
+            card.classList.add("active");
+            const year = card.querySelector(".fecha span").textContent;
+            mostrarMundial(year);
+        });
+    });
+}
+
+// FUNCIONES PRINCIPALES
+function activarCard(card) {
+    cardsList.forEach(c => c.classList.remove("active"));
+    card.classList.add("active");
+}
+
+function mostrarMundial(year) {
+    if (!imgMundial || !textoMundial || !tituloMundial || !jugadoresInfo) return;
+    
+    if (mundiales[year]) {
+        const mundial = mundiales[year];
+        imgMundial.src = mundial.img;
+        imgMundial.style.display = "block";
+        textoMundial.textContent = mundial.texto;
+        tituloMundial.textContent = `Mundial ${year}`;
+        
+        jugadoresInfo.innerHTML = `
+            <div class="info-detallada">
+                <div class="info-grid">
+                    <div class="info-columna">
+                        <h4>🏆 Información General</h4>
+                        <p><strong>Campeón:</strong> ${mundial.campeon || 'No disponible'}</p>
+                        <p><strong>Subcampeón:</strong> ${mundial.subcampeon || 'No disponible'}</p>
+                        <p><strong>Sede:</strong> ${mundial.sede || 'No disponible'}</p>
+                        <p><strong>Estadio Final:</strong> ${mundial.estadioFinal || 'No disponible'}</p>
+                        <p><strong>Resultado Final:</strong> ${mundial.resultadoFinal || 'No disponible'}</p>
+                    </div>
+                    
+                    <div class="info-columna">
+                        <h4>📊 Estadísticas</h4>
+                        <p><strong>Equipos:</strong> ${mundial.equiposParticipantes || 'No disponible'}</p>
+                        <p><strong>Partidos:</strong> ${mundial.partidosJugados || 'No disponible'}</p>
+                        <p><strong>Goles Totales:</strong> ${mundial.golesTotales || 'No disponible'}</p>
+                        <p><strong>Promedio de Goles:</strong> ${mundial.promedioGoles || 'No disponible'} por partido</p>
+                        ${mundial.asistenciaTotal ? `<p><strong>Asistencia:</strong> ${mundial.asistenciaTotal}</p>` : ''}
+                    </div>
+                </div>
+                
+                <div class="premios-individuales">
+                    <h4>⭐ Premios Individuales</h4>
+                    ${mundial.bestPlayer?.name ? `<p><strong>Mejor Jugador:</strong> ${mundial.bestPlayer.name} (${mundial.bestPlayer.country})</p>` : ''}
+                    ${mundial.topScorer?.name ? `<p><strong>Máximo Goleador:</strong> ${mundial.topScorer.name} (${mundial.topScorer.country}) - ${mundial.topScorer.goals} goles</p>` : ''}
+                    ${mundial.bestGK?.name ? `<p><strong>Mejor Portero:</strong> ${mundial.bestGK.name} (${mundial.bestGK.country})</p>` : ''}
+                </div>
+                
+                ${mundial.datoCurioso ? `
+                <div class="dato-curioso">
+                    <h4>💡 Dato Curioso</h4>
+                    <p>${mundial.datoCurioso}</p>
+                </div>
+                ` : ''}
+            </div>
+        `;
+        
+    } else {
+        imgMundial.style.display = "none";
+        textoMundial.textContent = "Información no disponible.";
+        tituloMundial.textContent = "";
+        jugadoresInfo.innerHTML = '<p>Información de jugadores no disponible.</p>';
+    }
+}
+
+// FUNCIONES PARA ELIMINAR MUNDIAL
+function inicializarEventosEliminarMundial() {
+    const btnEliminarMundial = document.getElementById('btn-eliminar-mundial');
+    const modalEliminarMundial = document.getElementById('modal-confirmacion-eliminar-mundial');
+    const btnCancelarEliminarMundial = document.querySelector('.btn-cancelar-eliminar-mundial');
+    const btnConfirmarEliminarMundial = document.querySelector('.btn-confirmar-eliminar-mundial');
+    const cerrarModalEliminarMundial = document.querySelector('.cerrar-modal-eliminar-mundial');
+    const selectAnioMundial = document.getElementById('select-anio-mundial-eliminar');
+
+    if (!btnEliminarMundial || !modalEliminarMundial) return;
+
+    btnEliminarMundial.addEventListener('click', function() {
+        const añosDisponibles = obtenerAñosDisponiblesMundiales();
+        
+        if (añosDisponibles.length > 0) {
+            cargarAñosEnSelectMundial(añosDisponibles);
+            abrirModalEliminarMundial();
+        } else {
+            alert('No hay mundiales disponibles para eliminar.');
+        }
+    });
+
+    if (selectAnioMundial) {
+        selectAnioMundial.addEventListener('change', function() {
+            anioSeleccionadoParaEliminarMundial = this.value;
+            const btnConfirmar = document.querySelector('.btn-confirmar-eliminar-mundial');
+            if (btnConfirmar) {
+                btnConfirmar.disabled = !anioSeleccionadoParaEliminarMundial;
+            }
+            
+            if (anioSeleccionadoParaEliminarMundial) {
+                mostrarInformacionMundial(anioSeleccionadoParaEliminarMundial);
+            }
+        });
+    }
+
+    if (cerrarModalEliminarMundial) {
+        cerrarModalEliminarMundial.addEventListener('click', function() {
+            const modal = document.getElementById('modal-confirmacion-eliminar-mundial');
+            modal.style.display = 'none';
+            anioSeleccionadoParaEliminarMundial = null;
+            
+            const infoDiv = document.getElementById('info-mundial-seleccionado');
+            if (infoDiv) infoDiv.style.display = 'none';
+        });
+    }
+
+    if (btnCancelarEliminarMundial) {
+        btnCancelarEliminarMundial.addEventListener('click', function() {
+            const modal = document.getElementById('modal-confirmacion-eliminar-mundial');
+            modal.style.display = 'none';
+            anioSeleccionadoParaEliminarMundial = null;
+            
+            const infoDiv = document.getElementById('info-mundial-seleccionado');
+            if (infoDiv) infoDiv.style.display = 'none';
+        });
+    }
+
+    if (btnConfirmarEliminarMundial) {
+        btnConfirmarEliminarMundial.addEventListener('click', confirmarEliminacionMundial);
+    }
+
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('modal-confirmacion-eliminar-mundial');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            anioSeleccionadoParaEliminarMundial = null;
+            
+            const infoDiv = document.getElementById('info-mundial-seleccionado');
+            if (infoDiv) infoDiv.style.display = 'none';
+        }
+    });
+}
+
+function obtenerAñosDisponiblesMundiales() {
+    if (typeof mundiales !== 'undefined' && mundiales !== null) {
+        const años = Object.keys(mundiales).map(año => parseInt(año));
+        return años.sort((a, b) => b - a);
+    }
+    console.warn('No se encontró el objeto mundiales');
+    return [];
+}
+
+function mostrarInformacionMundial(año) {
+    const mundial = mundiales[año];
+    const infoDiv = document.getElementById('info-mundial-seleccionado');
+    const titulo = document.getElementById('mundial-titulo');
+    const descripcion = document.getElementById('mundial-descripcion');
+    
+    if (mundial && infoDiv && titulo && descripcion) {
+        const tituloMundial = mundial.texto.split(':')[0];
+        titulo.textContent = tituloMundial;
+        descripcion.textContent = mundial.texto.substring(0, 120) + '...';
+        infoDiv.style.display = 'block';
+    } else if (infoDiv) {
+        infoDiv.style.display = 'none';
+    }
+}
+
+function cargarAñosEnSelectMundial(años) {
+    const select = document.getElementById('select-anio-mundial-eliminar');
+    if (!select) return;
+    
+    while (select.options.length > 1) {
+        select.remove(1);
+    }
+    
+    años.forEach(año => {
+        const option = document.createElement('option');
+        option.value = año;
+        option.textContent = año;
+        select.appendChild(option);
+    });
+    
+    select.value = "";
+    anioSeleccionadoParaEliminarMundial = null;
+    
+    const infoDiv = document.getElementById('info-mundial-seleccionado');
+    if (infoDiv) infoDiv.style.display = 'none';
+    
+    const btnConfirmar = document.querySelector('.btn-confirmar-eliminar-mundial');
+    if (btnConfirmar) btnConfirmar.disabled = true;
+}
+
+function abrirModalEliminarMundial() {
+    const modal = document.getElementById('modal-confirmacion-eliminar-mundial');
+    if (modal) modal.style.display = 'block';
+}
+
+function confirmarEliminacionMundial() {
+    if (anioSeleccionadoParaEliminarMundial) {
+        const mundial = mundiales[anioSeleccionadoParaEliminarMundial];
+        let nombreMundial = `Mundial ${anioSeleccionadoParaEliminarMundial}`;
+        
+        if (mundial) {
+            nombreMundial = mundial.texto.split(':')[0];
+        }
+        
+        if (confirm(`¿Estás completamente seguro de que deseas eliminar "${nombreMundial}"?\n\nEsta acción es irreversible y eliminará toda la información histórica de este mundial.`)) {
+            eliminarMundialPorAño(anioSeleccionadoParaEliminarMundial);
+            
+            const modal = document.getElementById('modal-confirmacion-eliminar-mundial');
+            if (modal) modal.style.display = 'none';
+            
+            alert(`"${nombreMundial}" ha sido eliminado correctamente de la historia.`);
+            actualizarInterfazMundiales();
+        }
+    }
+}
+
+function eliminarMundialPorAño(año) {
+    console.log(`Eliminando mundial del año: ${año}`);
+    
+    if (mundiales[año]) {
+        delete mundiales[año];
+        console.log(`Mundial ${año} eliminado del objeto mundiales`);
+    }
+    
+    // Eliminar la card del carrusel
+    const cardEliminada = Array.from(document.querySelectorAll('.card')).find(card => 
+        card.querySelector('.fecha span')?.textContent === año.toString());
+    
+    if (cardEliminada) {
+        cardEliminada.remove();
+        cardsList = document.querySelectorAll(".card");
+        
+        // Si eliminamos el mundial activo, mostrar el primero disponible
+        if (cardsList.length > 0) {
+            const primerCard = cardsList[0];
+            activarCard(primerCard);
+            const year = primerCard.querySelector(".fecha span").textContent;
+            mostrarMundial(year);
+        } else {
+            // Si no hay más mundiales, limpiar la vista
+            if (imgMundial) imgMundial.style.display = "none";
+            if (textoMundial) textoMundial.textContent = "No hay mundiales disponibles.";
+            if (tituloMundial) tituloMundial.textContent = "";
+            if (jugadoresInfo) jugadoresInfo.innerHTML = "";
+        }
+    }
+}
+
+
+
+function actualizarInterfazMundiales() {
+    console.log('Actualizando interfaz de historia de mundiales...');
+    console.log('Objeto mundiales actualizado:', mundiales);
+}
+
+function cargarDatosEnFormularioEditar(año) {
+    const mundial = mundiales[año];
+    if (!mundial) return;
+
+    document.getElementById('anio-mundial-editar').value = año;
+    document.getElementById('titulo-mundial-editar').value = `Mundial ${año}`;
+    document.getElementById('imagen-mundial-editar').value = mundial.img;
+    document.getElementById('descripcion-mundial-editar').value = mundial.texto;
+}
+
+mostrarMundial("1930");
+activarCard(cardsList[0]);
+
+
+
+</script>
+</body>
+</html>

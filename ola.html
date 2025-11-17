@@ -1,0 +1,425 @@
+<!DOCTYPE html> 
+<html lang="es"> 
+    <head> 
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Mi Mundial - Sedes</title> 
+        <link rel="stylesheet" href="style.css"> 
+        
+    </head> 
+    <body>
+       
+            <!-- Encabezado -->
+    <header>
+        <h1>Mi Mundial</h1>
+        <div class="contenedor-botones">
+ <div class="menu-usuario">
+                <button class="boton-icono-perfil" id="boton-usuario" title="Menú de usuario">
+                    <img src="user.png" alt="Perfil" class="icono-perfil-btn">
+                </button>
+                <div class="menu-desplegable" id="menu-usuario">
+                    <div class="usuarios-registrados">
+                        <h4>Cuentas activas</h4>
+                        <div class="usuario-item" data-usuario="SimonSnow">
+                            <img src="user.png" alt="SimonSnow" class="icono-usuario">
+                            <span>SimonSnow</span>
+                        </div>
+                    </div>
+                   
+                    <a href="Inicio-Sesion.html" class="opcion-menu añadir-cuenta">
+                        <img src="añadir_usuario.png" alt="Añadir" class="icono-opcion">
+                        <span>Añadir cuenta</span>
+                    </a>
+                </div>
+    </div>
+          <!-- MENÚ DE NOTIFICACIONES -->
+            <div class="menu-notificaciones">
+                <button class="boton-notificacion" id="modo-notificacion" title="Notificaciones">
+                            <img src="bell.png" alt="Ver notificaciones" class="icono-perfil-btn">
+                    </button>
+
+                    <div class="menu-notificaciones-desplegable" id="menu-notificaciones">
+                        <div class="cabecera-notificaciones">
+                            <h4>Notificaciones</h4>
+                            <span class="contador-menu">3 nuevas</span>
+                        </div>
+                        
+                        <div class="lista-notificaciones">
+                            <!-- Notificación 1 -->
+                            <div class="notificacion-item">
+                                <div class="icono-notificacion">
+                                    <img src="user.png" alt="Usuario" class="icono-dato">
+                                </div>
+                                <div class="contenido-notificacion">
+                                    <p class="texto-notificacion"><strong>usuario23</strong> aceptó tu publicación</p>
+                                    <span class="tiempo-notificacion">Hace 2 horas</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Notificación 2 -->
+                            <div class="notificacion-item">
+                                <div class="icono-notificacion">
+                                    <img src="comentarios.png" alt="Comentario" class="icono-dato">
+                                </div>
+                                <div class="contenido-notificacion">
+                                    <p class="texto-notificacion"><strong>usuario70</strong> comentó tu publicación</p>
+                                    <span class="tiempo-notificacion">Hace 1 hora</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Notificación 3 - Con botón de aceptar -->
+                            <div class="notificacion-item notificacion-con-boton">
+                                <div class="icono-notificacion">
+                                    <img src="user.png" alt="Solicitud" class="icono-dato">
+                                </div>
+                                <div class="contenido-notificacion">
+                                    <p class="texto-notificacion"><strong>usuario67</strong> ha solicitado publicar algo</p>
+                                    <span class="tiempo-notificacion">Hace 30 minutos</span>
+                                    <button class="btn-aceptar-publicacion" data-notificacion="1">
+                                        Aceptar publicación
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pie-notificaciones">
+                            <a href="#" class="ver-todas">Ver todas las notificaciones</a>
+                        </div>
+                    </div>
+            </div>
+
+        <!-- mODO OSCURO -->
+        <button id="modo-oscuro" title="Cambiar modo">
+            <img src="modo oscuro.png" alt="Ajustes" class="icono-perfil-btn">
+        </button>
+
+        <!-- AJUSTES -->
+        <!-- En el header, junto a los otros botones -->
+<div class="menu-accesibilidad">
+    <button class="boton-icono-perfil" id="boton-accesibilidad" title="Opciones de accesibilidad">
+        <img src="ajustes.png" alt="Ajustes" class="icono-perfil-btn">
+    </button>
+    <div class="menu-accesibilidad-desplegable" id="menu-accesibilidad">
+        <div class="cabecera-accesibilidad">
+            <h4>Accesibilidad</h4>
+        </div>
+        
+        <div class="opciones-accesibilidad">
+            <!-- Tamaño de texto -->
+            <div class="opcion-grupo">
+                <label class="opcion-label">Tamaño de texto</label>
+                <div class="controles-tamano">
+                    <button class="btn-tamano" data-accion="disminuir-texto" title="Texto más pequeño">A-</button>
+                    <button class="btn-tamano" data-accion="reset-texto" title="Tamaño normal">A</button>
+                    <button class="btn-tamano" data-accion="aumentar-texto" title="Texto más grande">A+</button>
+                </div>
+            </div>
+            
+            <!-- Modo daltonismo -->
+            <div class="opcion-grupo">
+                <label class="opcion-label">Modo para daltonismo</label>
+                <div class="controles-daltonismo">
+                    <button class="btn-daltonismo" data-tipo="protanopia" title="Protanopia (rojo-verde)">
+                        🔴
+                    </button>
+                    <button class="btn-daltonismo" data-tipo="deuteranopia" title="Deuteranopia (rojo-verde)">
+                        🟢
+                    </button>
+                    <button class="btn-daltonismo" data-tipo="tritanopia" title="Tritanopia (azul-amarillo)">
+                        🔵
+                    </button>
+                    <button class="btn-daltonismo" data-tipo="reset" title="Modo normal">
+                        ⬜
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Alto contraste -->
+            <div class="opcion-grupo">
+                <label class="opcion-label">Alto contraste</label>
+                <label class="switch">
+                    <input type="checkbox" id="alto-contraste">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <!-- Reducir animaciones -->
+            <div class="opcion-grupo">
+                <label class="opcion-label">Reducir animaciones</label>
+                <label class="switch">
+                    <input type="checkbox" id="reducir-animaciones">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <!-- Navegación por teclado -->
+            <div class="opcion-grupo">
+                <label class="opcion-label">Navegación por teclado</label>
+                <label class="switch">
+                    <input type="checkbox" id="navegacion-teclado">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <!-- Lector de pantalla -->
+            <div class="opcion-grupo">
+                <label class="opcion-label">Modo lectura</label>
+                <label class="switch">
+                    <input type="checkbox" id="modo-lectura">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="pie-accesibilidad">
+            <button class="btn-reset-todo" id="reset-accesibilidad">
+                Restablecer todo
+            </button>
+        </div>
+    </div>
+</div>
+
+        </div>
+    </header>
+    
+
+    <!-- Imagen principal -->
+    <main class="perfil-fondo">
+        <header class="texto-menu">
+            <nav>
+                <a href="ola.html">Inicio</a>
+                <a href="registro.html">Inicio de sesion</a>
+                <a href="Inicio-Sesion.html">Registrate</a>
+                <a href="historia.html">Historia</a>
+                <a href="foro.html">Foro</a>
+                <a href="sedes.html">Sedes</a>
+                <a href="Partidos.html">Partidos</a>
+            </nav>
+        </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class ="contenido-principal">
+        <!-- HERO SECTION CON VIDEO -->
+        <section class="hero-section">
+            <video class="hero-video" src="0815.mp4" loop autoplay muted></video>
+           <!---- <h2 class="texto-encima-agenda">Equipos Participantes</h2>-->
+        </section>
+
+        <!-- SECCIÓN MUNDIALES -->
+        <section class="mundiales-agenda">
+            <audio class="audio-mundial" src="Waka Waka (Esto es Africa) (Cancion Oficial de la Copa Mundial de la FIFA� Sudafrica 2010).mp4" loop autoplay controls></audio>
+            
+            <h2 class="titulo-mundiales">Mundiales</h2>
+            
+            <!-- GRID DE MUNDIALES -->
+            <div class="grid-mundiales">
+                <!-- Mundial 2026 -->
+                <article class="card-mundial">
+                    <img src="2026.jpeg" alt="Mundial 2026">
+                    <p>Mundial 2026</p>
+                </article>
+                
+                <!-- Mundial 2022 -->
+                <article class="card-mundial">
+                    <img src="2022.jpeg" alt="Mundial 2022">
+                    <p>Mundial 2022</p>
+                </article>
+                
+                <!-- Mundial 2018 -->
+                <article class="card-mundial">
+                    <img src="2018.jpg" alt="Mundial 2018">
+                    <p>Mundial 2018</p>
+                </article>
+                
+                <!-- Mundial 2014 -->
+                <article class="card-mundial">
+                    <img src="2014.jpeg" alt="Mundial 2014">
+                    <p>Mundial 2014</p>
+                </article>
+                
+                <!-- Mundial 2010 -->
+                <article class="card-mundial">
+                    <img src="2010.jpg" alt="Mundial 2010" loading="lazy">
+                    <p>Mundial 2010</p>
+                </article>
+                
+                <!-- Mundial 2006 -->
+                <article class="card-mundial">
+                    <img src="2006.jpg" alt="Mundial 2006" loading="lazy">
+                    <p>Mundial 2006</p>
+                </article>
+                
+                <!-- Mundial 2002 -->
+                <article class="card-mundial">
+                    <img src="2002.jpg" alt="Mundial 2002" loading="lazy">
+                    <p>Mundial 2002</p>
+                </article>
+                
+                <!-- Mundial 1998 -->
+                <article class="card-mundial">
+                    <img src="1998.jpg" alt="Mundial 1998" loading="lazy">
+                    <p>Mundial 1998</p>
+                </article>
+                
+                <!-- Mundial 1994 -->
+                <article class="card-mundial">
+                    <img src="1994.jpg" alt="Mundial 1994" loading="lazy">
+                    <p>Mundial 1994</p>
+                </article>
+                
+                <!-- Mundial 1990 -->
+                <article class="card-mundial">
+                    <img src="1990.jpg" alt="Mundial 1990" loading="lazy">
+                    <p>Mundial 1990</p>
+                </article>
+                
+                <!-- Mundial 1986 -->
+                <article class="card-mundial">
+                    <img src="1986.jpg" alt="Mundial 1986" loading="lazy">
+                    <p>Mundial 1986</p>
+                </article>
+                
+                <!-- Mundial 1982 -->
+                <article class="card-mundial">
+                    <img src="1982.jpg" alt="Mundial 1982" loading="lazy">
+                    <p>Mundial 1982</p>
+                </article>
+                
+                <!-- Mundial 1978 -->
+                <article class="card-mundial">
+                    <img src="1978.jpg" alt="Mundial 1978" loading="lazy">
+                    <p>Mundial 1978</p>
+                </article>
+                
+                <!-- Mundial 1974 -->
+                <article class="card-mundial">
+                    <img src="1974.jpg" alt="Mundial 1974" loading="lazy">
+                    <p>Mundial 1974</p>
+                </article>
+                
+                <!-- Mundial 1970 -->
+                <article class="card-mundial">
+                    <img src="1970.jpg" alt="Mundial 1970" loading="lazy">
+                    <p>Mundial 1970</p>
+                </article>
+                
+                <!-- Mundial 1966 -->
+                <article class="card-mundial">
+                    <img src="1966.jpg" alt="Mundial 1966" loading="lazy">
+                    <p>Mundial 1966</p>
+                </article>
+                
+                <!-- Mundial 1962 -->
+                <article class="card-mundial">
+                    <img src="1962.jpg" alt="Mundial 1962" loading="lazy">
+                    <p>Mundial 1962</p>
+                </article>
+                
+                <!-- Mundial 1958 -->
+                <article class="card-mundial">
+                    <img src="1958.jpg" alt="Mundial 1958" loading="lazy">
+                    <p>Mundial 1958</p>
+                </article>
+                
+                <!-- Mundial 1954 -->
+                <article class="card-mundial">
+                    <img src="1954.jpg" alt="Mundial 1954" loading="lazy">
+                    <p>Mundial 1954</p>
+                </article>
+                
+                <!-- Mundial 1950 -->
+                <article class="card-mundial">
+                    <img src="1950.jpg" alt="Mundial 1950" loading="lazy">
+                    <p>Mundial 1950</p>
+                </article>
+                
+                <!-- Mundial 1938 -->
+                <article class="card-mundial">
+                    <img src="1938.jpg" alt="Mundial 1938" loading="lazy">
+                    <p>Mundial 1938</p>
+                </article>
+                
+                <!-- Mundial 1934 -->
+                <article class="card-mundial">
+                    <img src="1934.jpg" alt="Mundial 1934" loading="lazy">
+                    <p>Mundial 1934</p>
+                </article>
+                
+                <!-- Mundial 1930 -->
+                <article class="card-mundial">
+                    <img src="1930.jpg" alt="Mundial 1930" loading="lazy">
+                    <p>Mundial 1930</p>
+                </article>
+            </div>
+        </section>
+    </div>
+    </main>
+    <script src="script.js"></script>
+
+<script>
+// MENÚ DE NOTIFICACIONES
+document.addEventListener('DOMContentLoaded', function() {
+    const botonNotificacion = document.getElementById('modo-notificacion');
+    const menuNotificaciones = document.getElementById('menu-notificaciones');
+    const botonesAceptar = document.querySelectorAll('.btn-aceptar-publicacion');
+    const contadorNotificaciones = document.querySelector('.contador-notificaciones');
+    const contadorMenu = document.querySelector('.contador-menu');
+    
+    // Alternar menú de notificaciones
+    if (botonNotificacion && menuNotificaciones) {
+        botonNotificacion.addEventListener('click', function(e) {
+            e.stopPropagation();
+            menuNotificaciones.classList.toggle('activo');
+        });
+    }
+    
+    // Cerrar menú de notificaciones al hacer clic fuera
+    document.addEventListener('click', function(e) {
+        if (menuNotificaciones && menuNotificaciones.classList.contains('activo')) {
+            if (!menuNotificaciones.contains(e.target) && !botonNotificacion.contains(e.target)) {
+                menuNotificaciones.classList.remove('activo');
+            }
+        }
+    });
+    
+    // Funcionalidad para botones "Aceptar publicación"
+    botonesAceptar.forEach(boton => {
+        boton.addEventListener('click', function() {
+            const notificacionId = this.getAttribute('data-notificacion');
+            
+            // Cambiar estado del botón
+            this.classList.add('aceptado');
+            this.textContent = ' Publicación aceptada';
+            this.disabled = true;
+            
+            // Actualizar contadores
+            actualizarContadores();
+            
+            console.log(`Publicación ${notificacionId} aceptada`);
+        });
+    });
+    
+    // Función para actualizar contadores
+    function actualizarContadores() {
+        const notificacionesPendientes = document.querySelectorAll('.btn-aceptar-publicacion:not(.aceptado)').length;
+        const totalNotificaciones = document.querySelectorAll('.notificacion-item').length;
+        
+        if (contadorNotificaciones) {
+            contadorNotificaciones.textContent = totalNotificaciones;
+        }
+        
+        if (contadorMenu) {
+            contadorMenu.textContent = `${totalNotificaciones} nuevas`;
+        }
+    }
+    
+    // Cerrar menú al presionar Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && menuNotificaciones && menuNotificaciones.classList.contains('activo')) {
+            menuNotificaciones.classList.remove('activo');
+        }
+    });
+});
+</script>
+
+</body>
+</html>

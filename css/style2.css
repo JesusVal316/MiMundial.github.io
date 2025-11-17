@@ -1,0 +1,416 @@
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #fff;
+    
+    transition: background 0.3s, color 0.3s;
+}
+
+
+header {
+    background-color: #222;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    height: 40px;
+    left: 0;
+    z-index: 100;
+    border-bottom: 2px solid #3a3a3a;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    letter-spacing: 0;
+}
+
+header h1 span, header span {
+    color: #ccc;
+}
+
+
+.contenedor-botones {
+  display: flex;
+  gap: 10px;
+  margin-right: 4%;
+}
+
+.barra-inferior {
+    display: none;
+}
+
+#modo-oscuro, #modo-notificacion, #modo-suma {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+#modo-oscuro:hover, #modo-notificacion:hover, #modo-suma:hover {
+  transform: scale(1.15);
+}
+
+
+img {
+    height:35dvb;
+    margin-top: 5%;
+}
+.usuario {
+    height: 5dvb;
+    margin-right: 5%;
+    margin-bottom: 1%;
+}
+
+
+.texto-menu {
+    position: fixed;
+    top:60px;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    background-color: rgba(30, 30, 30, 0.9);
+    width: 100%;
+    padding: 0px 0;
+    text-align: center;
+    z-index: 90;
+    color: white;
+}
+
+.texto-menu a {
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 1dvw;
+}
+
+.texto-menu a:hover {
+    color: #00b7ff;
+    text-decoration: underline;
+}
+
+nav {
+    display: flex;
+    justify-content: left;
+    gap: 30px;
+}
+
+
+.mundiales {
+    margin-top: 80vmin;
+    font-size: 3vmin;
+    text-align: center;
+}
+
+
+.partidos-grid {
+    display: flex;
+}
+
+
+.partido-card {
+    box-sizing: border-box;
+    background-color: #222;
+    color: #fff;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 3dvb 3dvb 10dvb rgba(0, 0, 0, 0.6);
+    margin: 5%;
+    margin-bottom: 10%;
+    padding: 10px;
+}
+
+
+.agenda-container {
+    max-width: 850px;
+    background-color: rgba(0, 0, 0, 0.6);
+    margin: 140px auto 50px auto;
+    padding: 25px 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+}
+
+.agenda-container h2 {
+    font-size: 1.5rem;
+    border-bottom: 2px solid #555;
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+}
+
+.fechaag {
+    font-weight: bold;
+    color: #b0d9ff;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #666;
+    padding-bottom: 4px;
+}
+
+.partido-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.bandera {
+    width: 45px;
+    height: 30px;
+    border-radius: 4px;
+    object-fit: cover;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.partido-texto {
+    font-size: 0.95rem;
+    line-height: 1.3rem;
+    text-align: left;
+}
+
+.partido-imagen {
+    width: 150px;
+    height: 90px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-left: 15px;
+}
+
+.icono-corazon {
+    font-size: 1.3rem;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.icono-corazon:hover {
+    transform: scale(1.2);
+}
+
+
+.volver {
+    background: #444;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background 0.3s;
+}
+
+.volver:hover {
+    background: #666;
+}
+
+
+.agenda-container button {
+    background-color: #00b7ff;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.agenda-container button:hover {
+    background-color: #0097d8;
+}
+
+
+.texto-encima {
+    position: absolute;
+    top: 10dvh;
+    left: 1dvw;
+    font-size: 5vmin;
+    color: white;
+    background: transparent;
+    padding: 7dvb;
+}
+
+.Titulo {
+    font-size: 5vmin;
+}
+
+body.dark {
+    background: #181818;
+    color: #f5f5f5;
+}
+
+body.dark header {
+    background: #000;
+}
+
+body.dark .agenda-container {
+    background: rgba(25, 25, 25, 0.85);
+}
+
+body.dark .partido-card {
+    background: rgba(40, 40, 40, 0.85);
+}
+
+
+.menu-lateral {
+    display: none;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+@media (min-width: 801px) {
+    .menu-toggle {
+        display: none;
+    }
+    .menu-lateral {
+        display: none;
+    }
+    .texto-menu {
+        display: block;
+    }
+    .acciones {
+        display: flex;
+    }
+}
+
+
+@media (max-width: 800px) {
+    .acciones {
+        display: none;
+    }
+
+    header {
+        justify-content: space-between;
+        padding: 12px 16px;
+    }
+
+    .texto-menu {
+        display: none;
+    }
+
+    .menu-lateral {
+        position: fixed;
+        top: 60px;
+        right: 12px;
+        width: 65%;
+        max-width: 280px;
+        background: #333;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+        z-index: 200;
+    }
+
+    .menu-lateral a {
+        background: #555;
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .menu-lateral a:hover {
+        background: #777;
+    }
+
+    .menu-lateral.activo {
+        display: flex;
+    }
+
+    .barra-inferior {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #222;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px 0;
+        z-index: 150;
+    }
+
+    .barra-inferior button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.6rem;
+        cursor: pointer;
+    }
+
+    .agenda-container {
+        margin-top: 120px;
+        padding: 15px;
+    }
+
+    .partido-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .partido-imagen {
+        width: 100%;
+        height: 160px;
+        margin: 10px 0 0 0;
+    }
+}
+
+
+
+/*----------------------------- TRANSICIONES -------------------------*/
+/* EFECTOS DE CAÍDA RECTA Y SIMPLE */
+.caida-recta {
+    animation: caidaRecta 0.5s ease-out both;
+}
+
+.caida-header { animation-delay: 0.1s; }
+.caida-nav { animation-delay: 0.2s; }
+.caida-controls { animation-delay: 0.3s; }
+.caida-content { animation-delay: 0.4s; }
+.caida-info { animation-delay: 0.5s; }
+
+@keyframes caidaRecta {
+    0% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Efecto de salida recta */
+.salida-recta {
+    animation: salidaRecta 0.2s ease-in both;
+}
+
+@keyframes salidaRecta {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-15px);
+        opacity: 0;
+    }
+}
