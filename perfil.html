@@ -204,6 +204,7 @@
 
     <!-- Sección de perfil mejorada -->
     <!-- Sección de perfil mejorada -->
+
 <section class="perfil" preload>
     <div class="perfil-container">
         <!-- Iconos superiores -->
@@ -256,7 +257,7 @@
                 <span class="color-opcion" style="background-color: #181818;" data-color="#181818"></span>
             </div>
         </div>
-
+        <main>
         <!-- Datos del perfil -->
         <div class="datos-perfil">
             <h2>SimonSnow</h2>
@@ -268,6 +269,7 @@
                 <a href="inicio.html" class="btn-cerrar-sesion" data-i18n="cerrar-sesion">Cerrar Sesión</a>
             </div>
         </div>
+        </main>
     </div>
 
     <!-- Modal Editar Perfil -->
@@ -382,14 +384,16 @@
             <h3 data-i18n="mis-publicaciones">Mis Publicaciones</h3>
             <div class="contenedor-ordenar">
                 <img src="filtro.png" alt="Filtrar" class="icono-filtrar" loading="lazy">
-                <select class="select-ordenar" id="ordenarPublicaciones">
-                    <option value="" data-i18n="ordenar-por">Ordenar por...</option>
-                    <option value="fecha" data-i18n="ordenar-fecha">Fecha (más reciente)</option>
-                    <option value="alfabeto" data-i18n="ordenar-alfabeto">Alfabéticamente (A-Z)</option>
-                    <option value="categoria" data-i18n="ordenar-categoria">Categoría</option>
-                    <option value="likes" data-i18n="ordenar-likes">Más likes</option>
-                    <option value="vistas" data-i18n="ordenar-vistas">Más vistas</option>
-                </select>
+                <label for="ordenarPublicaciones" class="label-oculto"></label>
+<select class="select-ordenar" id="ordenarPublicaciones">
+    <option value="" data-i18n="ordenar-por">Ordenar por...</option>
+    <option value="fecha" data-i18n="ordenar-fecha">Fecha (más reciente)</option>
+    <option value="alfabeto" data-i18n="ordenar-alfabeto">Alfabéticamente (A-Z)</option>
+    <option value="categoria" data-i18n="ordenar-categoria">Categoría</option>
+    <option value="likes" data-i18n="ordenar-likes">Más likes</option>
+    <option value="vistas" data-i18n="ordenar-vistas">Más vistas</option>
+</select>
+
             </div>
         </div>
 
@@ -470,7 +474,7 @@
         </div>
     </div>
 </section>
-</main>
+
 
 <script  defer src="perfil.js"></script>
 <script defer src="perfil2.js"></script>
