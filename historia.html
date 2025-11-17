@@ -1374,7 +1374,7 @@ function mostrarMundial(year) {
             <div class="info-detallada">
                 <div class="info-grid">
                     <div class="info-columna">
-                        <h4>🏆 Información General</h4>
+                        <h3>🏆 Información General</h3>
                         <p><strong>Campeón:</strong> ${mundial.campeon || 'No disponible'}</p>
                         <p><strong>Subcampeón:</strong> ${mundial.subcampeon || 'No disponible'}</p>
                         <p><strong>Sede:</strong> ${mundial.sede || 'No disponible'}</p>
@@ -1383,7 +1383,7 @@ function mostrarMundial(year) {
                     </div>
                     
                     <div class="info-columna">
-                        <h4>📊 Estadísticas</h4>
+                        <h3>📊 Estadísticas</h3>
                         <p><strong>Equipos:</strong> ${mundial.equiposParticipantes || 'No disponible'}</p>
                         <p><strong>Partidos:</strong> ${mundial.partidosJugados || 'No disponible'}</p>
                         <p><strong>Goles Totales:</strong> ${mundial.golesTotales || 'No disponible'}</p>
@@ -1393,7 +1393,7 @@ function mostrarMundial(year) {
                 </div>
                 
                 <div class="premios-individuales">
-                    <h4>⭐ Premios Individuales</h4>
+                    <h3>⭐ Premios Individuales</h3>
                     ${mundial.bestPlayer?.name ? `<p><strong>Mejor Jugador:</strong> ${mundial.bestPlayer.name} (${mundial.bestPlayer.country})</p>` : ''}
                     ${mundial.topScorer?.name ? `<p><strong>Máximo Goleador:</strong> ${mundial.topScorer.name} (${mundial.topScorer.country}) - ${mundial.topScorer.goals} goles</p>` : ''}
                     ${mundial.bestGK?.name ? `<p><strong>Mejor Portero:</strong> ${mundial.bestGK.name} (${mundial.bestGK.country})</p>` : ''}
@@ -1401,7 +1401,7 @@ function mostrarMundial(year) {
                 
                 ${mundial.datoCurioso ? `
                 <div class="dato-curioso">
-                    <h4>💡 Dato Curioso</h4>
+                    <h3>💡 Dato Curioso</h3>
                     <p>${mundial.datoCurioso}</p>
                 </div>
                 ` : ''}
