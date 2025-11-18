@@ -273,6 +273,19 @@ function activarCardAlClick() {
         card.addEventListener('click', () => {
             document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
             card.classList.add('active');
+
+            const container = document.querySelector('.cards-container');
+            const containerWidth = container.clientWidth;
+            const cardWidth = card.offsetWidth;
+            const cardOffsetLeft = card.offsetLeft;
+
+            const scrollTarget = cardOffsetLeft - (containerWidth / 2) + (cardWidth / 2);
+
+            container.scrollTo({
+                left: scrollTarget,
+                behavior: 'smooth'
+            });
+
             const year = card.querySelector('.fecha span').textContent;
             mostrarSedes(year);
         });
@@ -281,13 +294,34 @@ function activarCardAlClick() {
 
 // ===== NAVEGACIÓN CON FLECHAS =====
 function navegarCarrusel(dir) {
+    const container = document.querySelector('.cards-container');
     const cards = Array.from(document.querySelectorAll('.card'));
-    const activo = cards.findIndex(c => c.classList.contains('active'));
-    const total = cards.length;
-    const nuevo = (activo + dir + total) % total;
+    const activoIndex = cards.findIndex(c => c.classList.contains('active'));
+    let nuevoIndex = activoIndex + dir;
+
+    if (nuevoIndex < 0) nuevoIndex = cards.length - 1;
+    if (nuevoIndex >= cards.length) nuevoIndex = 0;
+
+    // Quitar active de todas
     cards.forEach(c => c.classList.remove('active'));
-    cards[nuevo].classList.add('active');
-    mostrarSedes(cards[nuevo].querySelector('.fecha span').textContent);
+    cards[nuevoIndex].classList.add('active');
+
+    // Scroll suave al centro de la card seleccionada
+    const cardSeleccionada = cards[nuevoIndex];
+    const containerWidth = container.clientWidth;
+    const cardWidth = cardSeleccionada.offsetWidth;
+    const cardOffsetLeft = cardSeleccionada.offsetLeft;
+
+    const scrollTarget = cardOffsetLeft - (containerWidth / 2) + (cardWidth / 2);
+
+    container.scrollTo({
+        left: scrollTarget,
+        behavior: 'smooth'
+    });
+
+    // Mostrar información
+    const year = cardSeleccionada.querySelector('.fecha span').textContent;
+    mostrarSedes(year);
 }
 
 // ===== ABRIR MODAL (AGREGAR / EDITAR) =====

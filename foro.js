@@ -1427,7 +1427,7 @@ function inicializarSistemaPublicaciones() {
 
     document.getElementById('descripcionPublicacion').addEventListener('input', function() {
         const longitud = this.value.length;
-        document.getElementById('contadorDescripcion').textContent = `${longitud}/500`;
+        document.getElementById('contadorDescripcion').textContent = `${longitud}/512`;
     });
 
     // Subir imagen
@@ -1481,7 +1481,7 @@ function abrirModalPublicar() {
     document.getElementById('tituloPublicacion').value = '';
     document.getElementById('descripcionPublicacion').value = '';
     document.getElementById('contadorTitulo').textContent = '0/100';
-    document.getElementById('contadorDescripcion').textContent = '0/500';
+    document.getElementById('contadorDescripcion').textContent = '0/512';
     eliminarImagen();
     limpiarCategoriasSeleccionadas();
 }

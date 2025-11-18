@@ -50,7 +50,7 @@
 }
 @media (max-width: 600px) {
     .next {
-        margin-top: 16%;
+        margin-top: 18%;
         margin-right: 8%;
     }
     .prev {
@@ -1315,29 +1315,94 @@ function agregarCardAlCarrusel(anio) {
 }
 
 function inicializarCarrusel() {
-    const cards = document.querySelector(".cards");
-    if (!cards) return;
-    
-    let offset = 0;
-    const nextBtn = document.querySelector(".next");
-    const prevBtn = document.querySelector(".prev");
-    
-    if (nextBtn) {
-        nextBtn.addEventListener("click", () => {
-            if (offset > -(cards.scrollWidth - cards.parentElement.offsetWidth)) {
-                offset -= 300;
-                cards.style.transform = `translateX(${offset}px)`;
-            }
+    const container = document.querySelector('.cards-container');
+    const cardsWrapper = document.querySelector('.cards');
+    const cards = document.querySelectorAll('.card');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+
+    if (!container || !cardsWrapper || cards.length === 0) return;
+
+    // Función para centrar una card específica
+    function centrarCard(card) {
+        const containerWidth = container.clientWidth;
+        const cardWidth = card.offsetWidth;
+        const cardOffsetLeft = card.offsetLeft;
+
+        const scrollTarget = cardOffsetLeft - (containerWidth / 2) + (cardWidth / 2);
+
+        container.scrollTo({
+            left: scrollTarget,
+            behavior: 'smooth'
         });
     }
-    
-    if (prevBtn) {
-        prevBtn.addEventListener("click", () => {
-            if (offset < 0) {
-                offset += 300;
-                cards.style.transform = `translateX(${offset}px)`;
-            }
+
+    // Al hacer clic en una card
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            // Quitar active de todas
+            cards.forEach(c => c.classList.remove('active'));
+            // Poner active en la seleccionada
+            card.classList.add('active');
+
+            // Centrarla visualmente
+            centrarCard(card);
+
+            // Mostrar información del mundial
+            const year = card.querySelector('.fecha span').textContent.trim();
+            mostrarSedes(year); // Asegúrate de que esta función exista (la tienes arriba)
         });
+    });
+
+    // Navegación con flechas
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            const activeCard = document.querySelector('.card.active');
+            let nextCard;
+
+            if (activeCard) {
+                const currentIndex = Array.from(cards).indexOf(activeCard);
+                nextCard = cards[currentIndex + 1] || cards[0]; // volver al primero si es el último
+            } else {
+                nextCard = cards[0];
+            }
+
+            // Activar y centrar
+            cards.forEach(c => c.classList.remove('active'));
+            nextCard.classList.add('active');
+            centrarCard(nextCard);
+
+            const year = nextCard.querySelector('.fecha span').textContent.trim();
+            mostrarSedes(year);
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            const activeCard = document.querySelector('.card.active');
+            let prevCard;
+
+            if (activeCard) {
+                const currentIndex = Array.from(cards).indexOf(activeCard);
+                prevCard = cards[currentIndex - 1] || cards[cards.length - 1]; // volver al último si es el primero
+            } else {
+                prevCard = cards[cards.length - 1];
+            }
+
+            cards.forEach(c => c.classList.remove('active'));
+            prevCard.classList.add('active');
+            centrarCard(prevCard);
+
+            const year = prevCard.querySelector('.fecha span').textContent.trim();
+            mostrarSedes(year);
+        });
+    }
+
+    // Al cargar la página: activar la primera card y centrarla
+    if (cards.length > 0 && !document.querySelector('.card.active')) {
+        cards[0].classList.add('active');
+        centrarCard(cards[0]);
+        mostrarSedes(cards[0].querySelector('.fecha span').textContent.trim());
     }
 }
 

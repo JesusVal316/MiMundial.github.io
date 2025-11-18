@@ -615,7 +615,7 @@ resetAccesibilidad.addEventListener('click', () => {
 
 // Carrusel de noticias
 let currentIndex = 0;
-const totalItems = document.querySelectorAll('.noticia-card').length;
+const totalItems = document.querySelectorAll('.info-sedes').length;
 
 function actualizarCarrusel() {
     const isRtl = document.documentElement.getAttribute('dir') === 'rtl';

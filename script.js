@@ -11,7 +11,9 @@ const partidosMundial2026 = [
         fecha: "2026-06-11T20:00:00",
         estadio: "estadio-azteca",
         equipoLocal: "México",
+        imagenlocal: "banderamexico.jpg",
         equipoVisitante: "Canadá",
+        imagenvisitante: "Canadabandera.png",
         resultado: "",
         imagenEstadio: "https://ejemplo.com/azteca.jpg",
         estado: "pendiente"
@@ -22,7 +24,9 @@ const partidosMundial2026 = [
         fecha: "2026-06-12T17:00:00",
         estadio: "estadio-atlantico",
         equipoLocal: "Estados Unidos",
+        imagenlocal: "banderausa.jpeg",
         equipoVisitante: "Brasil",
+        imagenvisitante: "banderabrasil.jpg",
         resultado: "",
         imagenEstadio: "https://ejemplo.com/atlantico.jpg",
         estado: "pendiente"
@@ -33,7 +37,9 @@ const partidosMundial2026 = [
         fecha: "2026-07-04T16:00:00",
         estadio: "estadio-pacifico",
         equipoLocal: "Argentina",
+        imagenlocal: "banderaargentina.jpg",
         equipoVisitante: "Francia",
+        imagenvisitante: "banderafrancia.webp",
         resultado: "",
         imagenEstadio: "https://ejemplo.com/pacifico.jpg",
         estado: "pendiente"
@@ -44,7 +50,9 @@ const partidosMundial2026 = [
         fecha: "2026-07-19T19:00:00",
         estadio: "estadio-metropolitano",
         equipoLocal: "Por definir",
+        imagenlocal: "banderadefault.webp",
         equipoVisitante: "Por definir",
+        imagenvisitante: "banderadefault.webp",
         resultado: "",
         imagenEstadio: "https://ejemplo.com/metropolitano.jpg",
         estado: "pendiente"
@@ -225,13 +233,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 <div class="equipos-partido-tarjeta">
                     <div class="equipo">
-                        <img src="banderamexico.jpg" alt="estadio azteca" class="imagen-estadio" >
+                        <img src="${partido.imagenlocal}" alt="estadio azteca" class="imagen-estadio" >
                         <span class="nombre-equipo">${partido.equipoLocal}</span>
                     </div>
                     
                     <div class="vs-tarjeta">VS</div>
                     <div class="equipo">
-                    <img src="banderamexico.jpg" alt="estadio azteca" class="imagen-estadio" >
+                    <img src="${partido.imagenvisitante}" alt="estadio azteca" class="imagen-estadio" >
                     
                          <span class="nombre-equipo">${partido.equipoVisitante}</span>
                     </div>
