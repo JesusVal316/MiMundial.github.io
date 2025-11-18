@@ -47,7 +47,7 @@ function abrirMenu(menu, boton) {
 
 const traducciones = {
     es: {
-        'header-title': 'Mi Mundial 2026',
+        'header-title': 'Mi Mundial',
         'cuentas-activas': 'Cuentas activas',
         'anadir-cuenta': 'Añadir cuenta',
         'notificaciones-title': 'Notificaciones',
@@ -158,7 +158,7 @@ const traducciones = {
         'comment-10': 'Hola.'
     },
     en: {
-        'header-title': 'My World Cup 2026',
+        'header-title': 'My World Cup',
         'cuentas-activas': 'Active Accounts',
         'anadir-cuenta': 'Add Account',
         'notificaciones-title': 'Notifications',
@@ -264,7 +264,7 @@ const traducciones = {
         'comment-10': 'Hello.'
     },
     fr: {
-        'header-title': 'Ma Coupe du Monde 2026',
+        'header-title': 'Ma Coupe du Monde',
         'cuentas-activas': 'Comptes Actifs',
         'anadir-cuenta': 'Ajouter Compte',
         'notificaciones-title': 'Notifications',
