@@ -159,7 +159,23 @@
                             </label>
                         </div>
 
-                        <!-- Reducir animaciones -->
+                        <!-- COLOR PERSONALIZADO DEL HEADER -->
+<div class="opcion-grupo">
+    <label class="opcion-label" data-i18n="color-header">Color del Header</label>
+    <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
+        <input 
+            type="color" 
+            id="color-header-input" 
+            value="#0d6efd"
+            title="Elige el color de la barra superior"
+            style="width: 50px; height: 40px; border: none; border-radius: 8px; cursor: pointer;">
+        <button 
+            id="reset-color-header" 
+            class="btn-reset-pequeño" 
+            data-i18n="restablecer">
+            Restablecer
+        </button>
+    </div>
                         
                     </div>
                     <div class="pie-accesibilidad">
@@ -310,6 +326,80 @@
             </div>
         </div>
     </main>
+    <!-- BOTÓN DE AYUDA FIJO -->
+<button id="btn-ayuda-fijo" class="btn-ayuda-fijo" title="Ayuda - Partidos del Mundial">
+    ?
+</button>
+
+<!-- MODAL DE AYUDA PARA PARTIDOS -->
+<div id="modal-ayuda" class="modal-ayuda">
+    <div class="modal-contenido-ayuda">
+        <div class="modal-cabecera-ayuda">
+            <h2>
+                <span class="icono-ayuda">?</span> 
+                <span data-i18n="partidos-ayuda-titulo">¿Cómo usar la sección de Partidos?</span>
+            </h2>
+            <button class="cerrar-modal-ayuda" aria-label="Cerrar">×</button>
+        </div>
+
+        <div class="modal-cuerpo-ayuda">
+            <div class="pasos-ayuda">
+                <div class="paso">
+                    <span class="numero-paso">1</span>
+                    <div>
+                        <strong data-i18n="partidos-paso1-titulo">Filtra por fase</strong>
+                        <p data-i18n="partidos-paso1-desc">Haz clic en los botones arriba (Fase de Grupos, Octavos, Final…) para ver solo esos partidos.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">2</span>
+                    <div>
+                        <strong data-i18n="partidos-paso2-titulo">Ver todos los partidos</strong>
+                        <p data-i18n="partidos-paso2-desc">El botón “Todos los Partidos” te muestra absolutamente todos los encuentros del Mundial 2026.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">3</span>
+                    <div>
+                        <strong data-i18n="partidos-paso3-titulo">¿Eres administrador?</strong>
+                        <p data-i18n="partidos-paso3-desc">Si iniciaste sesión como administrador verás el botón <strong>+ Agregar Partido</strong> para crear nuevos encuentros.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">4</span>
+                    <div>
+                        <strong data-i18n="partidos-paso4-titulo">Editar o eliminar</strong>
+                        <p data-i18n="partidos-paso4-desc">Los administradores también pueden editar (lápiz) o eliminar (papelera) cualquier partido ya creado.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">5</span>
+                    <div>
+                        <strong data-i18n="partidos-paso5-titulo">¡Disfruta el Mundial!</strong>
+                        <p data-i18n="partidos-paso5-desc">Aquí tendrás siempre actualizada la fixture completa del Mundial 2026.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="consejo-final">
+                <strong data-i18n="partidos-consejo">Consejo:</strong> 
+                <span data-i18n="partidos-consejo-texto">Guarda esta página en favoritos para seguir todos los partidos en tiempo real.</span>
+            </div>
+        </div>
+
+        <div class="modal-pie-ayuda">
+            <label class="checkbox-no-mostrar">
+                <input type="checkbox" id="no-mostrar-ayuda-nuevamente">
+                <span data-i18n="no-mostrar-mas">No volver a mostrar esta ayuda</span>
+            </label>
+            <button class="btn-cerrar-ayuda" data-i18n="entendido">¡Entendido!</button>
+        </div>
+    </div>
+</div>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -322,6 +412,100 @@
     <!-- ==================== SCRIPTS ==================== -->
      <script src="partidos.js"></script>
      <script src="script.js"></script>
+     <script>
+        const btnAyuda       = document.getElementById('btn-ayuda-fijo');
+    const modalAyuda     = document.getElementById('modal-ayuda');
+    const cerrarBtn      = document.querySelector('.cerrar-modal-ayuda');
+    const entendidoBtn   = document.querySelector('.btn-cerrar-ayuda');
+    const noMostrarCheck = document.getElementById('no-mostrar-ayuda-nuevamente');
+
+    function abrirModal() {
+        modalAyuda.style.display = 'block';
+    }
+
+    function cerrarModal() {
+        modalAyuda.style.display = 'none';
+        if (noMostrarCheck.checked) {
+            localStorage.setItem('ayudaPartidosOcultada', 'true');
+        }
+    }
+
+    // Aparece automáticamente la primera vez que entra a la página de partidos
+    if (!localStorage.getItem('ayudaPartidosOcultada')) {
+        setTimeout(abrirModal, 1000);
+    }
+
+    // Siempre puede abrirlo manualmente con el botón ?
+    btnAyuda.addEventListener('click', abrirModal);
+
+    cerrarBtn.addEventListener('click', cerrarModal);
+    entendidoBtn.addEventListener('click', cerrarModal);
+
+    // Cerrar al hacer clic fuera del contenido
+    modalAyuda.addEventListener('click', (e) => {
+        if (e.target === modalAyuda) cerrarModal();
+    });
+        // ==================== COLOR PERSONALIZADO DEL HEADER - 100% FUNCIONAL ====================
+
+const header = document.querySelector('header');
+const inputColorHeader = document.getElementById('color-header-input');
+const btnResetColorHeader = document.getElementById('reset-color-header');
+const COLOR_DEFAULT = '#0d6efd'; // Cambia esto si tu color original es otro
+
+function aplicarColorHeader(color) {
+    if (!header) return;
+    
+    // Forzamos con máxima prioridad
+    header.style.cssText = `
+        background: ${color} !important;
+        background-image: none !important;
+        background-color: ${color} !important;
+        transition: background-color 0.4s ease !important;
+    `;
+    
+    localStorage.setItem('colorHeaderPersonalizado', color);
+}
+
+function cargarColorHeader() {
+    const colorGuardado = localStorage.getItem('colorHeaderPersonalizado');
+    if (colorGuardado) {
+        if (inputColorHeader) inputColorHeader.value = colorGuardado;
+        aplicarColorHeader(colorGuardado);
+    }
+}
+
+function resetearColorHeader() {
+    localStorage.removeItem('colorHeaderPersonalizado');
+    header.style.cssText = ''; // Limpia todo el inline style
+    if (inputColorHeader) inputColorHeader.value = COLOR_DEFAULT;
+}
+
+// Eventos del selector de color
+if (inputColorHeader) {
+    inputColorHeader.addEventListener('input', (e) => aplicarColorHeader(e.target.value));
+}
+
+// Botón restablecer
+if (btnResetColorHeader) {
+    btnResetColorHeader.addEventListener('click', resetearColorHeader);
+}
+
+// === CARGAR AL INICIAR (una sola vez) ===
+document.addEventListener('DOMContentLoaded', () => {
+    cargarColorHeader();
+
+    // Protege el color aunque cambies modo oscuro, idioma, etc.
+    const observer = new MutationObserver(() => {
+        if (localStorage.getItem('colorHeaderPersonalizado')) {
+            cargarColorHeader();
+        }
+    });
+    observer.observe(document.documentElement, { 
+        attributes: true, 
+        attributeFilter: ['class'] 
+    });
+});
+     </script>
     
 </body>
 </html>

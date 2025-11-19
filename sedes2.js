@@ -64,6 +64,21 @@ const traducciones = {
         'tritanopia': '🔵 Tritanopía',
         'normal': '⬜ Normal',
         'idioma': 'Cambiar Idioma',
+        'color-header': 'Color del Header',
+    'restablecer': 'Restablecer',
+    'primeros-pasos-titulo': 'Primeros Pasos en Mi Mundial 2026',
+    'paso1-titulo': 'Explora las sedes del Mundial',
+    'paso1-desc': 'Usa las flechas ← → o haz clic en los años arriba para ver cada sede del Mundial 2026.',
+    'paso2-titulo': 'Personaliza tu experiencia',
+    'paso2-desc': 'Haz clic en el engranaje (arriba a la derecha) para cambiar idioma, modo oscuro, tamaño de letra y más.',
+    'paso3-titulo': 'Navega por el menú',
+    'paso3-desc': 'Usa el menú lateral (☰) en móvil o el menú superior para ir a Historia, Foro, Partidos, etc.',
+    'paso4-titulo': '¿Eres administrador?',
+    'paso4-desc': 'Si tienes cuenta de administrador, verás botones para agregar, editar o eliminar sedes.',
+    'consejo': 'Consejo:',
+    'consejo-texto': '¡Puedes cambiar el color del header desde el menú de accesibilidad!',
+    'no-mostrar-mas': 'No volver a mostrar esta ayuda',
+    'entendido': '¡Entendido!',
         'es': 'Español',
         'en': 'Inglés',
         'fr': 'Francés',
@@ -129,7 +144,22 @@ const traducciones = {
         'deuteranopia': '🟢 Deuteranopia',
         'tritanopia': '🔵 Tritanopia',
         'normal': '⬜ Normal',
+        'primeros-pasos-titulo': 'First Steps in My World Cup 2026',
+    'paso1-titulo': 'Explore the World Cup Venues',
+    'paso1-desc': 'Use the ← → arrows or click on the years above to view each 2026 World Cup venue.',
+    'paso2-titulo': 'Customize Your Experience',
+    'paso2-desc': 'Click the gear icon (top right) to change language, dark mode, text size, and more.',
+    'paso3-titulo': 'Navigate the Menu',
+    'paso3-desc': 'Use the side menu (☰) on mobile or the top menu to go to History, Forum, Matches, etc.',
+    'paso4-titulo': 'Are You an Admin?',
+    'paso4-desc': 'If you have an administrator account, you’ll see buttons to add, edit, or delete venues.',
+    'consejo': 'Tip:',
+    'consejo-texto': 'You can change the header color from the accessibility menu!',
+    'no-mostrar-mas': 'Do not show this help again',
+    'entendido': 'Got it!',
         'idioma': 'Change Language',
+        'color-header': 'Header Color',
+    'restablecer': 'Reset',
         'es': 'Spanish',
         'en': 'English',
         'fr': 'French',
@@ -193,6 +223,21 @@ const traducciones = {
         'deuteranopia': '🟢 Deutéranopie',
         'tritanopia': '🔵 Tritanopie',
         'normal': '⬜ Normal',
+        'primeros-pasos-titulo': 'Premiers pas sur Ma Coupe du Monde 2026',
+    'paso1-titulo': 'Découvrez les sites de la Coupe du Monde',
+    'paso1-desc': 'Utilisez les flèches ← → ou cliquez sur les années en haut pour voir chaque site du Mondial 2026.',
+    'paso2-titulo': 'Personnalisez votre expérience',
+    'paso2-desc': 'Cliquez sur l’icône d’engrenage (en haut à droite) pour changer la langue, le mode sombre, la taille du texte, etc.',
+    'paso3-titulo': 'Naviguez dans le menu',
+    'paso3-desc': 'Utilisez le menu latéral (☰) sur mobile ou le menu supérieur pour accéder à l’Histoire, au Forum, aux Matchs, etc.',
+    'paso4-titulo': 'Êtes-vous administrateur ?',
+    'paso4-desc': 'Si vous avez un compte administrateur, vous verrez des boutons pour ajouter, modifier ou supprimer des sites.',
+    'consejo': 'Astuce :',
+    'consejo-texto': 'Vous pouvez changer la couleur de l’en-tête depuis le menu d’accessibilité !',
+    'no-mostrar-mas': 'Ne plus afficher cette aide',
+    'entendido': 'Compris !',
+        'color-header': 'Couleur de l\'en-tête',
+    'restablecer': 'Réinitialiser',
         'idioma': 'Changer de Langue',
         'es': 'Espagnol',
         'en': 'Anglais',
@@ -650,47 +695,3 @@ function ajustarCarrusel() {
         actualizarCarrusel();
     }
 }
-document.addEventListener("DOMContentLoaded", function() {
-    // Menú hamburguesa
-    const menuToggle = document.querySelector(".menu-toggle");
-    const menuLateral = document.querySelector(".menu-lateral");
-
-    menuToggle.addEventListener("click", function() {
-        menuLateral.classList.toggle("active");
-    });
-
-    // Cerrar menú al hacer clic en un enlace
-    document.querySelectorAll(".menu-lateral a").forEach(link => {
-        link.addEventListener("click", () => {
-            menuLateral.classList.remove("active");
-        });
-    });
-
-    // Modo oscuro
-    const toggleDarkMode = function() {
-        document.body.classList.toggle("modo-oscuro");
-        // Guardar preferencia en localStorage
-        if (document.body.classList.contains("modo-oscuro")) {
-            localStorage.setItem("theme", "dark");
-        } else {
-            localStorage.setItem("theme", "light");
-        }
-    };
-
-    const modoOscuroBtn = document.querySelector("#modo-oscuro");
-    const modoOscuroLateralBtn = document.querySelector("#modo-oscuro-lateral");
-
-    // Cargar preferencia guardada
-    if (localStorage.getItem("theme") === "dark") {
-        document.body.classList.add("modo-oscuro");
-    }
-
-    // Alternar modo oscuro al hacer clic
-    modoOscuroBtn.addEventListener("click", toggleDarkMode);
-    modoOscuroLateralBtn.addEventListener("click", toggleDarkMode);
-});
-
-window.addEventListener('resize', ajustarCarrusel);
-ajustarCarrusel();
-
-

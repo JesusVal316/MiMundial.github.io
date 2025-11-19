@@ -143,7 +143,23 @@
                                 <span class="slider"></span>
                             </label>
                         </div>
-                        
+                        <!-- COLOR PERSONALIZADO DEL HEADER -->
+<div class="opcion-grupo">
+    <label class="opcion-label" data-i18n="color-header">Color del Header</label>
+    <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
+        <input 
+            type="color" 
+            id="color-header-input" 
+            value="#0d6efd"
+            title="Elige el color de la barra superior"
+            style="width: 50px; height: 40px; border: none; border-radius: 8px; cursor: pointer;">
+        <button 
+            id="reset-color-header" 
+            class="btn-reset-pequeño" 
+            data-i18n="restablecer">
+            Restablecer
+        </button>
+    </div>
                     </div>
                     <div class="pie-accesibilidad">
                         <button class="btn-reset-todo" id="reset-accesibilidad" data-i18n="reset-accesibilidad">Restablecer Configuraciones</button>
@@ -643,7 +659,182 @@
         </div>
     </div>
     
+    <!-- BOTÓN ? FIJO DE AYUDA -->
+<button id="btn-ayuda-fijo" class="btn-ayuda-fijo" title="Ayuda - Foro Mundial 2026">
+    ?
+</button>
+
+<!-- MODAL DE AYUDA PARA EL FORO -->
+<div id="modal-ayuda" class="modal-ayuda">
+    <div class="modal-contenido-ayuda">
+        <div class="modal-cabecera-ayuda">
+            <h2>
+                <span class="icono-ayuda">?</span> 
+                <span data-i18n="foro-ayuda-titulo">¿Cómo usar el Foro del Mundial 2026?</span>
+            </h2>
+            <button class="cerrar-modal-ayuda" aria-label="Cerrar">×</button>
+        </div>
+
+        <div class="modal-cuerpo-ayuda">
+            <div class="pasos-ayuda">
+                <div class="paso">
+                    <span class="numero-paso">1</span>
+                    <div>
+                        <strong data-i18n="foro-paso1-titulo">Publica contenido</strong>
+                        <p data-i18n="foro-paso1-desc">Haz clic en el botón grande <strong>PUBLICAR</strong> para crear una nueva publicación con título, descripción, imagen y hashtags.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">2</span>
+                    <div>
+                        <strong data-i18n="foro-paso2-titulo">Espera aprobación</strong>
+                        <p data-i18n="foro-paso2-desc">Todas las publicaciones pasan por revisión. Recibirás una notificación cuando sea aceptada o rechazada.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">3</span>
+                    <div>
+                        <strong data-i18n="foro-paso3-titulo">Interactúa</strong>
+                        <p data-i18n="foro-paso3-desc">Dale <strong>Me gusta</strong>, comenta o comparte las publicaciones que te gusten. ¡Sé parte de la comunidad!</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">4</span>
+                    <div>
+                        <strong data-i18n="foro-paso4-titulo">Filtra lo que te interesa</strong>
+                        <p data-i18n="foro-paso4-desc">Usa el botón de filtro <img src="filtro.png" style="height:16px;vertical-align:middle;"> para ver solo publicaciones de #Mundial2026, #Argentina, #Messi, goles, etc.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">5</span>
+                    <div>
+                        <strong data-i18n="foro-paso5-titulo">¿Eres administrador?</strong>
+                        <p data-i18n="foro-paso5-desc">Si iniciaste sesión como <strong>administrador</strong>, verás el botón <em>ADMINISTRAR</em> para aprobar o rechazar publicaciones pendientes.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">6</span>
+                    <div>
+                        <strong data-i18n="foro-paso6-titulo">Añade nuevas categorías</strong>
+                        <p data-i18n="foro-paso6-desc">Haz clic en el botón + (solo administradores) para crear nuevas secciones o hashtags personalizados.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="consejo-final">
+                <strong data-i18n="foro-consejo">¡Recuerda!</strong> 
+                <span data-i18n="foro-consejo-texto">Este es un espacio para compartir pasión por el fútbol. Sé respetuoso, usa hashtags y disfruta del Mundial 2026 con la comunidad.</span>
+            </div>
+        </div>
+
+        <div class="modal-pie-ayuda">
+            <label class="checkbox-no-mostrar">
+                <input type="checkbox" id="no-mostrar-ayuda-nuevamente">
+                <span data-i18n="no-mostrar-mas">No volver a mostrar esta ayuda</span>
+            </label>
+            <button class="btn-cerrar-ayuda" data-i18n="entendido">¡Entendido!</button>
+        </div>
+    </div>
+</div>
     <script defer src="foro.js"></script>
     <script defer src="foro2.js"></script>
+    <script>
+        const btnAyuda       = document.getElementById('btn-ayuda-fijo');
+    const modalAyuda     = document.getElementById('modal-ayuda');
+    const cerrarBtn      = document.querySelector('.cerrar-modal-ayuda');
+    const entendidoBtn   = document.querySelector('.btn-cerrar-ayuda');
+    const noMostrarCheck = document.getElementById('no-mostrar-ayuda-nuevamente');
+
+    function abrirModal() {
+        modalAyuda.style.display = 'block';
+    }
+
+    function cerrarModal() {
+        modalAyuda.style.display = 'none';
+        if (noMostrarCheck && noMostrarCheck.checked) {
+            localStorage.setItem('ayudaForoOcultada', 'true');
+        }
+    }
+
+    // Mostrar automáticamente la primera vez
+    if (!localStorage.getItem('ayudaForoOcultada')) {
+        setTimeout(abrirModal, 1600);
+    }
+
+    // Eventos
+    btnAyuda.addEventListener('click', abrirModal);
+    cerrarBtn.addEventListener('click', cerrarModal);
+    entendidoBtn.addEventListener('click', cerrarModal);
+
+    // Cerrar al hacer clic fuera
+    modalAyuda.addEventListener('click', (e) => {
+        if (e.target === modalAyuda) cerrarModal();
+    });
+        // ==================== COLOR PERSONALIZADO DEL HEADER - 100% FUNCIONAL ====================
+
+const header = document.querySelector('header');
+const inputColorHeader = document.getElementById('color-header-input');
+const btnResetColorHeader = document.getElementById('reset-color-header');
+const COLOR_DEFAULT = '#0d6efd'; // Cambia esto si tu color original es otro
+
+function aplicarColorHeader(color) {
+    if (!header) return;
+    
+    // Forzamos con máxima prioridad
+    header.style.cssText = `
+        background: ${color} !important;
+        background-image: none !important;
+        background-color: ${color} !important;
+        transition: background-color 0.4s ease !important;
+    `;
+    
+    localStorage.setItem('colorHeaderPersonalizado', color);
+}
+
+function cargarColorHeader() {
+    const colorGuardado = localStorage.getItem('colorHeaderPersonalizado');
+    if (colorGuardado) {
+        if (inputColorHeader) inputColorHeader.value = colorGuardado;
+        aplicarColorHeader(colorGuardado);
+    }
+}
+
+function resetearColorHeader() {
+    localStorage.removeItem('colorHeaderPersonalizado');
+    header.style.cssText = ''; // Limpia todo el inline style
+    if (inputColorHeader) inputColorHeader.value = COLOR_DEFAULT;
+}
+
+// Eventos del selector de color
+if (inputColorHeader) {
+    inputColorHeader.addEventListener('input', (e) => aplicarColorHeader(e.target.value));
+}
+
+// Botón restablecer
+if (btnResetColorHeader) {
+    btnResetColorHeader.addEventListener('click', resetearColorHeader);
+}
+
+// === CARGAR AL INICIAR (una sola vez) ===
+document.addEventListener('DOMContentLoaded', () => {
+    cargarColorHeader();
+
+    // Protege el color aunque cambies modo oscuro, idioma, etc.
+    const observer = new MutationObserver(() => {
+        if (localStorage.getItem('colorHeaderPersonalizado')) {
+            cargarColorHeader();
+        }
+    });
+    observer.observe(document.documentElement, { 
+        attributes: true, 
+        attributeFilter: ['class'] 
+    });
+});
+    </script>
 </body>
 </html>

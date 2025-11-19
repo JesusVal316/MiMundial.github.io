@@ -175,7 +175,24 @@
                                 <span class="slider"></span>
                             </label>
                         </div>
-                        
+                        <!-- COLOR PERSONALIZADO DEL HEADER -->
+<div class="opcion-grupo">
+    <label class="opcion-label" data-i18n="color-header">Color del Header</label>
+    <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
+        <input 
+            type="color" 
+            id="color-header-input" 
+            value="#0d6efd"
+            title="Elige el color de la barra superior"
+            style="width: 50px; height: 40px; border: none; border-radius: 8px; cursor: pointer;">
+        <button 
+            id="reset-color-header" 
+            class="btn-reset-pequeño" 
+            data-i18n="restablecer">
+            Restablecer
+        </button>
+    </div>
+</div>
                     </div>
                     <div class="pie-accesibilidad">
                         <button class="btn-reset-todo" id="reset-accesibilidad" data-i18n="reset-accesibilidad">Restablecer Configuraciones</button>
@@ -549,6 +566,66 @@
             btn.style.display = isAdmin ? 'block' : 'none';
         });
     });
+    // ==================== COLOR PERSONALIZADO DEL HEADER - 100% FUNCIONAL ====================
+
+const header = document.querySelector('header');
+const inputColorHeader = document.getElementById('color-header-input');
+const btnResetColorHeader = document.getElementById('reset-color-header');
+const COLOR_DEFAULT = '#0d6efd'; // Cambia esto si tu color original es otro
+
+function aplicarColorHeader(color) {
+    if (!header) return;
+    
+    // Forzamos con máxima prioridad
+    header.style.cssText = `
+        background: ${color} !important;
+        background-image: none !important;
+        background-color: ${color} !important;
+        transition: background-color 0.4s ease !important;
+    `;
+    
+    localStorage.setItem('colorHeaderPersonalizado', color);
+}
+
+function cargarColorHeader() {
+    const colorGuardado = localStorage.getItem('colorHeaderPersonalizado');
+    if (colorGuardado) {
+        if (inputColorHeader) inputColorHeader.value = colorGuardado;
+        aplicarColorHeader(colorGuardado);
+    }
+}
+
+function resetearColorHeader() {
+    localStorage.removeItem('colorHeaderPersonalizado');
+    header.style.cssText = ''; // Limpia todo el inline style
+    if (inputColorHeader) inputColorHeader.value = COLOR_DEFAULT;
+}
+
+// Eventos del selector de color
+if (inputColorHeader) {
+    inputColorHeader.addEventListener('input', (e) => aplicarColorHeader(e.target.value));
+}
+
+// Botón restablecer
+if (btnResetColorHeader) {
+    btnResetColorHeader.addEventListener('click', resetearColorHeader);
+}
+
+// === CARGAR AL INICIAR (una sola vez) ===
+document.addEventListener('DOMContentLoaded', () => {
+    cargarColorHeader();
+
+    // Protege el color aunque cambies modo oscuro, idioma, etc.
+    const observer = new MutationObserver(() => {
+        if (localStorage.getItem('colorHeaderPersonalizado')) {
+            cargarColorHeader();
+        }
+    });
+    observer.observe(document.documentElement, { 
+        attributes: true, 
+        attributeFilter: ['class'] 
+    });
+});
 </script>
 </body>
 </html>

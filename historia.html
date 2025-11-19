@@ -350,7 +350,23 @@
                                 <span class="slider"></span>
                             </label>
                         </div>
-                        
+                        <!-- COLOR PERSONALIZADO DEL HEADER -->
+<div class="opcion-grupo">
+    <label class="opcion-label" data-i18n="color-header">Color del Header</label>
+    <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
+        <input 
+            type="color" 
+            id="color-header-input" 
+            value="#0d6efd"
+            title="Elige el color de la barra superior"
+            style="width: 50px; height: 40px; border: none; border-radius: 8px; cursor: pointer;">
+        <button 
+            id="reset-color-header" 
+            class="btn-reset-pequeño" 
+            data-i18n="restablecer">
+            Restablecer
+        </button>
+    </div>
                     </div>
                     <div class="pie-accesibilidad">
                         <button class="btn-reset-todo" id="reset-accesibilidad" data-i18n="reset-accesibilidad">Restablecer Configuraciones</button>
@@ -663,9 +679,114 @@
             </div>
         </div>
     </div>
+    <!-- BOTÓN DE AYUDA FIJO -->
+<button id="btn-ayuda-fijo" class="btn-ayuda-fijo" title="Ayuda - Historia de los Mundiales">
+    ?
+</button>
+
+<!-- MODAL DE AYUDA PARA HISTORIA DE LOS MUNDIALES -->
+<div id="modal-ayuda" class="modal-ayuda">
+    <div class="modal-contenido-ayuda">
+        <div class="modal-cabecera-ayuda">
+            <h2>
+                <span class="icono-ayuda">?</span> 
+                <span data-i18n="historia-ayuda-titulo">¿Cómo explorar la Historia de los Mundiales?</span>
+            </h2>
+            <button class="cerrar-modal-ayuda" aria-label="Cerrar">×</button>
+        </div>
+
+        <div class="modal-cuerpo-ayuda">
+            <div class="pasos-ayuda">
+                <div class="paso">
+                    <span class="numero-paso">1</span>
+                    <div>
+                        <strong data-i18n="historia-paso1-titulo">Desplázate por los años</strong>
+                        <p data-i18n="historia-paso1-desc">Usa las flechas ← → o haz clic directamente en cualquier año del carrusel para seleccionarlo.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">2</span>
+                    <div>
+                        <strong data-i18n="historia-paso2-titulo">Descubre cada Mundial</strong>
+                        <p data-i18n="historia-paso2-desc">Al seleccionar un año, verás: foto oficial, campeón, subcampeón, estadísticas completas, mejores jugadores y un dato curioso.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">3</span>
+                    <div>
+                        <strong data-i18n="historia-paso3-titulo">¿Eres administrador?</strong>
+                        <p data-i18n="historia-paso3-desc">Si iniciaste sesión como administrador, verás los botones: Agregar Mundial, Editar Mundial y Eliminar Mundial.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">4</span>
+                    <div>
+                        <strong data-i18n="historia-paso4-titulo">Agregar un nuevo Mundial</strong>
+                        <p data-i18n="historia-paso4-desc">Haz clic en “Agregar Mundial”, completa el formulario (año, título, imagen y descripción) y se añadirá al carrusel al instante.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">5</span>
+                    <div>
+                        <strong data-i18n="historia-paso5-titulo">Editar o eliminar</strong>
+                        <p data-i18n="historia-paso5-desc">Usa los botones correspondientes. ¡Cuidado! Eliminar un Mundial es permanente.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="consejo-final">
+                <strong data-i18n="historia-consejo">Consejo:</strong> 
+                <span data-i18n="historia-consejo-texto">¡Explora todos los Mundiales! Desde el primero en 1930 hasta el futuro 2026 con 48 equipos.</span>
+            </div>
+        </div>
+
+        <div class="modal-pie-ayuda">
+            <label class="checkbox-no-mostrar">
+                <input type="checkbox" id="no-mostrar-ayuda-nuevamente">
+                <span data-i18n="no-mostrar-mas">No volver a mostrar esta ayuda</span>
+            </label>
+            <button class="btn-cerrar-ayuda" data-i18n="entendido">¡Entendido!</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
     <script>
+        const btnAyuda       = document.getElementById('btn-ayuda-fijo');
+    const modalAyuda     = document.getElementById('modal-ayuda');
+    const cerrarBtn      = document.querySelector('.cerrar-modal-ayuda');
+    const entendidoBtn   = document.querySelector('.btn-cerrar-ayuda');
+    const noMostrarCheck = document.getElementById('no-mostrar-ayuda-nuevamente');
+
+    function abrirModal() {
+        modalAyuda.style.display = 'block';
+    }
+
+    function cerrarModal() {
+        modalAyuda.style.display = 'none';
+        if (noMostrarCheck && noMostrarCheck.checked) {
+            localStorage.setItem('ayudaHistoriaOcultada', 'true');
+        }
+    }
+
+    // Mostrar automáticamente la primera vez
+    if (!localStorage.getItem('ayudaHistoriaOcultada')) {
+        setTimeout(abrirModal, 1400);
+    }
+
+    // Eventos
+    btnAyuda.addEventListener('click', abrirModal);
+    cerrarBtn.addEventListener('click', cerrarModal);
+    entendidoBtn.addEventListener('click', cerrarModal);
+
+    // Cerrar al hacer clic fuera
+    modalAyuda.addEventListener('click', (e) => {
+        if (e.target === modalAyuda) cerrarModal();
+    });
     document.addEventListener('DOMContentLoaded', function() {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         const isAdmin = currentUser && currentUser.role === 'administrator';
@@ -1677,7 +1798,66 @@ function cargarDatosEnFormularioEditar(año) {
 mostrarMundial("1930");
 activarCard(cardsList[0]);
 
+// ==================== COLOR PERSONALIZADO DEL HEADER - 100% FUNCIONAL ====================
 
+const header = document.querySelector('header');
+const inputColorHeader = document.getElementById('color-header-input');
+const btnResetColorHeader = document.getElementById('reset-color-header');
+const COLOR_DEFAULT = '#0d6efd'; // Cambia esto si tu color original es otro
+
+function aplicarColorHeader(color) {
+    if (!header) return;
+    
+    // Forzamos con máxima prioridad
+    header.style.cssText = `
+        background: ${color} !important;
+        background-image: none !important;
+        background-color: ${color} !important;
+        transition: background-color 0.4s ease !important;
+    `;
+    
+    localStorage.setItem('colorHeaderPersonalizado', color);
+}
+
+function cargarColorHeader() {
+    const colorGuardado = localStorage.getItem('colorHeaderPersonalizado');
+    if (colorGuardado) {
+        if (inputColorHeader) inputColorHeader.value = colorGuardado;
+        aplicarColorHeader(colorGuardado);
+    }
+}
+
+function resetearColorHeader() {
+    localStorage.removeItem('colorHeaderPersonalizado');
+    header.style.cssText = ''; // Limpia todo el inline style
+    if (inputColorHeader) inputColorHeader.value = COLOR_DEFAULT;
+}
+
+// Eventos del selector de color
+if (inputColorHeader) {
+    inputColorHeader.addEventListener('input', (e) => aplicarColorHeader(e.target.value));
+}
+
+// Botón restablecer
+if (btnResetColorHeader) {
+    btnResetColorHeader.addEventListener('click', resetearColorHeader);
+}
+
+// === CARGAR AL INICIAR (una sola vez) ===
+document.addEventListener('DOMContentLoaded', () => {
+    cargarColorHeader();
+
+    // Protege el color aunque cambies modo oscuro, idioma, etc.
+    const observer = new MutationObserver(() => {
+        if (localStorage.getItem('colorHeaderPersonalizado')) {
+            cargarColorHeader();
+        }
+    });
+    observer.observe(document.documentElement, { 
+        attributes: true, 
+        attributeFilter: ['class'] 
+    });
+});
 
 </script>
 </body>

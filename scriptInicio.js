@@ -1,5 +1,3 @@
-// Traducciones para los textos de la interfaz
-
 
 document.addEventListener('DOMContentLoaded', () => {
     // === ANIMACIÓN DE ENTRADA ===
@@ -20,6 +18,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+function posicionarMenu(menu, boton) {
+    if (window.innerWidth <= 800) return;
+    void boton.offsetHeight;
+    const rect = boton.getBoundingClientRect();
+    const scrollTop = window.pageYOffset;
+    menu.style.left = `${rect.left + rect.width / 2}px`;
+    menu.style.top = `${rect.bottom + scrollTop + 8}px`;
+    menu.style.transform = 'translateX(-50%)';
+}
+
+function abrirMenu(menu, boton) {
+    [menuUsuario, menuNotificaciones, menuAccesibilidad].forEach(m => {
+        if (m && m !== menu) m.classList.remove('activo');
+    });
+    menu.classList.toggle('activo');
+    if (menu.classList.contains('activo')) {
+        setTimeout(() => posicionarMenu(menu, boton), 550);
+    }
+}
 
 const traducciones = {
     es: {
@@ -44,6 +63,21 @@ const traducciones = {
         'deuteranopia': '🟢 Deuteranopía',
         'tritanopia': '🔵 Tritanopía',
         'normal': '⬜ Normal',
+        'inicio-ayuda-titulo': '¡Bienvenido a Mi Mundial 2026!',
+'inicio-paso1-titulo': 'Explora las noticias',
+'inicio-paso1-desc': 'Usa las flechas ◄ ► para ver las últimas noticias del Mundial 2026.',
+'inicio-paso2-titulo': 'Accede a todos los mundiales',
+'inicio-paso2-desc': 'Haz clic en cualquiera de los mundiales en la sección inferior para ver su historia completa.',
+'inicio-paso3-titulo': 'Navega por el menú',
+'inicio-paso3-desc': 'Usa el menú superior o el lateral (☰ en móvil) para ir a Sedes, Partidos, Foro, Perfil, etc.',
+'inicio-paso4-titulo': 'Personaliza tu experiencia',
+'inicio-paso4-desc': 'Haz clic en el engranaje (accesibilidad) para cambiar idioma, modo oscuro, tamaño de letra y hasta el color del header.',
+'inicio-paso5-titulo': 'Inicia sesión o regístrate',
+'inicio-paso5-desc': 'Para publicar, comentar o ser administrador, entra con tu cuenta o crea una nueva.',
+'inicio-consejo': 'Consejo del día:',
+'inicio-consejo-texto': '¡El Mundial 2026 será el primero con 48 selecciones y 3 países anfitriones!',
+        'color-header': 'Color del Header',
+    'restablecer': 'Restablecer',
         'idioma': 'Cambiar Idioma',
         'es': 'Español',
         'en': 'Inglés',
@@ -109,6 +143,8 @@ const traducciones = {
         'notificacion-solicitud': 'has requested to post something',
         'hace-2-horas': '2 hours ago',
         'hace-1-hora': '1 hour ago',
+        'entendido': 'Got it!',
+        'idioma': 'Change Language',
         'hace-30-minutos': '30 minutes ago',
         'aceptar-publicacion': 'Accept Post',
         'publicacion-aceptada': 'Post Accepted',
@@ -120,6 +156,21 @@ const traducciones = {
         'deuteranopia': '🟢 Deuteranopia',
         'tritanopia': '🔵 Tritanopia',
         'normal': '⬜ Normal',
+        'inicio-ayuda-titulo': 'Welcome to My World Cup 2026!',
+'inicio-paso1-titulo': 'Explore the news',
+'inicio-paso1-desc': 'Use the ◄ ► arrows to see the latest World Cup 2026 news.',
+'inicio-paso2-titulo': 'Access all World Cups',
+'inicio-paso2-desc': 'Click on any World Cup in the bottom section to see its full history.',
+'inicio-paso3-titulo': 'Navigate the menu',
+'inicio-paso3-desc': 'Use the top menu or side menu (☰ on mobile) to go to Venues, Matches, Forum, Profile, etc.',
+'inicio-paso4-titulo': 'Customize your experience',
+'inicio-paso4-desc': 'Click the gear icon (accessibility) to change language, dark mode, text size, and even the header color.',
+'inicio-paso5-titulo': 'Log in or register',
+'inicio-paso5-desc': 'To post, comment, or be an admin, log in or create a new account.',
+'inicio-consejo': 'Tip of the day:',
+'inicio-consejo-texto': 'The 2026 World Cup will be the first with 48 teams and 3 host countries!',
+        'color-header': 'Header Color',
+    'restablecer': 'Reset',
         'idioma': 'Change Language',
         'es': 'Spanish',
         'en': 'English',
@@ -196,6 +247,23 @@ const traducciones = {
         'deuteranopia': '🟢 Deutéranopie',
         'tritanopia': '🔵 Tritanopie',
         'normal': '⬜ Normal',
+        'no-mostrar-mas': 'Ne plus afficher cette aide',
+    'entendido': 'Compris !',
+        'inicio-ayuda-titulo': 'Bienvenue sur Ma Coupe du Monde 2026 !',
+'inicio-paso1-titulo': 'Découvrez les actualités',
+'inicio-paso1-desc': 'Utilisez les flèches ◄ ► pour voir les dernières nouvelles de la Coupe du Monde 2026.',
+'inicio-paso2-titulo': 'Accédez à toutes les Coupes du Monde',
+'inicio-paso2-desc': 'Cliquez sur n’importe quelle Coupe du Monde dans la section du bas pour voir son histoire complète.',
+'inicio-paso3-titulo': 'Naviguez dans le menu',
+'inicio-paso3-desc': 'Utilisez le menu supérieur ou le menu latéral (☰ sur mobile) pour aller aux Stades, Matchs, Forum, Profil, etc.',
+'inicio-paso4-titulo': 'Personnalisez votre expérience',
+'inicio-paso4-desc': 'Cliquez sur l’icône d’engrenage (accessibilité) pour changer la langue, le mode sombre, la taille du texte et même la couleur de l’en-tête.',
+'inicio-paso5-titulo': 'Connectez-vous ou inscrivez-vous',
+'inicio-paso5-desc': 'Pour publier, commenter ou être administrateur, connectez-vous ou créez un nouveau compte.',
+'inicio-consejo': 'Astuce du jour :',
+'inicio-consejo-texto': 'La Coupe du Monde 2026 sera la première avec 48 équipes et 3 pays hôtes !',
+        'color-header': 'Couleur de l\'en-tête',
+    'restablecer': 'Réinitialiser',
         'idioma': 'Changer de Langue',
         'es': 'Espagnol',
         'en': 'Anglais',
@@ -628,43 +696,7 @@ resetAccesibilidad.addEventListener('click', () => {
     cambiarIdioma('es');
 });
 
-// Carrusel de noticias
-let currentIndex = 0;
-const totalItems = document.querySelectorAll('.noticia-card').length;
 
-function actualizarCarrusel() {
-    const isRtl = document.documentElement.getAttribute('dir') === 'rtl';
-    const offset = isRtl ? currentIndex * (window.innerWidth > 800 ? 100 / 3 : 100) : -currentIndex * (window.innerWidth > 800 ? 100 / 3 : 100);
-    carruselItems.style.transform = `translateX(${offset}%)`;
-}
-
-carruselBtnNext.addEventListener('click', () => {
-    if (window.innerWidth > 800) {
-        currentIndex = (currentIndex + 1) % totalItems;
-    } else {
-        currentIndex = (currentIndex + 1) % totalItems;
-    }
-    actualizarCarrusel();
-});
-
-carruselBtnPrev.addEventListener('click', () => {
-    if (window.innerWidth > 800) {
-        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-    } else {
-        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-    }
-    actualizarCarrusel();
-});
-
-// Ajustar carrusel en pantallas grandes
-function ajustarCarrusel() {
-    if (window.innerWidth > 800) {
-        carruselItems.style.transform = 'translateX(0)';
-        currentIndex = 0;
-    } else {
-        actualizarCarrusel();
-    }
-}
 document.addEventListener("DOMContentLoaded", function() {
     // Menú hamburguesa
     const menuToggle = document.querySelector(".menu-toggle");
@@ -705,7 +737,6 @@ document.addEventListener("DOMContentLoaded", function() {
     modoOscuroLateralBtn.addEventListener("click", toggleDarkMode);
 });
 
-window.addEventListener('resize', ajustarCarrusel);
-ajustarCarrusel();
+
 
 

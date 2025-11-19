@@ -58,7 +58,8 @@ const traducciones = {
         'aceptar-publicacion': 'Aceptar publicación',
         'publicacion-aceptada': 'Publicación aceptada',
         'ver-todas': 'Ver todas las notificaciones',
-
+        'color-header': 'Color del Header',
+    'restablecer': 'Restablecer',
         // Accesibilidad
         'accesibilidad-title': 'Opciones de Accesibilidad',
         'tamano-texto': 'Ajustar Tamaño de Texto',
@@ -136,7 +137,8 @@ const traducciones = {
         'aceptar-publicacion': 'Accept Post',
         'publicacion-aceptada': 'Post Accepted',
         'ver-todas': 'View All Notifications',
-
+        'color-header': 'Header Color',
+    'restablecer': 'Reset',
         'accesibilidad-title': 'Accessibility Options',
         'tamano-texto': 'Adjust Text Size',
         'daltonismo': 'Colorblind Modes',
@@ -210,7 +212,8 @@ const traducciones = {
         'aceptar-publicacion': 'Accepter la Publication',
         'publicacion-aceptada': 'Publication Acceptée',
         'ver-todas': 'Voir Toutes les Notifications',
-
+        'color-header': 'Couleur de l\'en-tête',
+    'restablecer': 'Réinitialiser',
         'accesibilidad-title': 'Options d\'Accessibilité',
         'tamano-texto': 'Ajuster la Taille du Texte',
         'daltonismo': 'Modes pour Daltonisme',
