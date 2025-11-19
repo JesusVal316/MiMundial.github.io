@@ -706,38 +706,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const entendidoBtn   = document.querySelector('.btn-cerrar-ayuda');
     const noMostrarCheck = document.getElementById('no-mostrar-ayuda-nuevamente');
 
-    // === FUNCIÓN PARA ABRIR EL MODAL ===
+    // === CLAVE ÚNICA PARA TODO EL SITIO ===
+    const CLAVE_AYUDA_GLOBAL = 'ayudaGlobalOcultada'; // ¡Una sola para todas las páginas!
+
+    // === FUNCIÓN ABRIR ===
     function abrirModal() {
-        modalAyuda.style.display = 'block';
+        if (modalAyuda) modalAyuda.style.display = 'block';
     }
 
-    // === FUNCIÓN PARA CERRAR EL MODAL ===
+    // === FUNCIÓN CERRAR ===
     function cerrarModal() {
-        modalAyuda.style.display = 'none';
+        if (modalAyuda) modalAyuda.style.display = 'none';
 
-        // Si marcó "No volver a mostrar" → guardamos para nunca más abrirlo automáticamente
-        if (noMostrarCheck.checked) {
-            localStorage.setItem('ayudaOcultadaAuto', 'true');
+        // Si marcó "No volver a mostrar" → guardamos GLOBALMENTE
+        if (noMostrarCheck && noMostrarCheck.checked) {
+            localStorage.setItem(CLAVE_AYUDA_GLOBAL, 'true');
         }
     }
 
-    // 1. ABRIR AUTOMÁTICAMENTE LA PRIMERA VEZ (solo si no está ocultado)
-    if (!localStorage.getItem('ayudaOcultadaAuto')) {
-        setTimeout(abrirModal, 800); // Pequeño retraso para que se vea bonito
+    // === ¿MOSTRAR AUTOMÁTICAMENTE AL CARGAR? ===
+    // Solo si el usuario NUNCA ha marcado "No volver a mostrar" en ninguna página
+    if (!localStorage.getItem(CLAVE_AYUDA_GLOBAL)) {
+        setTimeout(abrirModal, 900); // 0.9 segundos → elegante
     }
 
-    // 2. ABRIR SIEMPRE AL HACER CLIC EN EL BOTÓN ?
-    btnAyuda.addEventListener('click', () => {
-        abrirModal(); // Siempre abre, aunque haya marcado "no mostrar"
-    });
+    // === EVENTOS ===
+    if (btnAyuda)       btnAyuda.addEventListener('click', abrirModal);
+    if (cerrarBtn)      cerrarBtn.addEventListener('click', cerrarModal);
+    if (entendidoBtn)   entendidoBtn.addEventListener('click', cerrarModal);
 
-    // 3. CERRAR CON LOS BOTONES
-    cerrarBtn.addEventListener('click', cerrarModal);
-    entendidoBtn.addEventListener('click', cerrarModal);
+    // Cerrar clic fuera del modal
+    if (modalAyuda) {
+        modalAyuda.addEventListener('click', (e) => {
+            if (e.target === modalAyuda) cerrarModal();
+        });
+    }
 
-    // 4. CERRAR AL HACER CLIC FUERA
-    modalAyuda.addEventListener('click', (e) => {
-        if (e.target === modalAyuda) {
+    // Opción extra: ESC para cerrar
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalAyuda && modalAyuda.style.display === 'block') {
             cerrarModal();
         }
     });
