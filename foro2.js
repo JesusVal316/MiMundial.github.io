@@ -21,7 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         const isAdmin = currentUser && currentUser.role === 'administrator';
-        document.querySelectorAll('.admin-boton').forEach(btn => {
+        document.querySelectorAll('.btn-administrar-publicaciones-foro').forEach(btn => {
+            btn.style.display = isAdmin ? 'block' : 'none';
+        });
+        document.querySelectorAll('.icon-btn').forEach(btn => {
             btn.style.display = isAdmin ? 'block' : 'none';
         });
 

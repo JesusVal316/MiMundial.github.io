@@ -1899,37 +1899,34 @@ body.dark .modal-footer-eliminar-mundial {
 
 
 .etiqueta-info-sedes {
-      font-weight: bold;
+    font-weight: bold;
     color: #333;
     margin-bottom: 5px;
     font-size: 0.9rem;
-
 }
 
 .valor-info-sedes {
-    color: #2c3e50;
+    color: #333;
     font-size: 1rem;
 }
 
 .datos-curiosos-sedes {
-    background-color: #fff9e6f5;
-    border-left: 4px solid #f39c12;
+    background-color: #e5e5e5;
     padding: 15px;
     margin-top: 15px;
-    border-radius: 0 8px 8px 0;
+    border-radius: 8px 8px 8px 8px;
 }
 
 .titulo-datos-curiosos-sedes {
-    color: #e67e22;
+    color: #000000;
     margin-bottom: 10px;
     font-size: 1.1rem;
 }
 
 .texto-datos-curiosos-sedes {
-    color: #2c3e50;
+    color: #1f1f1f;
     line-height: 1.5;
 }
-
 /* Mejoras para el modal de edición */
 .campo-formulario-sedes {
     margin-bottom: 15px;
@@ -3526,6 +3523,18 @@ body.dark .search-bar input::placeholder {
     justify-content: center;
     padding: 0.3rem;
 }
+.icon-btn2 {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem;
+}
+
 
 body.dark .icon-btn {
     color: #ccc;

@@ -4,7 +4,7 @@
         <meta charset="UTF-8"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <title>Mi Mundial - Sedes</title> 
-        <link rel="stylesheet" href="sedes.css"> 
+        <link rel="stylesheet" href="style.css"> 
         
         <style>
             
@@ -246,15 +246,15 @@
             <!-- Carrusel de años de mundiales -->
 
             <div class="controles-mundiales">
-                <button class="admin-boton" class="btn-agregar-sede" id="btn-agregar-sede" data-i18n="agregar-sede">
+                <button  class="btn-agregar-sede" id="btn-agregar-sede" data-i18n="agregar-sede">
                     <img src="mas.png" alt="Agregar sede" class="icono-control" >
                     Agregar Sede
                 </button>
-                <button class="admin-boton" class="btn-editar-sede" id="btn-editar-sede" data-i18n="editar-sede">
+                <button  class="btn-editar-sede" id="btn-editar-sede" data-i18n="editar-sede">
                     <img src="editar.png" alt="Editar sede" class="icono-control" >
                     Editar Sede
                 </button>
-                <button class="admin-boton" class="btn-eliminar-sede" id="btn-eliminar-sede" data-i18n="eliminar-sede">
+                <button  class="btn-eliminar-sede" id="btn-eliminar-sede" data-i18n="eliminar-sede">
                     <img src="delete.png" alt="Eliminar sede" class="icono-control">
                     Eliminar sede
                 </button>
@@ -558,11 +558,86 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- BOTÓN DE AYUDA FIJO (?) -->
+<button id="btn-ayuda-fijo" class="btn-ayuda-fijo" title="Ayuda - Primeros pasos">
+    ?
+</button>
+
+<!-- MODAL DE PRIMEROS PASOS / GUÍA RÁPIDA -->
+<div id="modal-ayuda" class="modal-ayuda">
+    <div class="modal-contenido-ayuda">
+        <div class="modal-cabecera-ayuda">
+            <h2>
+                <span class="icono-ayuda">?</span> 
+                <span data-i18n="primeros-pasos-titulo">Primeros Pasos en Mi Mundial 2026</span>
+            </h2>
+            <button class="cerrar-modal-ayuda" aria-label="Cerrar ayuda">×</button>
+        </div>
+
+        <div class="modal-cuerpo-ayuda">
+            <div class="pasos-ayuda">
+                <div class="paso">
+                    <span class="numero-paso">1</span>
+                    <div>
+                        <strong data-i18n="paso1-titulo">Explora las sedes del Mundial</strong>
+                        <p data-i18n="paso1-desc">Usa las flechas ← → o haz clic en los años arriba para ver cada sede del Mundial 2026.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">2</span>
+                    <div>
+                        <strong data-i18n="paso2-titulo">Personaliza tu experiencia</strong>
+                        <p data-i18n="paso2-desc">Haz clic en el engranaje (arriba a la derecha) para cambiar idioma, modo oscuro, tamaño de letra, alto contraste y más.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">3</span>
+                    <div>
+                        <strong data-i18n="paso3-titulo">Navega por el menú</strong>
+                        <p data-i18n="paso3-desc">Usa el menú lateral (☰) en móvil o el menú superior para ir a Historia, Foro, Partidos, etc.</p>
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <span class="numero-paso">4</span>
+                    <div>
+                        <strong data-i18n="paso4-titulo">¿Eres administrador?</strong>
+                        <p data-i18n="paso4-desc">Si tienes cuenta de administrador, verás botones para agregar, editar o eliminar sedes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="consejo-final">
+                <strong data-i18n="consejo">Consejo:</strong> 
+                <span data-i18n="consejo-texto">¡Puedes cambiar el color del header desde el menú de accesibilidad!</span>
+            </div>
+        </div>
+
+        <div class="modal-pie-ayuda">
+            <label class="checkbox-no-mostrar">
+                <input type="checkbox" id="no-mostrar-ayuda-nuevamente">
+                <span data-i18n="no-mostrar-mas">No volver a mostrar esta ayuda</span>
+            </label>
+            <button class="btn-cerrar-ayuda" data-i18n="entendido">¡Entendido!</button>
+        </div>
+    </div>
+</div>
+        
         <script>
     document.addEventListener('DOMContentLoaded', function() {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         const isAdmin = currentUser && currentUser.role === 'administrator';
-        document.querySelectorAll('.admin-boton').forEach(btn => {
+        document.querySelectorAll('.btn-agregar-sede').forEach(btn => {
+            btn.style.display = isAdmin ? 'block' : 'none';
+        });
+        document.querySelectorAll('.btn-editar-sede').forEach(btn => {
+            btn.style.display = isAdmin ? 'block' : 'none';
+        });
+        document.querySelectorAll('.btn-eliminar-sede').forEach(btn => {
             btn.style.display = isAdmin ? 'block' : 'none';
         });
     });
@@ -625,11 +700,49 @@ document.addEventListener('DOMContentLoaded', () => {
         attributes: true, 
         attributeFilter: ['class'] 
     });
+    const btnAyuda       = document.getElementById('btn-ayuda-fijo');
+    const modalAyuda     = document.getElementById('modal-ayuda');
+    const cerrarBtn      = document.querySelector('.cerrar-modal-ayuda');
+    const entendidoBtn   = document.querySelector('.btn-cerrar-ayuda');
+    const noMostrarCheck = document.getElementById('no-mostrar-ayuda-nuevamente');
+
+    // === FUNCIÓN PARA ABRIR EL MODAL ===
+    function abrirModal() {
+        modalAyuda.style.display = 'block';
+    }
+
+    // === FUNCIÓN PARA CERRAR EL MODAL ===
+    function cerrarModal() {
+        modalAyuda.style.display = 'none';
+
+        // Si marcó "No volver a mostrar" → guardamos para nunca más abrirlo automáticamente
+        if (noMostrarCheck.checked) {
+            localStorage.setItem('ayudaOcultadaAuto', 'true');
+        }
+    }
+
+    // 1. ABRIR AUTOMÁTICAMENTE LA PRIMERA VEZ (solo si no está ocultado)
+    if (!localStorage.getItem('ayudaOcultadaAuto')) {
+        setTimeout(abrirModal, 800); // Pequeño retraso para que se vea bonito
+    }
+
+    // 2. ABRIR SIEMPRE AL HACER CLIC EN EL BOTÓN ?
+    btnAyuda.addEventListener('click', () => {
+        abrirModal(); // Siempre abre, aunque haya marcado "no mostrar"
+    });
+
+    // 3. CERRAR CON LOS BOTONES
+    cerrarBtn.addEventListener('click', cerrarModal);
+    entendidoBtn.addEventListener('click', cerrarModal);
+
+    // 4. CERRAR AL HACER CLIC FUERA
+    modalAyuda.addEventListener('click', (e) => {
+        if (e.target === modalAyuda) {
+            cerrarModal();
+        }
+    });
 });
 </script>
 </body>
 </html>
 
-
-</body>
-</html>

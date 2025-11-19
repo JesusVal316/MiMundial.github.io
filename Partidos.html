@@ -231,7 +231,7 @@
             <!-- Controles -->
             <div class="controles-partidos">
                 <h2 class="titulo-partidos" data-i18n="partidos-title">Partidos Mundial 2026</h2>
-                <button class="admin-boton" class="btn-agregar-partido" id="btn-agregar-partido">
+                <button  class="btn-agregar-partido" id="btn-agregar-partido">
                     <img src="mas.png" alt="Agregar partido" class="icono-control-partido">
                     <span data-i18n="agregar-partido">Agregar Partido</span>
                 </button>
@@ -404,7 +404,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         const isAdmin = currentUser && currentUser.role === 'administrator';
-        document.querySelectorAll('.admin-boton').forEach(btn => {
+        document.querySelectorAll('.btn-agregar-partido').forEach(btn => {
             btn.style.display = isAdmin ? 'block' : 'none';
         });
     });

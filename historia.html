@@ -414,15 +414,15 @@
 
     <div class="cuadro-blanco-historia">
         <div class="controles-mundiales">
-            <button class="admin-boton" class="btn-agregar-mundial" id="btn-agregar-mundial">
+            <button  class="btn-agregar-mundial" id="btn-agregar-mundial">
                 <img src="mas.png" alt="Agregar mundial" class="icono-control">
                 Agregar Mundial
             </button>
-            <button class="admin-boton" class="btn-editar-mundial" id="btn-editar-mundial">
+            <button  class="btn-editar-mundial" id="btn-editar-mundial">
                 <img src="editar.png" alt="Editar mundial" class="icono-control">
                 Editar Mundial
             </button>
-            <button class="admin-boton" class="btn-eliminar-mundial" id="btn-eliminar-mundial">
+            <button  class="btn-eliminar-mundial" id="btn-eliminar-mundial">
                     <img src="delete.png" alt="Eliminar mundial" class="icono-control">
                     Eliminar Mundial
                 </button>
@@ -790,7 +790,13 @@
     document.addEventListener('DOMContentLoaded', function() {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         const isAdmin = currentUser && currentUser.role === 'administrator';
-        document.querySelectorAll('.admin-boton').forEach(btn => {
+        document.querySelectorAll('.btn-eliminar-mundial').forEach(btn => {
+            btn.style.display = isAdmin ? 'block' : 'none';
+        });
+        document.querySelectorAll('.btn-editar-mundial').forEach(btn => {
+            btn.style.display = isAdmin ? 'block' : 'none';
+        });
+        document.querySelectorAll('.btn-agregar-mundial').forEach(btn => {
             btn.style.display = isAdmin ? 'block' : 'none';
         });
     });
